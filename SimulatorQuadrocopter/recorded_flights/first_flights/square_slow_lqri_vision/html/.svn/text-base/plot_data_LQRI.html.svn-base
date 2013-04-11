@@ -1,0 +1,270 @@
+
+<!DOCTYPE html
+  PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html><head>
+      <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+   <!--
+This HTML was auto-generated from MATLAB code.
+To make changes, update the MATLAB code and republish this document.
+      --><title>plot_data_LQRI</title><meta name="generator" content="MATLAB 7.11"><link rel="schema.DC" href="http://purl.org/dc/elements/1.1/"><meta name="DC.date" content="2011-09-12"><meta name="DC.source" content="plot_data_LQRI.m"><style type="text/css">
+
+body {
+  background-color: white;
+  margin:10px;
+}
+
+h1 {
+  color: #990000; 
+  font-size: x-large;
+}
+
+h2 {
+  color: #990000;
+  font-size: medium;
+}
+
+/* Make the text shrink to fit narrow windows, but not stretch too far in 
+wide windows. */ 
+p,h1,h2,div.content div {
+  max-width: 600px;
+  /* Hack for IE6 */
+  width: auto !important; width: 600px;
+}
+
+pre.codeinput {
+  background: #EEEEEE;
+  padding: 10px;
+}
+@media print {
+  pre.codeinput {word-wrap:break-word; width:100%;}
+} 
+
+span.keyword {color: #0000FF}
+span.comment {color: #228B22}
+span.string {color: #A020F0}
+span.untermstring {color: #B20000}
+span.syscmd {color: #B28C00}
+
+pre.codeoutput {
+  color: #666666;
+  padding: 10px;
+}
+
+pre.error {
+  color: red;
+}
+
+p.footer {
+  text-align: right;
+  font-size: xx-small;
+  font-weight: lighter;
+  font-style: italic;
+  color: gray;
+}
+
+  </style></head><body><div class="content"><h2>Contents</h2><div><ul><li><a href="#2">x - axis</a></li><li><a href="#3">y - axis</a></li><li><a href="#4">z - axis</a></li><li><a href="#5">yaw - angle</a></li><li><a href="#6">2D - Plot</a></li><li><a href="#7">3D - Plot</a></li></ul></div><pre class="codeinput">close <span class="string">all</span>
+<span class="comment">%1: time</span>
+<span class="comment">%2: x</span>
+<span class="comment">%3: x_dot</span>
+<span class="comment">%4: pitch</span>
+<span class="comment">%5: x_ref</span>
+<span class="comment">%6: pitch_cmd</span>
+<span class="comment">%7: y</span>
+<span class="comment">%8: y_dot</span>
+<span class="comment">%9: roll</span>
+<span class="comment">%10: y_ref</span>
+<span class="comment">%11: roll_cmd</span>
+<span class="comment">%12: z</span>
+<span class="comment">%13: z_dot</span>
+<span class="comment">%14: z_ref</span>
+<span class="comment">%15: thrust cmd</span>
+<span class="comment">%16: yaw</span>
+<span class="comment">%17: ang vel z</span>
+<span class="comment">%18: yaw ref</span>
+<span class="comment">%19: yaw rate cmd</span>
+
+load <span class="string">hquad_traj_lqri.mat</span>
+
+
+start_time=1;
+end_time=1400;
+
+<span class="comment">% get trajectory data</span>
+hquad_traj_lqri=hquad_traj_lqri(:,start_time:end_time);
+
+<span class="comment">% move starting point to 0/0</span>
+hquad_traj_lqri(2,:)=hquad_traj_lqri(2,:)-1;
+hquad_traj_lqri(5,:)=hquad_traj_lqri(5,:)-1;
+hquad_traj_lqri(7,:)=hquad_traj_lqri(7,:)+0.4;
+hquad_traj_lqri(10,:)=hquad_traj_lqri(10,:)+0.4;
+hquad_traj_lqri(12,:)=hquad_traj_lqri(12,:)+1;
+hquad_traj_lqri(14,:)=hquad_traj_lqri(14,:)+1;
+
+<span class="comment">% data is recorded with z-axis pointing down !!</span>
+<span class="comment">% change this</span>
+hquad_traj_lqri(7:19,:)=-1*hquad_traj_lqri(7:19,:);
+</pre><h2>x - axis<a name="2"></a></h2><pre class="codeinput">figure
+plot(hquad_traj_lqri(1,:)'-hquad_traj_lqri(1,1),[hquad_traj_lqri(2,:)',<span class="keyword">...</span>
+    hquad_traj_lqri(3,:)',hquad_traj_lqri(5,:)']);
+title(<span class="string">'Trajectory Control with LQRI'</span>);
+legend(<span class="string">'position'</span>,<span class="string">'velocity'</span>,<span class="string">'reference'</span>,<span class="string">'Location'</span>,<span class="string">'SouthEast'</span>);
+ylabel(<span class="string">'position (meter)'</span>);
+xlabel(<span class="string">'time (sec)'</span>);
+axis([0 25 -1.2 1.2]);
+</pre><img vspace="5" hspace="5" src="plot_data_LQRI_01.eps" alt=""> <h2>y - axis<a name="3"></a></h2><pre class="codeinput">figure
+plot(hquad_traj_lqri(1,:)'-hquad_traj_lqri(1,1),[hquad_traj_lqri(7,:)',<span class="keyword">...</span>
+    hquad_traj_lqri(8,:)',hquad_traj_lqri(10,:)']);
+title(<span class="string">'Trajectory Control with LQRI'</span>);
+legend(<span class="string">'position'</span>,<span class="string">'velocity'</span>,<span class="string">'reference'</span>,<span class="string">'Location'</span>,<span class="string">'SouthEast'</span>);
+ylabel(<span class="string">'position (meter)'</span>);
+xlabel(<span class="string">'time (sec)'</span>);
+axis([0 25 -1.2 1.2]);
+</pre><img vspace="5" hspace="5" src="plot_data_LQRI_02.eps" alt=""> <h2>z - axis<a name="4"></a></h2><pre class="codeinput">figure
+plot(hquad_traj_lqri(1,:)'-hquad_traj_lqri(1,1),[hquad_traj_lqri(12,:)',<span class="keyword">...</span>
+    hquad_traj_lqri(13,:)',hquad_traj_lqri(14,:)']);
+title(<span class="string">'Trajectory Control with LQRI'</span>);
+legend(<span class="string">'position'</span>,<span class="string">'velocity'</span>,<span class="string">'reference'</span>,<span class="string">'Location'</span>,<span class="string">'SouthEast'</span>);
+ylabel(<span class="string">'position (meter)'</span>);
+xlabel(<span class="string">'time (sec)'</span>);
+axis([0 25 -1.2 1.2]);
+</pre><img vspace="5" hspace="5" src="plot_data_LQRI_03.eps" alt=""> <h2>yaw - angle<a name="5"></a></h2><p>figure plot(hquad_traj_lqri(1,:)'-hquad_traj_lqri(1,1),[hquad_traj_lqri(16,:)',...     hquad_traj_lqri(17,:)',hquad_traj_lqri(18,:)']); title('Trajectory Control with LQRI'); legend('position','velocity','reference','Location','SouthEast'); ylabel('position (meter)'); xlabel('time (sec)');</p><h2>2D - Plot<a name="6"></a></h2><pre class="codeinput">figure
+plot(hquad_traj_lqri(2,:)', hquad_traj_lqri(7,:)');
+hold <span class="string">on</span>
+plot(hquad_traj_lqri(5,:)', hquad_traj_lqri(10,:)',<span class="string">'-r'</span>);
+
+axis([-0.2 1.2 -0.2 1.2]);
+title(<span class="string">'Trajectory Control with LQRI'</span>);
+legend(<span class="string">'position'</span>,<span class="string">'reference'</span>,<span class="string">'Location'</span>,<span class="string">'SouthEast'</span>);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+</pre><img vspace="5" hspace="5" src="plot_data_LQRI_04.eps" alt=""> <h2>3D - Plot<a name="7"></a></h2><pre class="codeinput">figure
+plot3(hquad_traj_lqri(2,:)', hquad_traj_lqri(7,:)',hquad_traj_lqri(12,:)');
+hold <span class="string">on</span>
+plot3(hquad_traj_lqri(5,:)', hquad_traj_lqri(10,:)',hquad_traj_lqri(14,:)',<span class="string">'-r'</span>);
+axis([-0.2 1.2 -0.2 1.2 -0.2 1.2]);
+<span class="comment">%axis equal;</span>
+
+title(<span class="string">'Trajectory Control with LQRI'</span>);
+legend(<span class="string">'position'</span>,<span class="string">'reference'</span>,<span class="string">'Location'</span>,<span class="string">'SouthEast'</span>);
+xlabel(<span class="string">'x'</span>);
+ylabel(<span class="string">'y'</span>);
+zlabel(<span class="string">'z'</span>);
+</pre><img vspace="5" hspace="5" src="plot_data_LQRI_05.eps" alt=""> <p class="footer"><br>
+      Published with MATLAB&reg; 7.11<br></p></div><!--
+##### SOURCE BEGIN #####
+close all
+%1: time
+%2: x
+%3: x_dot
+%4: pitch
+%5: x_ref
+%6: pitch_cmd
+%7: y
+%8: y_dot
+%9: roll
+%10: y_ref
+%11: roll_cmd
+%12: z
+%13: z_dot
+%14: z_ref
+%15: thrust cmd
+%16: yaw
+%17: ang vel z
+%18: yaw ref
+%19: yaw rate cmd
+
+load hquad_traj_lqri.mat
+
+
+start_time=1;
+end_time=1400;
+
+% get trajectory data
+hquad_traj_lqri=hquad_traj_lqri(:,start_time:end_time);
+
+% move starting point to 0/0
+hquad_traj_lqri(2,:)=hquad_traj_lqri(2,:)-1;
+hquad_traj_lqri(5,:)=hquad_traj_lqri(5,:)-1;
+hquad_traj_lqri(7,:)=hquad_traj_lqri(7,:)+0.4;
+hquad_traj_lqri(10,:)=hquad_traj_lqri(10,:)+0.4;
+hquad_traj_lqri(12,:)=hquad_traj_lqri(12,:)+1;
+hquad_traj_lqri(14,:)=hquad_traj_lqri(14,:)+1;
+
+% data is recorded with z-axis pointing down !!
+% change this
+hquad_traj_lqri(7:19,:)=-1*hquad_traj_lqri(7:19,:);
+
+
+
+%% x - axis
+figure
+plot(hquad_traj_lqri(1,:)'-hquad_traj_lqri(1,1),[hquad_traj_lqri(2,:)',...
+    hquad_traj_lqri(3,:)',hquad_traj_lqri(5,:)']);
+title('Trajectory Control with LQRI');
+legend('position','velocity','reference','Location','SouthEast');
+ylabel('position (meter)');
+xlabel('time (sec)');
+axis([0 25 -1.2 1.2]);
+
+
+%% y - axis
+figure
+plot(hquad_traj_lqri(1,:)'-hquad_traj_lqri(1,1),[hquad_traj_lqri(7,:)',...
+    hquad_traj_lqri(8,:)',hquad_traj_lqri(10,:)']);
+title('Trajectory Control with LQRI');
+legend('position','velocity','reference','Location','SouthEast');
+ylabel('position (meter)');
+xlabel('time (sec)');
+axis([0 25 -1.2 1.2]);
+
+
+%% z - axis
+figure
+plot(hquad_traj_lqri(1,:)'-hquad_traj_lqri(1,1),[hquad_traj_lqri(12,:)',...
+    hquad_traj_lqri(13,:)',hquad_traj_lqri(14,:)']);
+title('Trajectory Control with LQRI');
+legend('position','velocity','reference','Location','SouthEast');
+ylabel('position (meter)');
+xlabel('time (sec)');
+axis([0 25 -1.2 1.2]);
+
+%% yaw - angle
+% figure
+% plot(hquad_traj_lqri(1,:)'-hquad_traj_lqri(1,1),[hquad_traj_lqri(16,:)',...
+%     hquad_traj_lqri(17,:)',hquad_traj_lqri(18,:)']);
+% title('Trajectory Control with LQRI');
+% legend('position','velocity','reference','Location','SouthEast');
+% ylabel('position (meter)');
+% xlabel('time (sec)');
+
+
+%% 2D - Plot
+figure
+plot(hquad_traj_lqri(2,:)', hquad_traj_lqri(7,:)');
+hold on
+plot(hquad_traj_lqri(5,:)', hquad_traj_lqri(10,:)','-r');
+
+axis([-0.2 1.2 -0.2 1.2]);
+title('Trajectory Control with LQRI');
+legend('position','reference','Location','SouthEast');
+xlabel('x');
+ylabel('y');
+
+%% 3D - Plot
+figure
+plot3(hquad_traj_lqri(2,:)', hquad_traj_lqri(7,:)',hquad_traj_lqri(12,:)');
+hold on
+plot3(hquad_traj_lqri(5,:)', hquad_traj_lqri(10,:)',hquad_traj_lqri(14,:)','-r');
+axis([-0.2 1.2 -0.2 1.2 -0.2 1.2]);
+%axis equal;
+
+title('Trajectory Control with LQRI');
+legend('position','reference','Location','SouthEast');
+xlabel('x');
+ylabel('y');
+zlabel('z');
+
+
+
+##### SOURCE END #####
+--></body></html>
