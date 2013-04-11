@@ -1,5 +1,4 @@
-tbxmanager restorepath
-mpt_init
+% Main implementation
 %%
 close all
 clear all
