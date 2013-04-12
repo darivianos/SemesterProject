@@ -93,9 +93,14 @@ end
 fullfilename = [dirname, filesep, fname,'.h'];
 
 % extract polyhedra with control law
-Pn = obj.feedback.Set;
-nr = obj.feedback.Num;
-
+tempnum = size(obj.feedback,2);
+Pn = [];
+nr = 0;
+for i = 1:tempnum
+    Ptempn = obj.feedback(i).Set;
+    Pn = [Pn;Ptempn];
+    nr = nr + obj.feedback(i).Num;
+end
 % extract hyperplane representation
 Hn = cell(nr,1);
 Kn = cell(nr,1);
@@ -133,7 +138,7 @@ deltau = 0;
 tracking = 0;
 if tracking==1,
     nxt = obj.model.nx;
-    if isfield(obj.model.y, 'reference'),
+    if isfield(obj.model.y,'reference'),
         nref = obj.model.ny;
     else
         nref = obj.model.nx;

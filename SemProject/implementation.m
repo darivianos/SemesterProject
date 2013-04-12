@@ -3,7 +3,7 @@
 close all
 clear all
 clc
-% Initialization
+%% Initialization
 Ts = 0.11;
 m = 1.22;
 g = 9.8065;
@@ -62,8 +62,8 @@ for i = 1:5
 end
 % Initial structure with the disturbance as an aux variable to the system,
 % zero position and velocity at the switching of the hybrid system
-model = MLDSystem('Coaxial',parameters);
-modelPWA = model.toPWA();
+modelMLD = MLDSystem('Coaxial',parameters);
+model = modelMLD.toPWA();
 %%
 
 % %%  Simulate Open Loop
@@ -96,8 +96,8 @@ Q = zeros(4,4);
 % reference signals calculation Xss = A*Xss+B*Uref
 yref = [-deg2rad(5);0;0;0;m*g*deg2rad(5)];
 xref = [-deg2rad(5);0;0;0];
-B = modelPWA.B{1};
-A = modelPWA.A{1};
+B = model.B{1};
+A = model.A{1};
 uref = (B'*B)\B'*(eye(4) - A)*xref;
 
 
@@ -124,10 +124,14 @@ ctrl.model.u.reference = uref;
 % ctrl.model.x.with('terminalSet');
 % ctrl.model.x.terminalSet = Polyhedron('Ae',Ae,'be',be);
 expmpc = ctrl.toExplicit();
-%%
+save;
+%% Create Look Up Table, code in C
+exportToC_MLD(expmpc,Ts);
+cd mpt_explicit_controller
+mex mpt_getInput_sfunc.c;
 % Open Loop Simulation
 %% Simulate the closed loop
-x0 = [0;0;-1;0];
+x0 = [0;0;-0.7;0];
 N_sim = 50;
 
 % Create the closed-loop system:
