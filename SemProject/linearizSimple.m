@@ -6,7 +6,7 @@ function [Aff,Bff,Cff,Dff,Add,Bdd,Cdd,Ddd] = linearizSimple(Theta,Ts)
 % -------------------------------------------------------------
 % [Aff,Bff,Cff,Add,Bdd,Cdd] = linearizSimple(Theta,Ts)
 %
-% Theta : angle in rad
+% Theta : Desired Angle for Force Control
 % Ts : sampling time
 % -------------------------------------------------------------
 
@@ -36,8 +36,8 @@ Bd = zeros(4,2);
 Dd = zeros(5,2);
 
 % Free Flight
-Af(1,2) = 1; Af(2,1) = -a0; Af(2,2) = -a1; Af(3,4) = 1; 
-Af(4,1) = -g*cos(Theta); Af(4,4) = DF;
+Af(1,2) = 1; Af(2,1) = -a0; Af(1,1) = -a1; Af(3,4) = 1; 
+Af(4,1) = -g; Af(4,4) = DF;
 Bf(2,1) = c0;
 Cf = [eye(4);zeros(1,4)];
 
@@ -49,10 +49,10 @@ Cff = sysfd.c;
 Dff = sysfd.d;
 
 % Docked Dynamics
-Ad(1,2) = 1; Ad(2,1) = -a0; Ad(2,2) = -a1; Ad(3,4) = 1; 
+Ad(1,2) = 1; Ad(2,1) = -a0; Ad(1,1) = -a1; Ad(3,4) = 1; 
 Bd(2,1) = c0; Bd(2,2) = la;
 Cd = [eye(4);
-      -m*g*cos(Theta),zeros(1,3)];
+      -m*g,zeros(1,3)];
 
 sysdc = ss(Ad,Bd,Cd,Dd);
 sysdd = c2d(sysdc,Ts,'zoh');

@@ -94,11 +94,11 @@ fullfilename = [dirname, filesep, fname,'.h'];
 
 % extract polyhedra with control law
 tempnum = size(obj.feedback,2);
+clear Pn;
 Pn = [];
 nr = 0;
 for i = 1:tempnum
-    Ptempn = obj.feedback(i).Set;
-    Pn = [Pn;Ptempn];
+    Pn = [Pn;obj.feedback(i).Set];
     nr = nr + obj.feedback(i).Num;
 end
 % extract hyperplane representation
@@ -169,7 +169,8 @@ fprintf(fid, '#define MPT_NREF %d\n', nref);
 fprintf(fid, '#define MPT_TS %f\n', Ts);
 fprintf(fid, '#define MPT_DUMODE %d\n', deltau);
 fprintf(fid, '#define MPT_TRACKING %d\n', tracking);
-fprintf(fid, '#define MPT_ABSTOL %e\n', MPTOPTIONS.abs_tol);
+%fprintf(fid, '#define MPT_ABSTOL %e\n', MPTOPTIONS.abs_tol);
+fprintf(fid, '#define MPT_ABSTOL %e\n', 1e-6);
 
 ctr = 0;
 fprintf(fid, '\nstatic float MPT_H[] = {\n');

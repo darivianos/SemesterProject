@@ -1,22 +1,10 @@
-/* Initial System, in which we can easily check that the hysdel code is right */
-/* since the PWA returned system matches exactly the linearized matrices (LinearizSimple.m) */
-/* Velocity becomes zero when we attach the wall */
-/* Maximum angle -12 deg. No restriction to the input since we have restriction to the state angle. */
-
-/* We get the wall in the region [-0.05, 0.0] so as to have a margin for increasing the sampling rate */
-/* without having to worry that we get a solution that is out of bounds. */
-
-/* Define Sampling rate... Maximum velocity 0.2 m/s , so if we are in -0.05m it must be Ts <=0.25 */
-/* Prediction Horizon must be at least 10 so as to have enough time to reach the wall and make force control */
-/* from everywhere in the desired range which is 1m */
-
 SYSTEM Coaxial {
 
 INTERFACE {  
     STATE { REAL angle [-0.2094,0.2094];
             REAL omega [-2,2];
             REAL posx [-1,0];
-            REAL velx [0,1];
+            REAL velx [-0.5,0.5];
             }
     
     INPUT { REAL thetar[-5,5];
