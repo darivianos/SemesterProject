@@ -1,0 +1,58 @@
+10
+
+dir
+911
+svn+ssh://burrimi@svn.aslforge.ethz.ch/svnroot/airobots/trunk/AIR_traj_control/Matlab/recorded_flights/first_flights
+svn+ssh://burrimi@svn.aslforge.ethz.ch/svnroot/airobots
+
+
+
+2011-09-23T11:04:56.358646Z
+493
+burrimi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5f2abfc8-37d3-4652-b0f7-8b474f49098f
+
+square_FG_slow
+dir
+
+fancy_FG_vicon_vision
+dir
+
+square_slow_lqri_vision
+dir
+
+fancy_2_FG_vision
+dir
+
+square_fast_lqri
+dir
+
+square_FG_slow_vision
+dir
+
+helix
+dir
+
+square_lqri_slow_wall
+dir
+
+square_slow_lqri
+dir
+
+square_FG_fasts
+dir
+

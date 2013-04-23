@@ -1,0 +1,67 @@
+10
+
+dir
+911
+svn+ssh://burrimi@svn.aslforge.ethz.ch/svnroot/airobots/trunk/AIR_traj_control/Matlab/recorded_flights/old_flights
+svn+ssh://burrimi@svn.aslforge.ethz.ch/svnroot/airobots
+
+
+
+2011-09-23T11:04:56.358646Z
+493
+burrimi
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+5f2abfc8-37d3-4652-b0f7-8b474f49098f
+
+bias_estimation
+dir
+
+intermediate lqr and mpc flight
+dir
+
+uberflight
+dir
+
+intermediate hovering
+dir
+
+lqr_mpc
+dir
+
+mpc_2_flight
+dir
+
+pitch_validation
+dir
+
+mpc_first_flight
+dir
+
+thrust_validation
+dir
+
+with_camera
+dir
+
+mpc_circle_first_try
+dir
+
+lqri_square_traj
+dir
+
+long remote flight
+dir
+
