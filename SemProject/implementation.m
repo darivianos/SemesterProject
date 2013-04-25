@@ -2,69 +2,20 @@
 %%
 close all
 clear all
+clear classes
 clc
 %% Initialization
-% Sampling time fs = 50 Hz , Ts = 0.02
-Ts = 0.1;
+% Define Parameters
 m = 0.650;
 g = 9.8065;
-% free flight and docked dynamics linearization
 Theta = -deg2rad(2);
-[Aff,Bff,Cff,Dff,Add,Bdd,Cdd,Ddd] = linearizSimple(Theta,Ts);
+% Controller Sampling Time
+Ts = 0.08;
+model = SimulateModel(Theta,Ts);
+% Simulation Sampling Time (50 Hz)
+TsReal = 0.02;
+modelReal = SimulateModel(Theta,TsReal);
 
-% Free Flight set parameters
-for i = 1:4
-    for j = 1:4
-        VarName = sprintf('parameters.Af%d%d',i,j);
-        VarValue = sprintf('=Aff(%d,%d);',i,j);
-        eval([VarName VarValue ]);
-    end
-end
-
-for i = 1:4
-    for j = 1:2
-        VarName = sprintf('parameters.Bf%d%d',i,j);
-        VarValue = sprintf('=Bff(%d,%d);',i,j);
-        eval([VarName VarValue ]);
-    end
-end
-
-for i = 1:5
-    for j = 1:4
-        VarName = sprintf('parameters.Cf%d%d',i,j);
-        VarValue = sprintf('=Cff(%d,%d);',i,j);
-        eval([VarName VarValue ]);
-    end
-end
-
-% Docked Set parameters
-for i = 1:4
-    for j = 1:4
-        VarName = sprintf('parameters.Ad%d%d',i,j);
-        VarValue = sprintf('=Add(%d,%d);',i,j);
-        eval([VarName VarValue ]);
-    end
-end
-
-for i = 1:4
-    for j = 1:2
-        VarName = sprintf('parameters.Bd%d%d',i,j);
-        VarValue = sprintf('=Bdd(%d,%d);',i,j);
-        eval([VarName VarValue ]);
-    end
-end
-
-for i = 1:5
-    for j = 1:4
-        VarName = sprintf('parameters.Cd%d%d',i,j);
-        VarValue = sprintf('=Cdd(%d,%d);',i,j);
-        eval([VarName VarValue ]);
-    end
-end
-% Initial structure with the disturbance as an aux variable to the system,
-% zero position and velocity at the switching of the hybrid system
-modelMLD = MLDSystem('QuadXDirection',parameters);
-model = modelMLD.toPWA();
 %%
 
 % %%  Simulate Open Loop
@@ -130,9 +81,9 @@ save;
 exportToC_MLD(expmpc,Ts);
 cd mpt_explicit_controller
 mex mpt_getInput_sfunc.c;
+x0 = [0;0;-1;0];
 % Open Loop Simulation
 %% Simulate the closed loop
-x0 = [0;0;-1;0];
 N_sim = 150;
 
 % Create the closed-loop system:

@@ -41,6 +41,11 @@
     Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
 */ 
 
+/* Modified to compensate for the case in which no control law was found. 
+ * In that case, the control law that violates the less constraints in the
+ * set, is chosen as the optimal one
+ */
+
 #ifndef mpt_getInput_h 
 #include "mpt_getInput.h" 
 #endif
@@ -50,17 +55,21 @@ static float mpt_getInput(float *X, float *U)
     int ix, iu, ic, nc, isinside;
     unsigned long ireg, abspos;
     float hx, region;
-
+    int minReg, minViol, regionViol;
+    
     abspos = 0;
     region = 0;
-
+    
+    minReg = -1;
+    minViol = 1000;
+    
     /* initialize U to zero*/
     for (iu=0; iu<MPT_NU; iu++) {
         U[iu] = 0;
     }
 
     for (ireg=0; ireg<MPT_NR; ireg++) {
-
+        regionViol = 0;
         isinside = 1;
         nc = MPT_NC[ireg];
         for (ic=0; ic<nc; ic++) {
@@ -70,6 +79,7 @@ static float mpt_getInput(float *X, float *U)
             }
             if ((hx - MPT_K[abspos+ic]) > MPT_ABSTOL) {
                 /* constraint is violated, continue with next region */
+                regionViol = regionViol + 1;
                 isinside = 0;
                 break;
             } 
@@ -86,6 +96,21 @@ static float mpt_getInput(float *X, float *U)
             return region;
         }
         abspos = abspos + MPT_NC[ireg];
+        
+        /* Check which region has the least number of constraints violation */
+        if(regionViol < minViol){
+            minViol = regionViol;
+            minReg = ireg;
+        }
+    }
+    
+    /* case in which not a feasible control law found */
+    region = minReg + 1;
+    for (iu=0; iu<MPT_NU; iu++) {
+        for (ix=0; ix<MPT_NX; ix++) {
+            U[iu] = U[iu] + MPT_F[minReg*MPT_NX*MPT_NU + iu*MPT_NX + ix]*X[ix];
+        }
+        U[iu] = U[iu] + MPT_G[minReg*MPT_NU + iu];
     }
     return region;
 }
