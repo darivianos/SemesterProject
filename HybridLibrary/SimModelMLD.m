@@ -8,7 +8,6 @@ function [sys,x0,str,ts] = SimModelMLD(t,x,u,flag,model,x_init,Ts)
 %   
 % Created by Darivianakis Georgios (MSc Robotics Systems and Control)
 % email: gdarivia@student.ethz.ch
-
 switch flag,
   % Initialization
   case 0,                                                
@@ -18,15 +17,14 @@ switch flag,
     else
         x0 = zeros(model.nx,1);
     end
+    model.initialize(x0);
   % Update 
-  case 2,                                               
-    model.initialize(x);
-    [sys,~] = model.update(u);
-    % Output
+  case 2,
+    states = model.update(u);
+    sys = round(1000*states)/1000;
   case 3,                                                
-  % Terminate 
-    model.initialize(x);
-    [~,sys] = model.update(u);
+    output = model.output;
+    sys = round(1000*output)/1000;
   case 9,                                               
     sys = [];
 

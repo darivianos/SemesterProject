@@ -1,15 +1,16 @@
-/* Position control until -0.005 and after that force control */
+/* Model Created for Simulink with no constraints */
+/* Wall is at zero */
 
-SYSTEM QuadXDirection {
+SYSTEM QuadXDirectionSimulink {
 
 INTERFACE {  
-    STATE { REAL angle [-0.2094,0.2094];
-            REAL omega [-2,2];
-            REAL posx [-1,0];
-            REAL velx [-1,1];
+    STATE { REAL angle[-10,10];
+            REAL omega[-10,10];
+            REAL posx[-10,10];
+            REAL velx[-10,10];
             }
     
-    INPUT { REAL thetar[-5,5];
+    INPUT { REAL thetar[-10,10];
             }
     
     OUTPUT{ REAL y1;
@@ -60,7 +61,7 @@ IMPLEMENTATION {
             BOOL docked;
             REAL Fwall;
         }
-    AD  {   docked = posx >= -0.005 -MLD_epsilon;
+    AD  {   docked = posx >= 0;
         }
     DA  {   
             z1 = {IF ~docked THEN (Af11*angle+Af12*omega+Af13*posx+Af14*velx+Bf11*thetar+Bf12*Fwall)
@@ -107,7 +108,7 @@ IMPLEMENTATION {
     LINEAR {
             Fwall = k5;
             }
-    MUST   {
+    MUST {
             Fwall >= 0;
             }
     }

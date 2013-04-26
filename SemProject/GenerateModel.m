@@ -1,4 +1,4 @@
-function model = SimulateModel(Theta,Ts)
+function model = GenerateModel(fname,Theta,Ts)
 % Creates the discrete Model of the system for
 % different sampling times Ts and desired angles Theta
 %
@@ -60,7 +60,7 @@ for i = 1:5
 end
 % Initial structure with the disturbance as an aux variable to the system,
 % zero position and velocity at the switching of the hybrid system
-modelMLD = MLDSystem('QuadXDirection',parameters);
+modelMLD = MLDSystem(fname,parameters);
 model = modelMLD.toPWA();
 
 return
