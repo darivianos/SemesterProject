@@ -8,7 +8,7 @@ clc
 % Define Parameters
 m = 0.650;
 g = 9.8065;
-Theta = -deg2rad(2);
+Theta = -deg2rad(5);
 % Controller Sampling Time
 Ts = 0.08;
 model = SimulateModel(Theta,Ts);
@@ -53,7 +53,7 @@ A = model.A{1};
 uref = (B'*B)\B'*(eye(4) - A)*xref;
 
 
-N = 5;
+N = 15;
 norm = 2;
 
 ctrl = MPCController(model);
