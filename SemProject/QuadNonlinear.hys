@@ -1,0 +1,114 @@
+/* Position control until -0.005 and after that force control */
+
+SYSTEM QuadXDirection {
+
+INTERFACE {  
+    STATE { REAL angle [-0.2094,0.2094];
+            REAL omega [-2,2];
+            REAL posx [-1,0];
+            REAL velx [-1,1];
+            }
+    
+    INPUT { REAL thetar[-5,5];
+            }
+    
+    OUTPUT{ REAL y1;
+            REAL y2;
+            REAL y3;
+            REAL y4;
+            REAL y5;
+            }
+
+    PARAMETER {
+            REAL Af11,Af12,Af13,Af14;
+            REAL Af21,Af22,Af23,Af24;
+            REAL Af31,Af32,Af33,Af34;
+            REAL Af41,Af42,Af43,Af44;
+
+            REAL Bf11,Bf12;
+            REAL Bf21,Bf22;
+            REAL Bf31,Bf32;
+            REAL Bf41,Bf42;
+
+            REAL Cf11,Cf12,Cf13,Cf14;
+            REAL Cf21,Cf22,Cf23,Cf24;
+            REAL Cf31,Cf32,Cf33,Cf34;
+            REAL Cf41,Cf42,Cf43,Cf44;
+            REAL Cf51,Cf52,Cf53,Cf54;
+
+            REAL Ad11,Ad12;
+            REAL Ad21,Ad22;
+            REAL Ad31,Ad32;
+            REAL Ad41,Ad42;
+
+            REAL Bd11,Bd12;
+            REAL Bd21,Bd22;
+            REAL Bd31,Bd32;
+            REAL Bd41,Bd42;
+
+            REAL Cd11,Cd12,Cd13,Cd14;
+            REAL Cd21,Cd22,Cd23,Cd24;
+            REAL Cd31,Cd32,Cd33,Cd34;
+            REAL Cd41,Cd42,Cd43,Cd44;
+            REAL Cd51,Cd52,Cd53,Cd54;
+                }
+    }
+
+IMPLEMENTATION {
+    AUX {   REAL z1,z2,z3,z4;
+            REAL k1,k2,k3,k4,k5;
+            BOOL docked;
+            REAL Fwall;
+        }
+    AD  {   docked = posx >= -0.005 -MLD_epsilon;
+        }
+    DA  {   
+            z1 = {IF ~docked THEN (Af11*angle+Af12*omega+Af13*posx+Af14*velx+Bf11*thetar+Bf12*Fwall)
+                            ELSE (Ad11*angle+Ad12*omega+0*posx+0*velx+Bd11*thetar+Bd12*Fwall)};
+            
+            z2 = {IF ~docked THEN (Af21*angle+Af22*omega+Af23*posx+Af24*velx+Bf21*thetar+Bf22*Fwall)
+                            ELSE (Ad21*angle+Ad22*omega+0*posx+0*velx+Bd21*thetar+Bd22*Fwall)};
+
+            z3 = {IF ~docked THEN (Af31*angle+Af32*omega+Af33*posx+Af34*velx+Bf31*thetar+Bf32*Fwall)
+                            ELSE (Ad31*angle+Ad32*omega+0*posx+0*velx+Bd31*thetar+Bd32*Fwall)};
+
+            z4 = {IF ~docked THEN (Af41*angle+Af42*omega+Af43*posx+Af44*velx+Bf41*thetar+Bf42*Fwall)
+                            ELSE (Ad41*angle+Ad42*omega+0*posx+0*velx+Bd41*thetar+Bd42*Fwall)};
+
+            
+            k1 = {IF ~docked THEN (Cf11*angle+Cf12*omega+Cf13*posx+Cf14*velx)
+                            ELSE (Cd11*angle+Cd12*omega+Cd13*posx+Cd14*velx)};
+            
+            k2 = {IF ~docked THEN (Cf21*angle+Cf22*omega+Cf23*posx+Cf24*velx)
+                            ELSE (Cd21*angle+Cd22*omega+Cd23*posx+Cd24*velx)};
+
+            k3 = {IF ~docked THEN (Cf31*angle+Cf32*omega+Cf33*posx+Cf34*velx)
+                            ELSE (Cd31*angle+Cd32*omega+Cd33*posx+Cd34*velx)};
+
+            k4 = {IF ~docked THEN (Cf41*angle+Cf42*omega+Cf43*posx+Cf44*velx)
+                            ELSE (Cd41*angle+Cd42*omega+Cd43*posx+Cd44*velx)};
+
+            k5 = {IF ~docked THEN (Cf51*angle+Cf52*omega+Cf53*posx+Cf54*velx)
+                            ELSE (Cd51*angle+Cd52*omega+Cd53*posx+Cd54*velx)};
+        }
+    CONTINUOUS {
+            angle = z1;
+            omega = z2;
+            posx = z3;
+            velx = z4;
+                }
+    OUTPUT {
+            y1 = k1;
+            y2 = k2;
+            y3 = k3;
+            y4 = k4;
+            y5 = k5;
+            }
+    LINEAR {
+            Fwall = k5;
+            }
+    MUST   {
+            Fwall >= 0;
+            }
+    }
+}

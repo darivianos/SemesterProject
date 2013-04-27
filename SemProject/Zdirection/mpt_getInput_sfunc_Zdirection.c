@@ -1,41 +1,10 @@
-/*  mpt_getInput_sfunc.c
-  
-  Pure C-code S-function for simulation of explicit controllers.
-  
-  Requires the explicit controller to be described in a header file called
-  mpt_getInput.h (see 'help mpt_exportc' for more details).
-  
-  Usage:
-    mpt_exportc(ctrl)
-    mex mpt_getInput_sfunc.c
-*/
 
-/* Copyright (C) 2005 by Michal Kvasnica (michal.kvasnica@stuba.sk) 
-   Revised in 2012 by Martin Herceg, Automatic Control Laboratory,
-   ETH Zurich, herceg@control.ee.ethz.ch
-*/
-
-/*  This program is free software; you can redistribute it and/or modify
-    it under the terms of the GNU General Public License as published by
-    the Free Software Foundation; either version 2 of the License, or
-    (at your option) any later version.
-
-    This program is distributed in the hope that it will be useful,
-    but WITHOUT ANY WARRANTY; without even the implied warranty of
-    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
-    GNU General Public License for more details.
-
-    You should have received a copy of the GNU General Public License
-    along with this program; if not, write to the Free Software
-    Foundation, Inc., 675 Mass Ave, Cambridge, MA 02139, USA.
-*/ 
-
-#define S_FUNCTION_NAME  mpt_getInput_sfunc   /*Name of the S-function file*/
+#define S_FUNCTION_NAME  mpt_getInput_sfunc_Zdirection   /*Name of the S-function file*/
 #define S_FUNCTION_LEVEL 2		/*Level 2 S-functions allow multi-port status*/
 
 #include "simstruc.h"			/*Header where different routines are defined */
 
-#include "mpt_getInput.c"
+#include "mpt_getInput_Zdirection.c"
 
 /* previous input */
 static double Uprev[MPT_NU];
@@ -144,7 +113,7 @@ static void mdlOutputs(SimStruct *S, int_T tid)
     }
     
     /* get control law */
-    region = mpt_getInput(X, U);
+    region = mpt_getInput_Zdirection(X, U);
         
     /* check if control law was found, if not, stop the simulation */
     if (region<1) {

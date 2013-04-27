@@ -1,76 +1,10 @@
 function exportToC_MLD(obj,Ts,fname,dirname)
-%
-%  EXPORTTOC: Export the explicit controller to C-code of MLD systems,
-%  otherwise use the controller.exportToC(); of the explicit controller.
-%  The function was modified to compensate for the definition of Ts.
-%  ====================================================
-%  
-%  
-%  SYNTAX
-%  ------
-%     
-%      exportToC_MLD(expmpc,Ts,fname,dirname)
-%    
-%  
-%  DESCRIPTION
-%  -----------
-%     The routine exportToC generates C-code from the explicit controller. A new
-%  directory is always created with the generated code. If no name of the directory
-%  is provided in the second argument, the default name for the directory is
-%  mpt_explicit_controller. The directory contains three files: 
-%    
-%     - mpt_getInput.h - The header files with PWA control law. 
-%     - mpt_getInput.c - The routine for sequential evaluation of PWA control law. 
-%     - mpt_getInput_sfunc.c - The Simulink interface for calling using the mpt_sim
-%     library. 
-%    The generated code can be used for fast execution of MPC control. An example
-%  of Simulink interface to generated code is given in mpt_getInput_sfunc.c that
-%  can be tested from Matlab. The prerequisite is to have C-compiler installed and
-%  recognized from Matlab. To test the Simulink interface, compile the
-%  mpt_getInput_sfunc.c first by typing
-%     mex mpt_getInput_sfunc.c.
-%    When compiled, connect the block of explicit controller from MPT Simulink
-%  library mpt_sim with your scheme and run the simulation.
-%  
-%  INPUT
-%  -----
-%     
-%        
-%          filename Name of the header file to be generated. 
-%                                                            
-%                   Class: char                              
-%          dirname  Name of the directory to be generated.   
-%                   Class: char                              
-%                     
-%  
-%  
 
-%  AUTHOR(s)
-%  ---------
-%     
-%    
-%   (c) 2010-2012  Martin Herceg: ETH Zurich
-%   mailto:herceg@control.ee.ethz.ch 
-%     
-%    
-%   (c) 2003-2012  Michal Kvasnica: STU Bratislava
-%   mailto:michal.kvasnica@stuba.sk 
-%  
-%  
-
-%  LICENSE
-%  -------
-%    
-%    This program is free software; you can redistribute it and/or modify it under
-%  the terms of the GNU General Public License as published by the Free Software
-%  Foundation; either version 2.1 of the License, or (at your option) any later
-%  version.
-%    This program is distributed in the hope that it will be useful, but WITHOUT
-%  ANY WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS
-%  FOR A PARTICULAR PURPOSE. See the GNU General Public License for more details.
-%    You should have received a copy of the GNU General Public License along with
-%  this library; if not, write to the  Free Software Foundation, Inc.,  59 Temple
-%  Place, Suite 330,  Boston, MA 02111-1307 USA
+% Main implementation was taken by function of MPT toolbox */
+% exportToC.m which can be found under tbxmanager/toolboxes/mpt/3.0.2/all/mpt3-3_0_2/functions/modules/ui/@EMPCController */
+% Modified by Darivianakis Georgios (gdarivia@student.ethz.ch) to include the following extra features */
+% 1) Support for PWA systems */
+% 2) Lower abs_tolerance from 1e-8 to 1e-6
  
  
 global MPTOPTIONS
@@ -112,7 +46,7 @@ end
 % add extension
 fullfilename = [dirname, filesep, fname,'.h'];
 
-% extract polyhedra with control law
+% Main Modification for support of PWA systems
 tempnum = size(obj.feedback,2);
 clear Pn;
 Pn = [];
@@ -121,6 +55,8 @@ for i = 1:tempnum
     Pn = [Pn;obj.feedback(i).Set];
     nr = nr + obj.feedback(i).Num;
 end
+
+
 % extract hyperplane representation
 Hn = cell(nr,1);
 Kn = cell(nr,1);
