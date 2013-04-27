@@ -189,8 +189,8 @@ fprintf(fid, '#define MPT_NREF %d\n', nref);
 fprintf(fid, '#define MPT_TS %f\n', Ts);
 fprintf(fid, '#define MPT_DUMODE %d\n', deltau);
 fprintf(fid, '#define MPT_TRACKING %d\n', tracking);
-fprintf(fid, '#define MPT_ABSTOL %e\n', MPTOPTIONS.abs_tol);
-%fprintf(fid, '#define MPT_ABSTOL %e\n', 1e-6);
+%fprintf(fid, '#define MPT_ABSTOL %e\n', MPTOPTIONS.abs_tol);
+fprintf(fid, '#define MPT_ABSTOL %e\n', 1e-6);
 
 ctr = 0;
 fprintf(fid, '\nstatic float MPT_H[] = {\n');

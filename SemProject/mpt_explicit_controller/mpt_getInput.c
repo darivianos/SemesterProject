@@ -49,6 +49,7 @@
 #ifndef mpt_getInput_h 
 #include "mpt_getInput.h" 
 #endif
+#include <math.h>
 
 static float mpt_getInput(float *X, float *U)
 {
@@ -92,6 +93,8 @@ static float mpt_getInput(float *X, float *U)
                     U[iu] = U[iu] + MPT_F[ireg*MPT_NX*MPT_NU + iu*MPT_NX + ix]*X[ix];
                 }
                 U[iu] = U[iu] + MPT_G[ireg*MPT_NU + iu];
+                /* round up at the third decimal */
+                U[iu] = round(U[iu]*1000)/1000;
             }
             return region;
         }
@@ -111,6 +114,8 @@ static float mpt_getInput(float *X, float *U)
             U[iu] = U[iu] + MPT_F[minReg*MPT_NX*MPT_NU + iu*MPT_NX + ix]*X[ix];
         }
         U[iu] = U[iu] + MPT_G[minReg*MPT_NU + iu];
+        /* round up at the third decimal */
+        U[iu] = round(U[iu]*1000)/1000;
     }
     return region;
 }
