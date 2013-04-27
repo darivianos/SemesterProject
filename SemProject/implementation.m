@@ -6,7 +6,7 @@ clear all
 clear classes
 clc
 
-%% Xdirection Controller
+%% Xdirection Controller (Yaw Controller)
 
 % Initialization
 % Define Parameters
@@ -124,7 +124,7 @@ x0 = [0;0;-1;0];
 % subplot(6,1,6)
 % plot(time,ClosedData.U(:)); grid on;ylabel('Input')
 
-%% Ydirection Controller (No Hybrid Model)
+%% Ydirection Controller (No Hybrid Model) (Roll Controller)
 DF = -0.9606;
 a1 = 59.71;
 a0 = 491;
@@ -208,7 +208,7 @@ y0 = [0;0;-1;0];
 % subplot(5,1,5)
 % plot(time,ClosedData.U(:)); grid on;ylabel('Input')
 
-%% Zdirection Controller (No Hybrid Model)
+%% Zdirection Controller (No Hybrid Model) (Thrust controller)
 
 Az = zeros(2,2); Az(1,2) = 1;
 Bz = zeros(2,1); Bz(2,1) = -1/m;
@@ -265,4 +265,60 @@ z0 = [-1;0];
 % subplot(3,1,2)
 % plot(time,ClosedData.Y(2,:)); grid on;ylabel('velocity')
 % subplot(3,1,3)
+% plot(time,ClosedData.U(:)); grid on;ylabel('Input')
+
+%% (Yaw controller)
+
+Ay = -5.9;
+By = 5.9;
+Cy = 1;
+Dy = 0;
+
+syscy = ss(Ay,By,Cy,Dy);
+
+% All controller must operate at the same frequency
+sysdy = c2d(syscy,Ts,'zoh');
+modelYaw = LTISystem(sysdy);
+
+% Real models are generated at 50Hz frequency
+sysdy = c2d(syscy,TsReal,'zoh');
+modelYawReal = LTISystem(sysdy);
+
+% Set constraints on states and input
+modelYaw.x.min = -0.0873;
+modelYaw.x.max = 0.0873;
+modelYaw.u.min = -2;
+modelYaw.u.max = 2;
+
+% Set the penalty
+Qxy= 1; % yaw angle control
+Ry = 1;
+
+modelYaw.x.penalty = Penalty(Qxy,norm);
+modelYaw.u.penalty = Penalty(Ry,norm);
+
+ctrlYaw = MPCController(modelYaw,N);
+
+expmpcYaw = ctrlYaw.toExplicit;
+exportToC_MLD(expmpcYaw,Ts,'YawCtrl','YawControl');
+cd YawControl
+mex mpt_getInput_sfunc_YawCtrl.c;
+yaw0 = -0.0873;
+
+
+% %Simulate the closed loop
+% N_sim = 50;
+% 
+% % Create the closed-loop system:
+% loop = ClosedLoop(expmpcYaw, modelYaw);
+% ClosedData = loop.simulate(yaw0, N_sim);
+% 
+% N = size(ClosedData.Y(1,:),2);
+% time = 0:Ts:(N-1)*Ts;
+% 
+% % plot the output
+% figure(4);
+% subplot(2,1,1)
+% plot(time,ClosedData.Y(1,:)); grid on;ylabel('position')
+% subplot(2,1,2)
 % plot(time,ClosedData.U(:)); grid on;ylabel('Input')

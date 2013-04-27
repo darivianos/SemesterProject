@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.673"
+    ComputedModelVersion    "1.678"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -30,7 +30,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [64.0, -4.0, 2497.0, 1445.0]
+      Location		      [1305.0, 24.0, 1263.0, 1424.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -39,7 +39,7 @@ Model {
 	DockPosition		"Left"
 	Width			[50]
 	Height			[50]
-	Filter			[12]
+	Filter			[13]
       }
       Object {
 	$PropName		"ExplorerBarInfo"
@@ -54,9 +54,9 @@ Model {
 	IsActive		[1]
 	ViewObjType		"SimulinkSubsys"
 	LoadSaveID		"1236"
-	Extents			[2459.0, 1276.0]
-	ZoomFactor		[1.5]
-	Offset			[855.576306590012, 276.83809523809589]
+	Extents			[1211.0, 1248.0]
+	ZoomFactor		[0.8]
+	Offset			[600.202298361628, -324.79523809523675]
       }
     }
   }
@@ -66,9 +66,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "root"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sat Apr 27 16:53:40 2013"
-  RTWModifiedTimeStamp	  288982410
-  ModelVersionFormat	  "1.%<AutoIncrement:673>"
+  LastModifiedDate	  "Sat Apr 27 19:07:51 2013"
+  RTWModifiedTimeStamp	  288990467
+  ModelVersionFormat	  "1.%<AutoIncrement:678>"
   ConfigurationManager	  "customverctrl"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -891,6 +891,14 @@ Model {
       Iterations	      "3"
     }
     Block {
+      BlockType		      Mux
+      Inputs		      "4"
+      DisplayOption	      "none"
+      UseBusObject	      off
+      BusObject		      "BusObject"
+      NonVirtualBus	      off
+    }
+    Block {
       BlockType		      Outport
       Port		      "1"
       OutMin		      "[]"
@@ -1084,7 +1092,7 @@ Model {
   }
   System {
     Name		    "Simulator_template"
-    Location		    [64, -4, 2561, 1441]
+    Location		    [1305, 24, 2568, 1448]
     Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -2524,7 +2532,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Point Mass Model \nnonlinear model"
-	Location		[64, -4, 2561, 1441]
+	Location		[1305, 24, 2568, 1448]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -2536,7 +2544,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"150"
+	ZoomFactor		"80"
 	SIDHighWatermark	"363"
 	SIDPrevWatermark	"344"
 	Block {
@@ -2659,7 +2667,7 @@ Model {
 	  Name			  "Bus\nSelector"
 	  SID			  "1236:128"
 	  Ports			  [1, 4]
-	  Position		  [915, 449, 920, 811]
+	  Position		  [895, 449, 900, 811]
 	  ZOrder		  -8
 	  ShowName		  off
 	  OutputSignals		  "roll_cmd,pitch_cmd,yaw_rate_cmd,thrust_cmd"
@@ -3010,7 +3018,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "convert2cmd"
-	    Location		    [682, 518, 1626, 1312]
+	    Location		    [1305, 24, 2568, 1448]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -3134,7 +3142,7 @@ Model {
 	  Name			  "pitch dynamics\n "
 	  SID			  "1236:122"
 	  Ports			  [3, 1]
-	  Position		  [1055, 544, 1175, 596]
+	  Position		  [1045, 549, 1165, 601]
 	  ZOrder		  -20
 	  AncestorBlock		  "Hqaud_model_LIB_SI/pitch dynamics\n "
 	  LibraryVersion	  "*1.94"
@@ -3153,7 +3161,7 @@ Model {
 	  }
 	  System {
 	    Name		    "pitch dynamics\n "
-	    Location		    [64, -4, 2561, 1441]
+	    Location		    [1305, 24, 2568, 1448]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -3166,13 +3174,13 @@ Model {
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "350"
+	    SIDHighWatermark	    "357"
 	    SIDPrevWatermark	    "344"
 	    Block {
 	      BlockType		      Inport
 	      Name		      "pitch_cmd\n "
 	      SID		      "1236:122:76"
-	      Position		      [15, 83, 45, 97]
+	      Position		      [45, 133, 75, 147]
 	      ZOrder		      -1
 	      IconDisplay	      "Port number"
 	      PortDimensions	      "1"
@@ -3181,7 +3189,7 @@ Model {
 	      BlockType		      Inport
 	      Name		      "Fwall"
 	      SID		      "1236:122:346"
-	      Position		      [15, 163, 45, 177]
+	      Position		      [45, 268, 75, 282]
 	      ZOrder		      2
 	      Port		      "2"
 	      IconDisplay	      "Port number"
@@ -3190,7 +3198,7 @@ Model {
 	      BlockType		      Inport
 	      Name		      "x"
 	      SID		      "1236:122:347"
-	      Position		      [15, 218, 45, 232]
+	      Position		      [45, 323, 75, 337]
 	      ZOrder		      3
 	      Port		      "3"
 	      IconDisplay	      "Port number"
@@ -3200,9 +3208,46 @@ Model {
 	      Name		      "Add"
 	      SID		      "1236:122:345"
 	      Ports		      [2, 1]
-	      Position		      [390, 82, 420, 113]
+	      Position		      [325, 152, 355, 183]
 	      ZOrder		      1
 	      InputSameDT	      off
+	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      Sum
+	      Name		      "Add1"
+	      SID		      "1236:122:353"
+	      Ports		      [2, 1]
+	      Position		      [215, 130, 245, 170]
+	      ZOrder		      9
+	      InputSameDT	      off
+	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      Gain
+	      Name		      "Apitch"
+	      SID		      "1236:122:351"
+	      Position		      [425, 210, 455, 240]
+	      ZOrder		      7
+	      BlockMirror	      on
+	      NamePlacement	      "alternate"
+	      Gain		      "dynamics_pitch_2ndOrd.a"
+	      Multiplication	      "Matrix(K*u)"
+	      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
+	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      Gain
+	      Name		      "Bpitch"
+	      SID		      "1236:122:354"
+	      Position		      [130, 125, 160, 155]
+	      ZOrder		      10
+	      Gain		      "dynamics_pitch_2ndOrd.b"
+	      Multiplication	      "Matrix(K*u)"
+	      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
 	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
 	      SaturateOnIntegerOverflow	off
 	    }
@@ -3210,15 +3255,38 @@ Model {
 	      BlockType		      Constant
 	      Name		      "Constant"
 	      SID		      "1236:122:350"
-	      Position		      [130, 260, 160, 290]
+	      Position		      [130, 365, 160, 395]
 	      ZOrder		      6
 	      Value		      "0"
 	    }
 	    Block {
 	      BlockType		      Gain
+	      Name		      "Cpitch"
+	      SID		      "1236:122:355"
+	      Position		      [610, 135, 640, 165]
+	      ZOrder		      11
+	      Gain		      "dynamics_pitch_2ndOrd.c"
+	      Multiplication	      "Matrix(K*u)"
+	      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
+	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
+	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      Demux
+	      Name		      "Demux"
+	      SID		      "1236:122:356"
+	      Ports		      [1, 2]
+	      Position		      [280, 131, 285, 169]
+	      ZOrder		      14
+	      ShowName		      off
+	      Outputs		      "2"
+	      DisplayOption	      "bar"
+	    }
+	    Block {
+	      BlockType		      Gain
 	      Name		      "Gain"
 	      SID		      "1236:122:349"
-	      Position		      [140, 155, 170, 185]
+	      Position		      [140, 260, 170, 290]
 	      ZOrder		      5
 	      Gain		      "la"
 	      ParamDataTypeStr	      "Inherit: Inherit via internal rule"
@@ -3226,23 +3294,29 @@ Model {
 	      SaturateOnIntegerOverflow	off
 	    }
 	    Block {
-	      BlockType		      Reference
-	      Name		      "LTI System"
-	      SID		      "1236:122:79"
+	      BlockType		      Integrator
+	      Name		      "Integrator"
+	      SID		      "1236:122:352"
 	      Ports		      [1, 1]
-	      Position		      [185, 72, 280, 108]
-	      ZOrder		      -2
-	      LibraryVersion	      "1.108"
-	      SourceBlock	      "cstblocks/LTI System"
-	      SourceType	      "LTI Block"
-	      sys		      "dynamics_pitch_2ndOrd"
-	      IC		      "[]"
+	      Position		      [440, 135, 470, 165]
+	      ZOrder		      8
+	    }
+	    Block {
+	      BlockType		      Mux
+	      Name		      "Mux"
+	      SID		      "1236:122:357"
+	      Ports		      [2, 1]
+	      Position		      [390, 126, 395, 164]
+	      ZOrder		      15
+	      ShowName		      off
+	      Inputs		      "2"
+	      DisplayOption	      "bar"
 	    }
 	    Block {
 	      BlockType		      Switch
 	      Name		      "Switch"
 	      SID		      "1236:122:348"
-	      Position		      [280, 205, 330, 245]
+	      Position		      [245, 310, 295, 350]
 	      ZOrder		      4
 	      InputSameDT	      off
 	      SaturateOnIntegerOverflow	off
@@ -3252,8 +3326,8 @@ Model {
 	      Name		      "Transport\nDelay1"
 	      SID		      "1236:122:120"
 	      Ports		      [1, 1]
-	      Position		      [490, 85, 520, 115]
-	      ZOrder		      -3
+	      Position		      [785, 135, 815, 165]
+	      ZOrder		      13
 	      DelayTime		      "Td_pitch_2ndOrd"
 	      PadeOrder		      "delay_pade_order"
 	    }
@@ -3261,32 +3335,14 @@ Model {
 	      BlockType		      Outport
 	      Name		      "pitch\n[rad] "
 	      SID		      "1236:122:84"
-	      Position		      [620, 93, 650, 107]
-	      ZOrder		      -4
+	      Position		      [940, 143, 970, 157]
+	      ZOrder		      12
 	      IconDisplay	      "Port number"
 	      PortDimensions	      "1"
 	    }
 	    Line {
-	      SrcBlock		      "pitch_cmd\n "
-	      SrcPort		      1
-	      DstBlock		      "LTI System"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Transport\nDelay1"
-	      SrcPort		      1
-	      DstBlock		      "pitch\n[rad] "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Add"
-	      SrcPort		      1
-	      DstBlock		      "Transport\nDelay1"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "LTI System"
-	      SrcPort		      1
+	      SrcBlock		      "Demux"
+	      SrcPort		      2
 	      DstBlock		      "Add"
 	      DstPort		      1
 	    }
@@ -3299,7 +3355,7 @@ Model {
 	    Line {
 	      SrcBlock		      "Switch"
 	      SrcPort		      1
-	      Points		      [25, 0; 0, -120]
+	      Points		      [44, 0; 0, -55; -34, 0]
 	      DstBlock		      "Add"
 	      DstPort		      2
 	    }
@@ -3322,6 +3378,78 @@ Model {
 	      Points		      [55, 0; 0, -35]
 	      DstBlock		      "Switch"
 	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "Integrator"
+	      SrcPort		      1
+	      Points		      [34, 0]
+	      Branch {
+		DstBlock		"Cpitch"
+		DstPort			1
+	      }
+	      Branch {
+		Points			[0, 75]
+		DstBlock		"Apitch"
+		DstPort			1
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "Apitch"
+	      SrcPort		      1
+	      Points		      [-220, 0]
+	      DstBlock		      "Add1"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "pitch_cmd\n "
+	      SrcPort		      1
+	      DstBlock		      "Bpitch"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Bpitch"
+	      SrcPort		      1
+	      DstBlock		      "Add1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Transport\nDelay1"
+	      SrcPort		      1
+	      DstBlock		      "pitch\n[rad] "
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Cpitch"
+	      SrcPort		      1
+	      DstBlock		      "Transport\nDelay1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Add1"
+	      SrcPort		      1
+	      DstBlock		      "Demux"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Add"
+	      SrcPort		      1
+	      Points		      [12, 0; 0, -15]
+	      DstBlock		      "Mux"
+	      DstPort		      2
+	    }
+	    Line {
+	      SrcBlock		      "Demux"
+	      SrcPort		      1
+	      Points		      [47, 0; 0, -5]
+	      DstBlock		      "Mux"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Mux"
+	      SrcPort		      1
+	      Points		      [17, 0; 0, 5]
+	      DstBlock		      "Integrator"
+	      DstPort		      1
 	    }
 	  }
 	}
@@ -3490,7 +3618,7 @@ Model {
 	  Name			  "pitch"
 	  SrcBlock		  "pitch dynamics\n "
 	  SrcPort		  1
-	  Points		  [85, 0; 0, 15]
+	  Points		  [95, 0; 0, 10]
 	  Branch {
 	    DstBlock		    "Newton's second law\n "
 	    DstPort		    2
@@ -3630,7 +3758,7 @@ Model {
 	  Labels		  [0, 0]
 	  SrcBlock		  "Bus\nSelector"
 	  SrcPort		  2
-	  Points		  [0, -30]
+	  Points		  [9, 0; 0, -37; 109, 0; 0, 12]
 	  DstBlock		  "pitch dynamics\n "
 	  DstPort		  1
 	}
@@ -3865,14 +3993,13 @@ Model {
 	Line {
 	  SrcBlock		  "From"
 	  SrcPort		  1
-	  Points		  [15, 0; 0, -5]
 	  DstBlock		  "pitch dynamics\n "
 	  DstPort		  2
 	}
 	Line {
 	  SrcBlock		  "From1"
 	  SrcPort		  1
-	  Points		  [15, 0; 0, -25]
+	  Points		  [10, 0]
 	  DstBlock		  "pitch dynamics\n "
 	  DstPort		  3
 	}
@@ -4033,7 +4160,7 @@ Model {
       Name		      "create traj"
       SID		      "1399"
       Ports		      [1, 1]
-      Position		      [200, 443, 240, 507]
+      Position		      [245, 443, 285, 507]
       ZOrder		      -28
       MinAlgLoopOccurrences   off
       PropExecContextOutsideSubsystem off
