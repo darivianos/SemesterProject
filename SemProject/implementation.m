@@ -15,7 +15,7 @@ g = 9.8065;
 
 Theta = -deg2rad(3); % Docking angle
 % Controller Sampling Time
-Ts = 0.08;
+Ts = 0.02;
 modelXdirection = GenerateModel('QuadXDirection',Theta,Ts);
 % Simulation Sampling Time (50 Hz)
 TsReal = 0.02;
@@ -86,6 +86,7 @@ save;
 exportToC_MLD(expmpcXdirection,Ts,'XdirectionCtrl');
 cd mpt_explicit_controller
 mex mpt_getInput_sfunc_Xdirection.c;
+cd ..
 x0 = [0;0;-1;0];
 
 
@@ -171,6 +172,7 @@ expmpcYdirection = ctrlY.toExplicit;
 exportToC_MLD(expmpcYdirection,Ts,'YdirectionCtrl','Ydirection');
 cd Ydirection
 mex mpt_getInput_sfunc_Ydirection.c;
+cd ..
 y0 = [0;0;-1;0];
 
 
@@ -245,6 +247,7 @@ expmpcZdirection = ctrlZ.toExplicit;
 exportToC_MLD(expmpcZdirection,Ts,'ZdirectionCtrl','Zdirection');
 cd Zdirection
 mex mpt_getInput_sfunc_Zdirection.c;
+cd ..
 z0 = [-1;0];
 
 
@@ -303,6 +306,7 @@ expmpcYaw = ctrlYaw.toExplicit;
 exportToC_MLD(expmpcYaw,Ts,'YawCtrl','YawControl');
 cd YawControl
 mex mpt_getInput_sfunc_YawCtrl.c;
+cd ..
 yaw0 = -0.0873;
 
 
