@@ -85,10 +85,10 @@ unsigned int sf_Simulator_template_process_check_sum_call( int nlhs, mxArray *
       ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(0U);
       ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(0U);
     } else if (!strcmp(commandName,"makefile")) {
-      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3921185688U);
-      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2169868061U);
-      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3901308238U);
-      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(763642704U);
+      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2991749020U);
+      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4250414832U);
+      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3013659878U);
+      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1407097655U);
     } else if (nrhs==3 && !strcmp(commandName,"chart")) {
       unsigned int chartFileNumber;
       chartFileNumber = (unsigned int)mxGetScalar(prhs[2]);

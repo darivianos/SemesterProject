@@ -3,11 +3,7 @@
 #include "Hquad_control_LIB_MPC_sfun.h"
 #include "Hquad_control_LIB_MPC_sfun_debug_macros.h"
 #include "c1_Hquad_control_LIB_MPC.h"
-#include "c3_Hquad_control_LIB_MPC.h"
 #include "c4_Hquad_control_LIB_MPC.h"
-#include "c5_Hquad_control_LIB_MPC.h"
-#include "c11_Hquad_control_LIB_MPC.h"
-#include "c16_Hquad_control_LIB_MPC.h"
 #include "c26_Hquad_control_LIB_MPC.h"
 
 /* Type Definitions */
@@ -39,28 +35,8 @@ unsigned int sf_Hquad_control_LIB_MPC_method_dispatcher(SimStruct *simstructPtr,
     return 1;
   }
 
-  if (chartFileNumber==3) {
-    c3_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr, method, data);
-    return 1;
-  }
-
   if (chartFileNumber==4) {
     c4_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr, method, data);
-    return 1;
-  }
-
-  if (chartFileNumber==5) {
-    c5_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr, method, data);
-    return 1;
-  }
-
-  if (chartFileNumber==11) {
-    c11_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr, method, data);
-    return 1;
-  }
-
-  if (chartFileNumber==16) {
-    c16_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr, method, data);
     return 1;
   }
 
@@ -97,10 +73,10 @@ unsigned int sf_Hquad_control_LIB_MPC_process_check_sum_call( int nlhs, mxArray 
       machineName[(sizeof(machineName)/sizeof(char)-1)] = '\0';
       if (!strcmp(machineName,"Hquad_control_LIB_MPC")) {
         if (nrhs==3) {
-          ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3019060824U);
-          ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3888461983U);
-          ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1831088207U);
-          ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1450113487U);
+          ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1982973996U);
+          ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1437223682U);
+          ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1085370905U);
+          ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(153047951U);
         } else if (nrhs==4) {
           unsigned int chartFileNumber;
           chartFileNumber = (unsigned int)mxGetScalar(prhs[3]);
@@ -113,43 +89,11 @@ unsigned int sf_Hquad_control_LIB_MPC_process_check_sum_call( int nlhs, mxArray 
               break;
             }
 
-           case 3:
-            {
-              extern void sf_c3_Hquad_control_LIB_MPC_get_check_sum(mxArray
-                *plhs[]);
-              sf_c3_Hquad_control_LIB_MPC_get_check_sum(plhs);
-              break;
-            }
-
            case 4:
             {
               extern void sf_c4_Hquad_control_LIB_MPC_get_check_sum(mxArray
                 *plhs[]);
               sf_c4_Hquad_control_LIB_MPC_get_check_sum(plhs);
-              break;
-            }
-
-           case 5:
-            {
-              extern void sf_c5_Hquad_control_LIB_MPC_get_check_sum(mxArray
-                *plhs[]);
-              sf_c5_Hquad_control_LIB_MPC_get_check_sum(plhs);
-              break;
-            }
-
-           case 11:
-            {
-              extern void sf_c11_Hquad_control_LIB_MPC_get_check_sum(mxArray
-                *plhs[]);
-              sf_c11_Hquad_control_LIB_MPC_get_check_sum(plhs);
-              break;
-            }
-
-           case 16:
-            {
-              extern void sf_c16_Hquad_control_LIB_MPC_get_check_sum(mxArray
-                *plhs[]);
-              sf_c16_Hquad_control_LIB_MPC_get_check_sum(plhs);
               break;
             }
 
@@ -226,64 +170,12 @@ unsigned int sf_Hquad_control_LIB_MPC_autoinheritance_info( int nlhs, mxArray *
         break;
       }
 
-     case 3:
-      {
-        if (strcmp(aiChksum, "oMZbdsvy8OZAzoPlGchP1C") == 0) {
-          extern mxArray *sf_c3_Hquad_control_LIB_MPC_get_autoinheritance_info
-            (void);
-          plhs[0] = sf_c3_Hquad_control_LIB_MPC_get_autoinheritance_info();
-          break;
-        }
-
-        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
-        break;
-      }
-
      case 4:
       {
         if (strcmp(aiChksum, "PddICc7weq3w2oiZsWbCfH") == 0) {
           extern mxArray *sf_c4_Hquad_control_LIB_MPC_get_autoinheritance_info
             (void);
           plhs[0] = sf_c4_Hquad_control_LIB_MPC_get_autoinheritance_info();
-          break;
-        }
-
-        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
-        break;
-      }
-
-     case 5:
-      {
-        if (strcmp(aiChksum, "Js21s845HMRYEwG9sWQp3F") == 0) {
-          extern mxArray *sf_c5_Hquad_control_LIB_MPC_get_autoinheritance_info
-            (void);
-          plhs[0] = sf_c5_Hquad_control_LIB_MPC_get_autoinheritance_info();
-          break;
-        }
-
-        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
-        break;
-      }
-
-     case 11:
-      {
-        if (strcmp(aiChksum, "oMZbdsvy8OZAzoPlGchP1C") == 0) {
-          extern mxArray *sf_c11_Hquad_control_LIB_MPC_get_autoinheritance_info
-            (void);
-          plhs[0] = sf_c11_Hquad_control_LIB_MPC_get_autoinheritance_info();
-          break;
-        }
-
-        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
-        break;
-      }
-
-     case 16:
-      {
-        if (strcmp(aiChksum, "Js21s845HMRYEwG9sWQp3F") == 0) {
-          extern mxArray *sf_c16_Hquad_control_LIB_MPC_get_autoinheritance_info
-            (void);
-          plhs[0] = sf_c16_Hquad_control_LIB_MPC_get_autoinheritance_info();
           break;
         }
 
@@ -350,56 +242,12 @@ unsigned int sf_Hquad_control_LIB_MPC_get_eml_resolved_functions_info( int nlhs,
         break;
       }
 
-     case 3:
-      {
-        extern const mxArray
-          *sf_c3_Hquad_control_LIB_MPC_get_eml_resolved_functions_info(void);
-        mxArray *persistentMxArray = (mxArray *)
-          sf_c3_Hquad_control_LIB_MPC_get_eml_resolved_functions_info();
-        plhs[0] = mxDuplicateArray(persistentMxArray);
-        mxDestroyArray(persistentMxArray);
-        break;
-      }
-
      case 4:
       {
         extern const mxArray
           *sf_c4_Hquad_control_LIB_MPC_get_eml_resolved_functions_info(void);
         mxArray *persistentMxArray = (mxArray *)
           sf_c4_Hquad_control_LIB_MPC_get_eml_resolved_functions_info();
-        plhs[0] = mxDuplicateArray(persistentMxArray);
-        mxDestroyArray(persistentMxArray);
-        break;
-      }
-
-     case 5:
-      {
-        extern const mxArray
-          *sf_c5_Hquad_control_LIB_MPC_get_eml_resolved_functions_info(void);
-        mxArray *persistentMxArray = (mxArray *)
-          sf_c5_Hquad_control_LIB_MPC_get_eml_resolved_functions_info();
-        plhs[0] = mxDuplicateArray(persistentMxArray);
-        mxDestroyArray(persistentMxArray);
-        break;
-      }
-
-     case 11:
-      {
-        extern const mxArray
-          *sf_c11_Hquad_control_LIB_MPC_get_eml_resolved_functions_info(void);
-        mxArray *persistentMxArray = (mxArray *)
-          sf_c11_Hquad_control_LIB_MPC_get_eml_resolved_functions_info();
-        plhs[0] = mxDuplicateArray(persistentMxArray);
-        mxDestroyArray(persistentMxArray);
-        break;
-      }
-
-     case 16:
-      {
-        extern const mxArray
-          *sf_c16_Hquad_control_LIB_MPC_get_eml_resolved_functions_info(void);
-        mxArray *persistentMxArray = (mxArray *)
-          sf_c16_Hquad_control_LIB_MPC_get_eml_resolved_functions_info();
         plhs[0] = mxDuplicateArray(persistentMxArray);
         mxDestroyArray(persistentMxArray);
         break;
@@ -460,49 +308,11 @@ unsigned int sf_Hquad_control_LIB_MPC_third_party_uses_info( int nlhs, mxArray *
         }
       }
 
-     case 3:
-      {
-        if (strcmp(tpChksum, "tQvBlIbv8Q76uvlyfAPTMB") == 0) {
-          extern mxArray *sf_c3_Hquad_control_LIB_MPC_third_party_uses_info(void);
-          plhs[0] = sf_c3_Hquad_control_LIB_MPC_third_party_uses_info();
-          break;
-        }
-      }
-
      case 4:
       {
         if (strcmp(tpChksum, "9ukmRYrRYXn7rvf6dwyjIG") == 0) {
           extern mxArray *sf_c4_Hquad_control_LIB_MPC_third_party_uses_info(void);
           plhs[0] = sf_c4_Hquad_control_LIB_MPC_third_party_uses_info();
-          break;
-        }
-      }
-
-     case 5:
-      {
-        if (strcmp(tpChksum, "po9Jq8Fj6QNIBJjFRUW5KC") == 0) {
-          extern mxArray *sf_c5_Hquad_control_LIB_MPC_third_party_uses_info(void);
-          plhs[0] = sf_c5_Hquad_control_LIB_MPC_third_party_uses_info();
-          break;
-        }
-      }
-
-     case 11:
-      {
-        if (strcmp(tpChksum, "tQvBlIbv8Q76uvlyfAPTMB") == 0) {
-          extern mxArray *sf_c11_Hquad_control_LIB_MPC_third_party_uses_info
-            (void);
-          plhs[0] = sf_c11_Hquad_control_LIB_MPC_third_party_uses_info();
-          break;
-        }
-      }
-
-     case 16:
-      {
-        if (strcmp(tpChksum, "po9Jq8Fj6QNIBJjFRUW5KC") == 0) {
-          extern mxArray *sf_c16_Hquad_control_LIB_MPC_third_party_uses_info
-            (void);
-          plhs[0] = sf_c16_Hquad_control_LIB_MPC_third_party_uses_info();
           break;
         }
       }
@@ -529,7 +339,7 @@ void Hquad_control_LIB_MPC_debug_initialize(struct SfDebugInstanceStruct*
   debugInstance)
 {
   _Hquad_control_LIB_MPCMachineNumber_ = sf_debug_initialize_machine
-    (debugInstance,"Hquad_control_LIB_MPC","sfun",1,7,0,0,0);
+    (debugInstance,"Hquad_control_LIB_MPC","sfun",1,3,0,0,0);
   sf_debug_set_machine_event_thresholds(debugInstance,
     _Hquad_control_LIB_MPCMachineNumber_,0,0);
   sf_debug_set_machine_data_thresholds(debugInstance,

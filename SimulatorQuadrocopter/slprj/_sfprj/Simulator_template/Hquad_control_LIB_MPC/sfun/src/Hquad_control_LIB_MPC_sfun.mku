@@ -8,7 +8,7 @@ LD = $(CC)
  
 MACHINE     = Hquad_control_LIB_MPC
 TARGET      = sfun
-CHART_SRCS 	= c1_Hquad_control_LIB_MPC.c c3_Hquad_control_LIB_MPC.c c4_Hquad_control_LIB_MPC.c c5_Hquad_control_LIB_MPC.c c11_Hquad_control_LIB_MPC.c c16_Hquad_control_LIB_MPC.c c26_Hquad_control_LIB_MPC.c
+CHART_SRCS 	= c1_Hquad_control_LIB_MPC.c c4_Hquad_control_LIB_MPC.c c26_Hquad_control_LIB_MPC.c
 MACHINE_SRC	= Hquad_control_LIB_MPC_sfun.c
 MACHINE_REG = 
 MAKEFILE    = Hquad_control_LIB_MPC_sfun.mku

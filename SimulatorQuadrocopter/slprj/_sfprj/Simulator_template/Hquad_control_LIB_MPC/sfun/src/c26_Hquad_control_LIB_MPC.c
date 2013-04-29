@@ -239,7 +239,7 @@ static void sf_c26_Hquad_control_LIB_MPC
   c26_pitch = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
   c26_roll = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 6U, chartInstance->c26_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 2U, chartInstance->c26_sfEvent);
   _SFD_DATA_RANGE_CHECK(*c26_roll, 0U);
   _SFD_DATA_RANGE_CHECK(*c26_pitch, 1U);
   _SFD_DATA_RANGE_CHECK(*c26_pitch_bias, 2U);
@@ -324,7 +324,7 @@ static void c26_chartstep_c26_Hquad_control_LIB_MPC
   c26_b_pitch_bias = (real_T *)ssGetInputPortSignal(chartInstance->S, 2);
   c26_b_pitch = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
   c26_b_roll = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 6U, chartInstance->c26_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 2U, chartInstance->c26_sfEvent);
   c26_hoistedGlobal = *c26_b_roll;
   c26_b_hoistedGlobal = *c26_b_pitch;
   c26_c_hoistedGlobal = *c26_b_pitch_bias;
@@ -478,7 +478,7 @@ static void c26_chartstep_c26_Hquad_control_LIB_MPC
   *c26_b_pitch_rot = c26_pitch_rot;
   *c26_b_pitch_bias_rot = c26_pitch_bias_rot;
   *c26_b_roll_bias_rot = c26_roll_bias_rot;
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 6U, chartInstance->c26_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 2U, chartInstance->c26_sfEvent);
 }
 
 static void initSimStructsc26_Hquad_control_LIB_MPC

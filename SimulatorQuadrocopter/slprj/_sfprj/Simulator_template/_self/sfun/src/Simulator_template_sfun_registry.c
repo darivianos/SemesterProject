@@ -11,15 +11,15 @@ unsigned int sf_process_check_sum_call( int nlhs, mxArray * plhs[], int nrhs,
 {
   extern unsigned int sf_Simulator_template_process_check_sum_call( int nlhs,
     mxArray * plhs[], int nrhs, const mxArray * prhs[] );
-  extern unsigned int sf_Hqaud_model_LIB_SI_process_check_sum_call( int nlhs,
-    mxArray * plhs[], int nrhs, const mxArray * prhs[] );
   extern unsigned int sf_Hquad_control_LIB_MPC_process_check_sum_call( int nlhs,
+    mxArray * plhs[], int nrhs, const mxArray * prhs[] );
+  extern unsigned int sf_Hqaud_model_LIB_SI_process_check_sum_call( int nlhs,
     mxArray * plhs[], int nrhs, const mxArray * prhs[] );
   if (sf_Simulator_template_process_check_sum_call(nlhs,plhs,nrhs,prhs))
     return 1;
-  if (sf_Hqaud_model_LIB_SI_process_check_sum_call(nlhs,plhs,nrhs,prhs))
-    return 1;
   if (sf_Hquad_control_LIB_MPC_process_check_sum_call(nlhs,plhs,nrhs,prhs))
+    return 1;
+  if (sf_Hqaud_model_LIB_SI_process_check_sum_call(nlhs,plhs,nrhs,prhs))
     return 1;
   return 0;
 }
@@ -29,9 +29,9 @@ unsigned int sf_process_autoinheritance_call( int nlhs, mxArray * plhs[], int
 {
   extern unsigned int sf_Simulator_template_autoinheritance_info( int nlhs,
     mxArray * plhs[], int nrhs, const mxArray * prhs[] );
-  extern unsigned int sf_Hqaud_model_LIB_SI_autoinheritance_info( int nlhs,
-    mxArray * plhs[], int nrhs, const mxArray * prhs[] );
   extern unsigned int sf_Hquad_control_LIB_MPC_autoinheritance_info( int nlhs,
+    mxArray * plhs[], int nrhs, const mxArray * prhs[] );
+  extern unsigned int sf_Hqaud_model_LIB_SI_autoinheritance_info( int nlhs,
     mxArray * plhs[], int nrhs, const mxArray * prhs[] );
   char commandName[64];
   char machineName[128];
@@ -56,15 +56,6 @@ unsigned int sf_process_autoinheritance_call( int nlhs, mxArray * plhs[], int
     return sf_Simulator_template_autoinheritance_info(nlhs,plhs,3,newRhs);
   }
 
-  if (strcmp(machineName, "Hqaud_model_LIB_SI") == 0) {
-    const mxArray *newRhs[3] = { NULL, NULL, NULL };
-
-    newRhs[0] = prhs[0];
-    newRhs[1] = prhs[2];
-    newRhs[2] = prhs[3];
-    return sf_Hqaud_model_LIB_SI_autoinheritance_info(nlhs,plhs,3,newRhs);
-  }
-
   if (strcmp(machineName, "Hquad_control_LIB_MPC") == 0) {
     const mxArray *newRhs[3] = { NULL, NULL, NULL };
 
@@ -72,6 +63,15 @@ unsigned int sf_process_autoinheritance_call( int nlhs, mxArray * plhs[], int
     newRhs[1] = prhs[2];
     newRhs[2] = prhs[3];
     return sf_Hquad_control_LIB_MPC_autoinheritance_info(nlhs,plhs,3,newRhs);
+  }
+
+  if (strcmp(machineName, "Hqaud_model_LIB_SI") == 0) {
+    const mxArray *newRhs[3] = { NULL, NULL, NULL };
+
+    newRhs[0] = prhs[0];
+    newRhs[1] = prhs[2];
+    newRhs[2] = prhs[3];
+    return sf_Hqaud_model_LIB_SI_autoinheritance_info(nlhs,plhs,3,newRhs);
   }
 
   return 0;
@@ -82,9 +82,9 @@ unsigned int sf_process_get_third_party_uses_info_call( int nlhs, mxArray *
 {
   extern unsigned int sf_Simulator_template_third_party_uses_info( int nlhs,
     mxArray * plhs[], int nrhs, const mxArray * prhs[] );
-  extern unsigned int sf_Hqaud_model_LIB_SI_third_party_uses_info( int nlhs,
-    mxArray * plhs[], int nrhs, const mxArray * prhs[] );
   extern unsigned int sf_Hquad_control_LIB_MPC_third_party_uses_info( int nlhs,
+    mxArray * plhs[], int nrhs, const mxArray * prhs[] );
+  extern unsigned int sf_Hqaud_model_LIB_SI_third_party_uses_info( int nlhs,
     mxArray * plhs[], int nrhs, const mxArray * prhs[] );
   char commandName[64];
   char machineName[128];
@@ -109,15 +109,6 @@ unsigned int sf_process_get_third_party_uses_info_call( int nlhs, mxArray *
     return sf_Simulator_template_third_party_uses_info(nlhs,plhs,3,newRhs);
   }
 
-  if (strcmp(machineName, "Hqaud_model_LIB_SI") == 0) {
-    const mxArray *newRhs[3] = { NULL, NULL, NULL };
-
-    newRhs[0] = prhs[0];
-    newRhs[1] = prhs[2];
-    newRhs[2] = prhs[3];
-    return sf_Hqaud_model_LIB_SI_third_party_uses_info(nlhs,plhs,3,newRhs);
-  }
-
   if (strcmp(machineName, "Hquad_control_LIB_MPC") == 0) {
     const mxArray *newRhs[3] = { NULL, NULL, NULL };
 
@@ -125,6 +116,15 @@ unsigned int sf_process_get_third_party_uses_info_call( int nlhs, mxArray *
     newRhs[1] = prhs[2];
     newRhs[2] = prhs[3];
     return sf_Hquad_control_LIB_MPC_third_party_uses_info(nlhs,plhs,3,newRhs);
+  }
+
+  if (strcmp(machineName, "Hqaud_model_LIB_SI") == 0) {
+    const mxArray *newRhs[3] = { NULL, NULL, NULL };
+
+    newRhs[0] = prhs[0];
+    newRhs[1] = prhs[2];
+    newRhs[2] = prhs[3];
+    return sf_Hqaud_model_LIB_SI_third_party_uses_info(nlhs,plhs,3,newRhs);
   }
 
   return 0;
@@ -135,10 +135,10 @@ unsigned int sf_process_get_eml_resolved_functions_info_call( int nlhs, mxArray 
 {
   extern unsigned int sf_Simulator_template_get_eml_resolved_functions_info( int
     nlhs, mxArray * plhs[], int nrhs, const mxArray * prhs[] );
-  extern unsigned int sf_Hqaud_model_LIB_SI_get_eml_resolved_functions_info( int
-    nlhs, mxArray * plhs[], int nrhs, const mxArray * prhs[] );
   extern unsigned int sf_Hquad_control_LIB_MPC_get_eml_resolved_functions_info
     ( int nlhs, mxArray * plhs[], int nrhs, const mxArray * prhs[] );
+  extern unsigned int sf_Hqaud_model_LIB_SI_get_eml_resolved_functions_info( int
+    nlhs, mxArray * plhs[], int nrhs, const mxArray * prhs[] );
   char commandName[64];
   char machineName[128];
   if (nrhs < 3) {
@@ -162,21 +162,21 @@ unsigned int sf_process_get_eml_resolved_functions_info_call( int nlhs, mxArray 
       newRhs);
   }
 
-  if (strcmp(machineName, "Hqaud_model_LIB_SI") == 0) {
-    const mxArray *newRhs[2] = { NULL, NULL };
-
-    newRhs[0] = prhs[0];
-    newRhs[1] = prhs[2];
-    return sf_Hqaud_model_LIB_SI_get_eml_resolved_functions_info(nlhs,plhs,2,
-      newRhs);
-  }
-
   if (strcmp(machineName, "Hquad_control_LIB_MPC") == 0) {
     const mxArray *newRhs[2] = { NULL, NULL };
 
     newRhs[0] = prhs[0];
     newRhs[1] = prhs[2];
     return sf_Hquad_control_LIB_MPC_get_eml_resolved_functions_info(nlhs,plhs,2,
+      newRhs);
+  }
+
+  if (strcmp(machineName, "Hqaud_model_LIB_SI") == 0) {
+    const mxArray *newRhs[2] = { NULL, NULL };
+
+    newRhs[0] = prhs[0];
+    newRhs[1] = prhs[2];
+    return sf_Hqaud_model_LIB_SI_get_eml_resolved_functions_info(nlhs,plhs,2,
       newRhs);
   }
 
@@ -237,9 +237,9 @@ unsigned int sf_machine_global_initializer_called(void)
 
 extern unsigned int sf_Simulator_template_method_dispatcher(SimStruct *S,
   unsigned int chartFileNumber, const char* specsCksum, int_T method, void *data);
-extern unsigned int sf_Hqaud_model_LIB_SI_method_dispatcher(SimStruct *S,
-  unsigned int chartFileNumber, const char* specsCksum, int_T method, void *data);
 extern unsigned int sf_Hquad_control_LIB_MPC_method_dispatcher(SimStruct *S,
+  unsigned int chartFileNumber, const char* specsCksum, int_T method, void *data);
+extern unsigned int sf_Hqaud_model_LIB_SI_method_dispatcher(SimStruct *S,
   unsigned int chartFileNumber, const char* specsCksum, int_T method, void *data);
 unsigned int sf_machine_global_method_dispatcher(SimStruct *simstructPtr, const
   char *machineName, unsigned int chartFileNumber, const char* specsCksum, int_T
@@ -250,29 +250,29 @@ unsigned int sf_machine_global_method_dispatcher(SimStruct *simstructPtr, const
             specsCksum,method,data));
   }
 
-  if (!strcmp(machineName,"Hqaud_model_LIB_SI")) {
-    return(sf_Hqaud_model_LIB_SI_method_dispatcher(simstructPtr,chartFileNumber,
-            specsCksum,method,data));
-  }
-
   if (!strcmp(machineName,"Hquad_control_LIB_MPC")) {
     return(sf_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr,
             chartFileNumber,specsCksum,method,data));
+  }
+
+  if (!strcmp(machineName,"Hqaud_model_LIB_SI")) {
+    return(sf_Hqaud_model_LIB_SI_method_dispatcher(simstructPtr,chartFileNumber,
+            specsCksum,method,data));
   }
 
   return 0;
 }
 
 extern void Simulator_template_terminator(void);
-extern void Hqaud_model_LIB_SI_terminator(void);
 extern void Hquad_control_LIB_MPC_terminator(void);
+extern void Hqaud_model_LIB_SI_terminator(void);
 void sf_machine_global_terminator(void)
 {
   sfGlobalMdlStartCallCounts--;
   if (sfGlobalMdlStartCallCounts == 0) {
     Simulator_template_terminator();
-    Hqaud_model_LIB_SI_terminator();
     Hquad_control_LIB_MPC_terminator();
+    Hqaud_model_LIB_SI_terminator();
     sf_debug_terminate(sfGlobalDebugInstanceStruct);
     sfGlobalDebugInstanceStruct = NULL;
   }
@@ -281,19 +281,19 @@ void sf_machine_global_terminator(void)
 }
 
 extern void Simulator_template_initializer(void);
-extern void Hqaud_model_LIB_SI_initializer(void);
 extern void Hquad_control_LIB_MPC_initializer(void);
+extern void Hqaud_model_LIB_SI_initializer(void);
 extern void Simulator_template_register_exported_symbols(SimStruct* S);
-extern void Hqaud_model_LIB_SI_register_exported_symbols(SimStruct* S);
 extern void Hquad_control_LIB_MPC_register_exported_symbols(SimStruct* S);
+extern void Hqaud_model_LIB_SI_register_exported_symbols(SimStruct* S);
 extern void Simulator_template_debug_initialize(struct SfDebugInstanceStruct*);
-extern void Hqaud_model_LIB_SI_debug_initialize(struct SfDebugInstanceStruct*);
 extern void Hquad_control_LIB_MPC_debug_initialize(struct SfDebugInstanceStruct*);
+extern void Hqaud_model_LIB_SI_debug_initialize(struct SfDebugInstanceStruct*);
 void sf_register_machine_exported_symbols(SimStruct* S)
 {
   Simulator_template_register_exported_symbols(S);
-  Hqaud_model_LIB_SI_register_exported_symbols(S);
   Hquad_control_LIB_MPC_register_exported_symbols(S);
+  Hqaud_model_LIB_SI_register_exported_symbols(S);
 }
 
 bool callCustomFcn(char initFlag)
@@ -317,15 +317,15 @@ void sf_machine_global_initializer(SimStruct* S)
 
     Simulator_template_initializer();
     if (!simModeIsRTWGen) {
-      Hqaud_model_LIB_SI_debug_initialize(sfGlobalDebugInstanceStruct);
-    }
-
-    Hqaud_model_LIB_SI_initializer();
-    if (!simModeIsRTWGen) {
       Hquad_control_LIB_MPC_debug_initialize(sfGlobalDebugInstanceStruct);
     }
 
     Hquad_control_LIB_MPC_initializer();
+    if (!simModeIsRTWGen) {
+      Hqaud_model_LIB_SI_debug_initialize(sfGlobalDebugInstanceStruct);
+    }
+
+    Hqaud_model_LIB_SI_initializer();
   }
 
   return;

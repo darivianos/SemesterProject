@@ -36,7 +36,17 @@ format compact
 Ts = .01*2;                       % Samplingtime 50Hz
 Ts_slow = Ts;
 load_PMModel                    % load point mass model parameters
+m = 0.65;
+g = 9.8065;
+l = 0.30;
+gamma = 0;
+Theta = -deg2rad(3);
 
+% for the mass of inertia, we use the approximation of Thin, solid disk of radius r and mass m
+J = m*l*l/4; % Inertia
+
+% Equilibrium Position
+la = l*sin(gamma+Theta)/J;
 % limits for lqri and mpc controller
 MAX_ANGLE=15/180*pi; % maximum allowed angle for roll and pitch in rad
 MAX_FORCE=2; % maximum allowed force in N (without gravity)

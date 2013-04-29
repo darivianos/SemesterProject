@@ -19,6 +19,10 @@ static float mpt_getInput_Xdirection(float *X, float *U)
     float hx, region;
     int minReg, minViol, regionViol;
     
+    for (ix=0; ix<MPT_NX; ix++) {
+        X[ix] = round(1000*X[ix])/1000;
+    }
+    
     abspos = 0;
     region = 0;
     
@@ -67,8 +71,7 @@ static float mpt_getInput_Xdirection(float *X, float *U)
             minReg = ireg;
         }
     }
-    
-    /* case in which not a feasible control law found */
+       /* case in which not a feasible control law found */
     region = minReg + 1;
     for (iu=0; iu<MPT_NU; iu++) {
         for (ix=0; ix<MPT_NX; ix++) {
@@ -79,4 +82,5 @@ static float mpt_getInput_Xdirection(float *X, float *U)
         U[iu] = round(U[iu]*1000)/1000;
     }
     return region;
+   
 }

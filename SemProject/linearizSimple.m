@@ -23,8 +23,9 @@ J = m*l*l/4; % Inertia
 
 % Equilibrium Position
 la = l*sin(gamma+Theta)/J;
-DF = -0.9606;
- 
+%DF = -0.9606;
+DF = 0;
+
 a1 = 59.71;
 a0 = 491;
 c0 = 491;

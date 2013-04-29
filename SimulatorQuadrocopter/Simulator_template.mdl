@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.702"
+    ComputedModelVersion    "1.716"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -30,7 +30,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [58.0, 24.0, 1317.0, 780.0]
+      Location		      [57.0, -4.0, 2511.0, 1452.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -45,7 +45,7 @@ Model {
 	$PropName		"ExplorerBarInfo"
 	$ObjectID		4
 	$ClassName		"Simulink.ExplorerBarInfo"
-	Visible			[0]
+	Visible			[1]
       }
       Object {
 	$PropName		"EditorsInfo"
@@ -53,10 +53,10 @@ Model {
 	$ClassName		"Simulink.EditorInfo"
 	IsActive		[1]
 	ViewObjType		"SimulinkSubsys"
-	LoadSaveID		"1363:1895:2366:2383"
-	Extents			[1265.0, 634.0]
-	ZoomFactor		[1.0]
-	Offset			[0.0, 0.0]
+	LoadSaveID		"1236"
+	Extents			[2459.0, 1276.0]
+	ZoomFactor		[0.8]
+	Offset			[749.2999999999995, -201.14999999999998]
       }
     }
   }
@@ -66,9 +66,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "root"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Sun Apr 28 13:13:00 2013"
-  RTWModifiedTimeStamp	  289055577
-  ModelVersionFormat	  "1.%<AutoIncrement:702>"
+  LastModifiedDate	  "Mon Apr 29 15:48:20 2013"
+  RTWModifiedTimeStamp	  289151294
+  ModelVersionFormat	  "1.%<AutoIncrement:716>"
   ConfigurationManager	  "customverctrl"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -172,7 +172,7 @@ Model {
 	  StartTime		  "0.0"
 	  StopTime		  "10"
 	  AbsTol		  "auto"
-	  FixedStep		  "Ts"
+	  FixedStep		  "0.02"
 	  InitialStep		  "auto"
 	  MaxNumMinSteps	  "-1"
 	  MaxOrder		  5
@@ -667,7 +667,7 @@ Model {
       Name		      "Configuration"
       ExtraOptions	      "-aGenerateTraceInfo=0 -aIgnoreTestpoints=0 "
       CurrentDlgPage	      "Solver"
-      ConfigPrmDlgPosition     [ 331, 320, 1211, 950 ] 
+      ConfigPrmDlgPosition     [ 315, 264, 1227, 966 ] 
     }
     PropName		    "ConfigurationSets"
   }
@@ -761,23 +761,6 @@ Model {
       SampleTime	      "inf"
       FramePeriod	      "inf"
       PreserveConstantTs      off
-    }
-    Block {
-      BlockType		      Delay
-      DelayLengthSource	      "Dialog"
-      DelayLength	      "2"
-      DelayLengthUpperLimit   "100"
-      InitialConditionSource  "Dialog"
-      InitialCondition	      "0.0"
-      ExternalReset	      "None"
-      PreventDirectFeedthrough off
-      DiagnosticForOutOfRangeDelayLength "None"
-      RemoveProtectionDelayLength off
-      InputProcessing	      "Elements as channels (sample based)"
-      UseCircularBuffer	      off
-      SampleTime	      "-1"
-      StateMustResolveToSignalObject off
-      CodeGenStateStorageClass "Auto"
     }
     Block {
       BlockType		      Demux
@@ -911,14 +894,6 @@ Model {
       SampleTime	      "-1"
     }
     Block {
-      BlockType		      RandomNumber
-      Mean		      "0"
-      Variance		      "1"
-      Seed		      "0"
-      SampleTime	      "-1"
-      VectorParams1D	      on
-    }
-    Block {
       BlockType		      RateTransition
       Integrity		      on
       Deterministic	      on
@@ -938,6 +913,21 @@ Model {
       SFunctionModules	      "''"
       PortCounts	      "[]"
       SFunctionDeploymentMode off
+    }
+    Block {
+      BlockType		      Saturate
+      UpperLimitSource	      "Dialog"
+      UpperLimit	      "0.5"
+      LowerLimitSource	      "Dialog"
+      LowerLimit	      "-0.5"
+      LinearizeAsGain	      on
+      ZeroCross		      on
+      SampleTime	      "-1"
+      OutMin		      "[]"
+      OutMax		      "[]"
+      OutDataTypeStr	      "Inherit: Same as input"
+      LockScale		      off
+      RndMeth		      "Floor"
     }
     Block {
       BlockType		      Scope
@@ -977,6 +967,15 @@ Model {
       SampleTime	      "0"
       Disabled		      off
       ScrollMode	      on
+    }
+    Block {
+      BlockType		      Step
+      Time		      "1"
+      Before		      "0"
+      After		      "1"
+      SampleTime	      "-1"
+      VectorParams1D	      on
+      ZeroCross		      on
     }
     Block {
       BlockType		      SubSystem
@@ -1057,7 +1056,7 @@ Model {
   }
   System {
     Name		    "Simulator_template"
-    Location		    [58, 24, 1375, 804]
+    Location		    [57, -4, 2568, 1448]
     Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1080,7 +1079,7 @@ Model {
       Position		      [1125, 36, 1130, 74]
       ZOrder		      9
       ShowName		      off
-      OutputSignals	      "pos"
+      OutputSignals	      "pos.x,vel.x_dot,rpy.pitch"
       OutputAsBus	      on
     }
     Block {
@@ -1128,1236 +1127,6 @@ Model {
       Value		      "mass"
     }
     Block {
-      BlockType		      SubSystem
-      Name		      "Error Model"
-      SID		      "765"
-      Ports		      [1, 1]
-      Position		      [735, 415, 870, 615]
-      ZOrder		      -14
-      BlockMirror	      on
-      MinAlgLoopOccurrences   off
-      PropExecContextOutsideSubsystem off
-      RTWSystemCode	      "Auto"
-      FunctionWithSeparateData off
-      Opaque		      off
-      RequestExecContextInheritance off
-      MaskHideContents	      off
-      System {
-	Name			"Error Model"
-	Location		[57, -4, 1374, 776]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"usletter"
-	PaperUnits		"inches"
-	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Inport
-	  Name			  "odometry"
-	  SID			  "1238"
-	  Position		  [25, 263, 55, 277]
-	  ZOrder		  -1
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  BusCreator
-	  Name			  "Bus\nCreator1"
-	  SID			  "1246"
-	  Ports			  [3, 1]
-	  Position		  [965, 107, 970, 193]
-	  ZOrder		  -2
-	  ShowName		  off
-	  Inputs		  "3"
-	  DisplayOption		  "bar"
-	  Port {
-	    PortNumber		    1
-	    Name		    "pos"
-	    PropagatedSignals	    "x, y, z"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  BusCreator
-	  Name			  "Bus\nCreator2"
-	  SID			  "1305"
-	  Ports			  [3, 1]
-	  Position		  [965, 312, 970, 398]
-	  ZOrder		  -3
-	  ShowName		  off
-	  Inputs		  "3"
-	  DisplayOption		  "bar"
-	  Port {
-	    PortNumber		    1
-	    Name		    "vel"
-	    PropagatedSignals	    "x_dot, y_dot, z_dot"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  BusCreator
-	  Name			  "Bus\nCreator3"
-	  SID			  "1317"
-	  Ports			  [3, 1]
-	  Position		  [965, 522, 970, 608]
-	  ZOrder		  -4
-	  ShowName		  off
-	  Inputs		  "3"
-	  DisplayOption		  "bar"
-	  Port {
-	    PortNumber		    1
-	    Name		    "rpy"
-	    PropagatedSignals	    "roll, pitch, yaw"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  BusCreator
-	  Name			  "Bus\nCreator4"
-	  SID			  "1329"
-	  Ports			  [3, 1]
-	  Position		  [965, 732, 970, 818]
-	  ZOrder		  -5
-	  ShowName		  off
-	  Inputs		  "3"
-	  DisplayOption		  "bar"
-	  Port {
-	    PortNumber		    1
-	    Name		    "ang_vel"
-	    PropagatedSignals	    "ang_vel_x, ang_vel_y, ang_vel_z"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  BusCreator
-	  Name			  "Bus\nCreator8"
-	  SID			  "1250"
-	  Ports			  [4, 1]
-	  Position		  [1095, 421, 1100, 509]
-	  ZOrder		  -6
-	  ShowName		  off
-	  DisplayOption		  "bar"
-	  Port {
-	    PortNumber		    1
-	    Name		    "odom"
-	    PropagatedSignals	    "pos, vel, rpy, ang_vel"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  BusSelector
-	  Name			  "Bus\nSelector"
-	  SID			  "1252"
-	  Ports			  [1, 3]
-	  Position		  [115, 107, 120, 193]
-	  ZOrder		  -7
-	  ShowName		  off
-	  OutputSignals		  "pos.x,pos.y,pos.z"
-	  Port {
-	    PortNumber		    1
-	    Name		    "<x>"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  Port {
-	    PortNumber		    2
-	    Name		    "<y>"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  Port {
-	    PortNumber		    3
-	    Name		    "<z>"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  BusSelector
-	  Name			  "Bus\nSelector1"
-	  SID			  "1306"
-	  Ports			  [1, 3]
-	  Position		  [115, 312, 120, 398]
-	  ZOrder		  -8
-	  ShowName		  off
-	  OutputSignals		  "vel.x_dot,vel.y_dot,vel.z_dot"
-	  Port {
-	    PortNumber		    1
-	    Name		    "<x_dot>"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  Port {
-	    PortNumber		    2
-	    Name		    "<y_dot>"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  Port {
-	    PortNumber		    3
-	    Name		    "<z_dot>"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  BusSelector
-	  Name			  "Bus\nSelector2"
-	  SID			  "1318"
-	  Ports			  [1, 3]
-	  Position		  [115, 522, 120, 608]
-	  ZOrder		  -9
-	  ShowName		  off
-	  OutputSignals		  "rpy.roll,rpy.pitch,rpy.yaw"
-	  Port {
-	    PortNumber		    1
-	    Name		    "<roll>"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  Port {
-	    PortNumber		    2
-	    Name		    "<pitch>"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  Port {
-	    PortNumber		    3
-	    Name		    "<yaw>"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  BusSelector
-	  Name			  "Bus\nSelector3"
-	  SID			  "1330"
-	  Ports			  [1, 3]
-	  Position		  [115, 732, 120, 818]
-	  ZOrder		  -10
-	  ShowName		  off
-	  OutputSignals		  "ang_vel.ang_vel_x,ang_vel.ang_vel_y,ang_vel.ang_vel_z"
-	  Port {
-	    PortNumber		    1
-	    Name		    "<ang_vel_x>"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  Port {
-	    PortNumber		    2
-	    Name		    "<ang_vel_y>"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  Port {
-	    PortNumber		    3
-	    Name		    "<ang_vel_z>"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant"
-	  SID			  "832"
-	  Position		  [180, 15, 210, 45]
-	  ZOrder		  -11
-	  Value			  "0"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant1"
-	  SID			  "1307"
-	  Position		  [180, 220, 210, 250]
-	  ZOrder		  -12
-	  Value			  "0"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant2"
-	  SID			  "1319"
-	  Position		  [180, 430, 210, 460]
-	  ZOrder		  -13
-	  Value			  "0"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant3"
-	  SID			  "1331"
-	  Position		  [180, 640, 210, 670]
-	  ZOrder		  -14
-	  Value			  "0"
-	}
-	Block {
-	  BlockType		  ManualSwitch
-	  Name			  "Manual Switch"
-	  SID			  "824"
-	  Position		  [575, 22, 605, 58]
-	  ZOrder		  -15
-	}
-	Block {
-	  BlockType		  ManualSwitch
-	  Name			  "Manual Switch1"
-	  SID			  "1308"
-	  Position		  [575, 227, 605, 263]
-	  ZOrder		  -16
-	}
-	Block {
-	  BlockType		  ManualSwitch
-	  Name			  "Manual Switch10"
-	  SID			  "1333"
-	  Position		  [310, 647, 340, 683]
-	  ZOrder		  -17
-	}
-	Block {
-	  BlockType		  ManualSwitch
-	  Name			  "Manual Switch11"
-	  SID			  "1334"
-	  Position		  [815, 647, 845, 683]
-	  ZOrder		  -18
-	}
-	Block {
-	  BlockType		  ManualSwitch
-	  Name			  "Manual Switch2"
-	  SID			  "826"
-	  Position		  [310, 22, 340, 58]
-	  ZOrder		  -19
-	}
-	Block {
-	  BlockType		  ManualSwitch
-	  Name			  "Manual Switch3"
-	  SID			  "1309"
-	  Position		  [310, 227, 340, 263]
-	  ZOrder		  -20
-	}
-	Block {
-	  BlockType		  ManualSwitch
-	  Name			  "Manual Switch4"
-	  SID			  "828"
-	  Position		  [815, 22, 845, 58]
-	  ZOrder		  -21
-	}
-	Block {
-	  BlockType		  ManualSwitch
-	  Name			  "Manual Switch5"
-	  SID			  "1310"
-	  Position		  [815, 227, 845, 263]
-	  ZOrder		  -22
-	}
-	Block {
-	  BlockType		  ManualSwitch
-	  Name			  "Manual Switch6"
-	  SID			  "1320"
-	  Position		  [575, 437, 605, 473]
-	  ZOrder		  -23
-	}
-	Block {
-	  BlockType		  ManualSwitch
-	  Name			  "Manual Switch7"
-	  SID			  "1321"
-	  Position		  [310, 437, 340, 473]
-	  ZOrder		  -24
-	}
-	Block {
-	  BlockType		  ManualSwitch
-	  Name			  "Manual Switch8"
-	  SID			  "1322"
-	  Position		  [815, 437, 845, 473]
-	  ZOrder		  -25
-	}
-	Block {
-	  BlockType		  ManualSwitch
-	  Name			  "Manual Switch9"
-	  SID			  "1332"
-	  Position		  [575, 647, 605, 683]
-	  ZOrder		  -26
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum"
-	  SID			  "798"
-	  Ports			  [2, 1]
-	  Position		  [355, 110, 375, 130]
-	  ZOrder		  -27
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  SampleTime		  "Ts_slow"
-	  Port {
-	    PortNumber		    1
-	    Name		    "x"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum1"
-	  SID			  "1311"
-	  Ports			  [2, 1]
-	  Position		  [355, 315, 375, 335]
-	  ZOrder		  -28
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  SampleTime		  "Ts_slow"
-	  Port {
-	    PortNumber		    1
-	    Name		    "x_dot"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum10"
-	  SID			  "1336"
-	  Ports			  [2, 1]
-	  Position		  [625, 765, 645, 785]
-	  ZOrder		  -29
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  SampleTime		  "Ts_slow"
-	  Port {
-	    PortNumber		    1
-	    Name		    "ang_vel_y"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum11"
-	  SID			  "1337"
-	  Ports			  [2, 1]
-	  Position		  [865, 795, 885, 815]
-	  ZOrder		  -30
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  SampleTime		  "Ts_slow"
-	  Port {
-	    PortNumber		    1
-	    Name		    "ang_vel_z"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum2"
-	  SID			  "803"
-	  Ports			  [2, 1]
-	  Position		  [625, 140, 645, 160]
-	  ZOrder		  -31
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  SampleTime		  "Ts_slow"
-	  Port {
-	    PortNumber		    1
-	    Name		    "y"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum3"
-	  SID			  "1312"
-	  Ports			  [2, 1]
-	  Position		  [625, 345, 645, 365]
-	  ZOrder		  -32
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  SampleTime		  "Ts_slow"
-	  Port {
-	    PortNumber		    1
-	    Name		    "y_dot"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum4"
-	  SID			  "1313"
-	  Ports			  [2, 1]
-	  Position		  [865, 375, 885, 395]
-	  ZOrder		  -33
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  SampleTime		  "Ts_slow"
-	  Port {
-	    PortNumber		    1
-	    Name		    "z_dot"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum5"
-	  SID			  "807"
-	  Ports			  [2, 1]
-	  Position		  [865, 170, 885, 190]
-	  ZOrder		  -34
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  SampleTime		  "Ts_slow"
-	  Port {
-	    PortNumber		    1
-	    Name		    "z"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum6"
-	  SID			  "1323"
-	  Ports			  [2, 1]
-	  Position		  [355, 525, 375, 545]
-	  ZOrder		  -35
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  SampleTime		  "Ts_slow"
-	  Port {
-	    PortNumber		    1
-	    Name		    "roll"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum7"
-	  SID			  "1324"
-	  Ports			  [2, 1]
-	  Position		  [625, 555, 645, 575]
-	  ZOrder		  -36
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  SampleTime		  "Ts_slow"
-	  Port {
-	    PortNumber		    1
-	    Name		    "pitch"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum8"
-	  SID			  "1325"
-	  Ports			  [2, 1]
-	  Position		  [865, 585, 885, 605]
-	  ZOrder		  -37
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  SampleTime		  "Ts_slow"
-	  Port {
-	    PortNumber		    1
-	    Name		    "yaw"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum9"
-	  SID			  "1335"
-	  Ports			  [2, 1]
-	  Position		  [355, 735, 375, 755]
-	  ZOrder		  -38
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "++|"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	  SampleTime		  "Ts_slow"
-	  Port {
-	    PortNumber		    1
-	    Name		    "ang_vel_x"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  RandomNumber
-	  Name			  "err_ang_vel_x"
-	  SID			  "1338"
-	  Position		  [235, 660, 265, 690]
-	  ZOrder		  -39
-	  Variance		  "0.0001"
-	  SampleTime		  "Ts_slow"
-	}
-	Block {
-	  BlockType		  RandomNumber
-	  Name			  "err_ang_vel_y"
-	  SID			  "1339"
-	  Position		  [500, 660, 530, 690]
-	  ZOrder		  -40
-	  Variance		  "0.0001"
-	  SampleTime		  "Ts_slow"
-	}
-	Block {
-	  BlockType		  RandomNumber
-	  Name			  "err_ang_vel_z"
-	  SID			  "1340"
-	  Position		  [740, 660, 770, 690]
-	  ZOrder		  -41
-	  Variance		  "0.0001"
-	  SampleTime		  "Ts_slow"
-	}
-	Block {
-	  BlockType		  RandomNumber
-	  Name			  "err_pitch"
-	  SID			  "1327"
-	  Position		  [500, 450, 530, 480]
-	  ZOrder		  -42
-	  Variance		  "0.0001"
-	  SampleTime		  "Ts_slow"
-	}
-	Block {
-	  BlockType		  RandomNumber
-	  Name			  "err_roll"
-	  SID			  "1326"
-	  Position		  [235, 450, 265, 480]
-	  ZOrder		  -43
-	  Variance		  "0.0001"
-	  SampleTime		  "Ts_slow"
-	}
-	Block {
-	  BlockType		  RandomNumber
-	  Name			  "err_x"
-	  SID			  "855"
-	  Position		  [235, 35, 265, 65]
-	  ZOrder		  -44
-	  Variance		  "0.000707"
-	  SampleTime		  "Ts_slow"
-	}
-	Block {
-	  BlockType		  RandomNumber
-	  Name			  "err_x_dot"
-	  SID			  "1314"
-	  Position		  [235, 240, 265, 270]
-	  ZOrder		  -45
-	  Variance		  "0.0001"
-	  SampleTime		  "Ts_slow"
-	}
-	Block {
-	  BlockType		  RandomNumber
-	  Name			  "err_y"
-	  SID			  "857"
-	  Position		  [500, 35, 530, 65]
-	  ZOrder		  -46
-	  Variance		  "0.000707"
-	  SampleTime		  "Ts_slow"
-	}
-	Block {
-	  BlockType		  RandomNumber
-	  Name			  "err_y_dot"
-	  SID			  "1315"
-	  Position		  [500, 240, 530, 270]
-	  ZOrder		  -47
-	  Variance		  "0.0001"
-	  SampleTime		  "Ts_slow"
-	}
-	Block {
-	  BlockType		  RandomNumber
-	  Name			  "err_yaw"
-	  SID			  "1328"
-	  Position		  [740, 450, 770, 480]
-	  ZOrder		  -48
-	  Variance		  "0.0001"
-	  SampleTime		  "Ts_slow"
-	}
-	Block {
-	  BlockType		  RandomNumber
-	  Name			  "err_z"
-	  SID			  "859"
-	  Position		  [740, 35, 770, 65]
-	  ZOrder		  -49
-	  Variance		  "0.000707"
-	  SampleTime		  "Ts_slow"
-	}
-	Block {
-	  BlockType		  RandomNumber
-	  Name			  "err_z_dot"
-	  SID			  "1316"
-	  Position		  [740, 240, 770, 270]
-	  ZOrder		  -50
-	  Variance		  "0.0001"
-	  SampleTime		  "Ts_slow"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "odometry_err"
-	  SID			  "1251"
-	  Position		  [1185, 458, 1215, 472]
-	  ZOrder		  -51
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  SrcBlock		  "err_z"
-	  SrcPort		  1
-	  DstBlock		  "Manual Switch4"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Manual Switch4"
-	  SrcPort		  1
-	  Points		  [25, 0]
-	  DstBlock		  "Sum5"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "err_y"
-	  SrcPort		  1
-	  DstBlock		  "Manual Switch"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Manual Switch"
-	  SrcPort		  1
-	  Points		  [25, 0]
-	  DstBlock		  "Sum2"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "err_x"
-	  SrcPort		  1
-	  DstBlock		  "Manual Switch2"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Manual Switch2"
-	  SrcPort		  1
-	  Points		  [20, 0]
-	  DstBlock		  "Sum"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "x"
-	  Labels		  [0, 1]
-	  SrcBlock		  "Sum"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator1"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "pos"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nCreator1"
-	  SrcPort		  1
-	  Points		  [95, 0; 0, 285]
-	  DstBlock		  "Bus\nCreator8"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "y"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Sum2"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator1"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "z"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Sum5"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator1"
-	  DstPort		  3
-	}
-	Line {
-	  SrcBlock		  "odometry"
-	  SrcPort		  1
-	  Points		  [30, 0]
-	  Branch {
-	    Points		    [0, -120]
-	    DstBlock		    "Bus\nSelector"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, 85]
-	    Branch {
-	      Points		      [0, 210]
-	      Branch {
-		DstBlock		"Bus\nSelector2"
-		DstPort			1
-	      }
-	      Branch {
-		Points			[0, 210]
-		DstBlock		"Bus\nSelector3"
-		DstPort			1
-	      }
-	    }
-	    Branch {
-	      DstBlock		      "Bus\nSelector1"
-	      DstPort		      1
-	    }
-	  }
-	}
-	Line {
-	  Name			  "<x>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector"
-	  SrcPort		  1
-	  DstBlock		  "Sum"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "<y>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector"
-	  SrcPort		  2
-	  DstBlock		  "Sum2"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "<z>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector"
-	  SrcPort		  3
-	  DstBlock		  "Sum5"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Constant"
-	  SrcPort		  1
-	  Points		  [65, 0]
-	  Branch {
-	    DstBlock		    "Manual Switch2"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, -15; 280, 0]
-	    Branch {
-	      DstBlock		      "Manual Switch"
-	      DstPort		      1
-	    }
-	    Branch {
-	      Points		      [240, 0]
-	      DstBlock		      "Manual Switch4"
-	      DstPort		      1
-	    }
-	  }
-	}
-	Line {
-	  SrcBlock		  "err_z_dot"
-	  SrcPort		  1
-	  DstBlock		  "Manual Switch5"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Manual Switch5"
-	  SrcPort		  1
-	  Points		  [25, 0]
-	  DstBlock		  "Sum4"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "err_y_dot"
-	  SrcPort		  1
-	  DstBlock		  "Manual Switch1"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Manual Switch1"
-	  SrcPort		  1
-	  Points		  [25, 0]
-	  DstBlock		  "Sum3"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "err_x_dot"
-	  SrcPort		  1
-	  DstBlock		  "Manual Switch3"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Manual Switch3"
-	  SrcPort		  1
-	  Points		  [20, 0]
-	  DstBlock		  "Sum1"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "x_dot"
-	  Labels		  [0, 1]
-	  SrcBlock		  "Sum1"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator2"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "y_dot"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Sum3"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator2"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "z_dot"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Sum4"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator2"
-	  DstPort		  3
-	}
-	Line {
-	  Name			  "<x_dot>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector1"
-	  SrcPort		  1
-	  DstBlock		  "Sum1"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "<y_dot>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector1"
-	  SrcPort		  2
-	  DstBlock		  "Sum3"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "<z_dot>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector1"
-	  SrcPort		  3
-	  DstBlock		  "Sum4"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Constant1"
-	  SrcPort		  1
-	  Points		  [65, 0]
-	  Branch {
-	    DstBlock		    "Manual Switch3"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, -15; 280, 0]
-	    Branch {
-	      DstBlock		      "Manual Switch1"
-	      DstPort		      1
-	    }
-	    Branch {
-	      Points		      [240, 0]
-	      DstBlock		      "Manual Switch5"
-	      DstPort		      1
-	    }
-	  }
-	}
-	Line {
-	  Name			  "vel"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nCreator2"
-	  SrcPort		  1
-	  Points		  [50, 0; 0, 100]
-	  DstBlock		  "Bus\nCreator8"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "err_yaw"
-	  SrcPort		  1
-	  DstBlock		  "Manual Switch8"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Manual Switch8"
-	  SrcPort		  1
-	  Points		  [25, 0]
-	  DstBlock		  "Sum8"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "err_pitch"
-	  SrcPort		  1
-	  DstBlock		  "Manual Switch6"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Manual Switch6"
-	  SrcPort		  1
-	  Points		  [25, 0]
-	  DstBlock		  "Sum7"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "err_roll"
-	  SrcPort		  1
-	  DstBlock		  "Manual Switch7"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Manual Switch7"
-	  SrcPort		  1
-	  Points		  [20, 0]
-	  DstBlock		  "Sum6"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "roll"
-	  Labels		  [0, 1]
-	  SrcBlock		  "Sum6"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator3"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "pitch"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Sum7"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator3"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "yaw"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Sum8"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator3"
-	  DstPort		  3
-	}
-	Line {
-	  Name			  "<roll>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector2"
-	  SrcPort		  1
-	  DstBlock		  "Sum6"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "<pitch>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector2"
-	  SrcPort		  2
-	  DstBlock		  "Sum7"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "<yaw>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector2"
-	  SrcPort		  3
-	  DstBlock		  "Sum8"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Constant2"
-	  SrcPort		  1
-	  Points		  [65, 0]
-	  Branch {
-	    DstBlock		    "Manual Switch7"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, -15; 280, 0]
-	    Branch {
-	      DstBlock		      "Manual Switch6"
-	      DstPort		      1
-	    }
-	    Branch {
-	      Points		      [240, 0]
-	      DstBlock		      "Manual Switch8"
-	      DstPort		      1
-	    }
-	  }
-	}
-	Line {
-	  Name			  "rpy"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nCreator3"
-	  SrcPort		  1
-	  Points		  [50, 0; 0, -90]
-	  DstBlock		  "Bus\nCreator8"
-	  DstPort		  3
-	}
-	Line {
-	  SrcBlock		  "err_ang_vel_z"
-	  SrcPort		  1
-	  DstBlock		  "Manual Switch11"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Manual Switch11"
-	  SrcPort		  1
-	  Points		  [25, 0]
-	  DstBlock		  "Sum11"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "err_ang_vel_y"
-	  SrcPort		  1
-	  DstBlock		  "Manual Switch9"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Manual Switch9"
-	  SrcPort		  1
-	  Points		  [25, 0]
-	  DstBlock		  "Sum10"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "err_ang_vel_x"
-	  SrcPort		  1
-	  DstBlock		  "Manual Switch10"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Manual Switch10"
-	  SrcPort		  1
-	  Points		  [20, 0]
-	  DstBlock		  "Sum9"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "ang_vel_x"
-	  Labels		  [0, 1]
-	  SrcBlock		  "Sum9"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator4"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "ang_vel_y"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Sum10"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator4"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "ang_vel_z"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Sum11"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator4"
-	  DstPort		  3
-	}
-	Line {
-	  Name			  "<ang_vel_x>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector3"
-	  SrcPort		  1
-	  DstBlock		  "Sum9"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "<ang_vel_y>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector3"
-	  SrcPort		  2
-	  DstBlock		  "Sum10"
-	  DstPort		  2
-	}
-	Line {
-	  Name			  "<ang_vel_z>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector3"
-	  SrcPort		  3
-	  DstBlock		  "Sum11"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Constant3"
-	  SrcPort		  1
-	  Points		  [65, 0]
-	  Branch {
-	    DstBlock		    "Manual Switch10"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [0, -15; 280, 0]
-	    Branch {
-	      DstBlock		      "Manual Switch9"
-	      DstPort		      1
-	    }
-	    Branch {
-	      Points		      [240, 0]
-	      DstBlock		      "Manual Switch11"
-	      DstPort		      1
-	    }
-	  }
-	}
-	Line {
-	  Name			  "ang_vel"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nCreator4"
-	  SrcPort		  1
-	  Points		  [105, 0]
-	  DstBlock		  "Bus\nCreator8"
-	  DstPort		  4
-	}
-	Line {
-	  Name			  "odom"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nCreator8"
-	  SrcPort		  1
-	  DstBlock		  "odometry_err"
-	  DstPort		  1
-	}
-      }
-    }
-    Block {
       BlockType		      Scope
       Name		      "Force"
       SID		      "642"
@@ -2366,7 +1135,7 @@ Model {
       ZOrder		      -31
       BackgroundColor	      "magenta"
       Floating		      off
-      Location		      [66, 53, 1367, 767]
+      Location		      [67, 81, 1368, 795]
       Open		      off
       NumInputPorts	      "1"
       ZoomMode		      "xonly"
@@ -2412,7 +1181,7 @@ Model {
       ZOrder		      3
       BackgroundColor	      "magenta"
       Floating		      off
-      Location		      [352, 142, 875, 652]
+      Location		      [351, 114, 874, 624]
       Open		      off
       NumInputPorts	      "1"
       List {
@@ -2457,8 +1226,8 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Point Mass Model \nnonlinear model"
-	Location		[58, 24, 1375, 804]
-	Open			off
+	Location		[57, -4, 2568, 1448]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -2469,8 +1238,8 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"60"
-	SIDHighWatermark	"367"
+	ZoomFactor		"80"
+	SIDHighWatermark	"371"
 	SIDPrevWatermark	"344"
 	Block {
 	  BlockType		  Inport
@@ -2643,7 +1412,7 @@ Model {
 	  SID			  "1236:350"
 	  Position		  [1750, 510, 1780, 540]
 	  ZOrder		  6
-	  Value			  "0"
+	  Value			  "WallPos"
 	}
 	Block {
 	  BlockType		  Constant
@@ -2901,12 +1670,26 @@ Model {
 	  }
 	}
 	Block {
+	  BlockType		  Sum
+	  Name			  "Sum2"
+	  SID			  "1236:368"
+	  Ports			  [2, 1]
+	  Position		  [950, 755, 970, 775]
+	  ZOrder		  24
+	  ShowName		  off
+	  IconShape		  "round"
+	  Inputs		  "|+-"
+	  InputSameDT		  off
+	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
+	  SaturateOnIntegerOverflow off
+	}
+	Block {
 	  BlockType		  Switch
 	  Name			  "Switch"
 	  SID			  "1236:345"
 	  Position		  [1750, 360, 1800, 400]
 	  ZOrder		  1
-	  Threshold		  "1"
+	  Threshold		  "WallPos"
 	  InputSameDT		  off
 	  SaturateOnIntegerOverflow off
 	  Port {
@@ -2922,7 +1705,7 @@ Model {
 	  SID			  "1236:349"
 	  Position		  [1890, 520, 1940, 560]
 	  ZOrder		  5
-	  Threshold		  "1"
+	  Threshold		  "WallPos"
 	  InputSameDT		  off
 	  SaturateOnIntegerOverflow off
 	  Port {
@@ -2938,7 +1721,7 @@ Model {
 	  SID			  "1236:352"
 	  Position		  [1840, 635, 1890, 675]
 	  ZOrder		  8
-	  Threshold		  "1"
+	  Threshold		  "WallPos"
 	  InputSameDT		  off
 	  SaturateOnIntegerOverflow off
 	  Port {
@@ -2954,7 +1737,7 @@ Model {
 	  SID			  "1236:365"
 	  Position		  [1805, 955, 1855, 995]
 	  ZOrder		  21
-	  Threshold		  "1"
+	  Threshold		  "WallPos"
 	  InputSameDT		  off
 	  SaturateOnIntegerOverflow off
 	}
@@ -3118,7 +1901,7 @@ Model {
 	  }
 	  System {
 	    Name		    "pitch dynamics\n "
-	    Location		    [57, -4, 1374, 776]
+	    Location		    [57, -4, 2568, 1448]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -3275,7 +2058,7 @@ Model {
 	      SID		      "1236:122:348"
 	      Position		      [245, 310, 295, 350]
 	      ZOrder		      4
-	      Threshold		      "1"
+	      Threshold		      "WallPos"
 	      InputSameDT	      off
 	      SaturateOnIntegerOverflow	off
 	    }
@@ -3494,7 +2277,7 @@ Model {
 	  BlockType		  Outport
 	  Name			  "acc"
 	  SID			  "1236:137"
-	  Position		  [2200, 458, 2230, 472]
+	  Position		  [2210, 458, 2240, 472]
 	  ZOrder		  -27
 	  Port			  "2"
 	  IconDisplay		  "Port number"
@@ -3672,25 +2455,24 @@ Model {
 	Line {
 	  SrcBlock		  "Constant"
 	  SrcPort		  1
-	  Points		  [163, 0]
+	  Points		  [35, 0]
 	  Branch {
-	    Points		    [0, 50]
-	    DstBlock		    "Product"
-	    DstPort		    1
-	  }
-	  Branch {
-	    Points		    [87, 0]
-	    DstBlock		    "Sum1"
+	    DstBlock		    "Sum2"
 	    DstPort		    2
 	  }
-	}
-	Line {
-	  Name			  "<thrust_cmd>"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nSelector"
-	  SrcPort		  4
-	  DstBlock		  "thrust dynamics\n "
-	  DstPort		  1
+	  Branch {
+	    Points		    [128, 0]
+	    Branch {
+	      Points		      [0, 50]
+	      DstBlock		      "Product"
+	      DstPort		      1
+	    }
+	    Branch {
+	      Points		      [87, 0]
+	      DstBlock		      "Sum1"
+	      DstPort		      2
+	    }
+	  }
 	}
 	Line {
 	  SrcBlock		  "cmd"
@@ -3992,23 +2774,21 @@ Model {
 	  DstBlock		  "Switch3"
 	  DstPort		  2
 	}
+	Line {
+	  Name			  "<thrust_cmd>"
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nSelector"
+	  SrcPort		  4
+	  DstBlock		  "Sum2"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "Sum2"
+	  SrcPort		  1
+	  DstBlock		  "thrust dynamics\n "
+	  DstPort		  1
+	}
       }
-    }
-    Block {
-      BlockType		      RateTransition
-      Name		      "Rate Transition1"
-      SID		      "1357"
-      Position		      [735, 194, 775, 236]
-      ZOrder		      -18
-      OutPortSampleTime	      "Ts"
-    }
-    Block {
-      BlockType		      RateTransition
-      Name		      "Rate Transition5"
-      SID		      "851"
-      Position		      [1045, 139, 1085, 181]
-      ZOrder		      -19
-      OutPortSampleTime	      "Ts"
     }
     Block {
       BlockType		      Terminator
@@ -4068,7 +2848,7 @@ Model {
       ZOrder		      -25
       BackgroundColor	      "magenta"
       Floating		      off
-      Location		      [380, 189, 903, 699]
+      Location		      [379, 161, 902, 671]
       Open		      off
       NumInputPorts	      "1"
       List {
@@ -4095,15 +2875,453 @@ Model {
       SampleTime	      "0"
     }
     Block {
-      BlockType		      Reference
+      BlockType		      SubSystem
       Name		      "create ref"
       SID		      "1359"
       Ports		      [0, 1]
       Position		      [85, 183, 125, 247]
       ZOrder		      -26
-      LibraryVersion	      "1.319"
-      SourceBlock	      "Hquad_control_LIB_LQRI/create ref"
-      SourceType	      "SubSystem"
+      AncestorBlock	      "Hquad_control_LIB_LQRI/create ref"
+      LibraryVersion	      "*1.319"
+      MinAlgLoopOccurrences   off
+      PropExecContextOutsideSubsystem off
+      RTWSystemCode	      "Auto"
+      FunctionWithSeparateData off
+      Opaque		      off
+      RequestExecContextInheritance off
+      MaskHideContents	      off
+      System {
+	Name			"create ref"
+	Location		[57, -4, 2568, 1448]
+	Open			off
+	ModelBrowserVisibility	off
+	ModelBrowserWidth	200
+	ScreenColor		"white"
+	PaperOrientation	"landscape"
+	PaperPositionMode	"auto"
+	PaperType		"usletter"
+	PaperUnits		"inches"
+	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
+	TiledPageScale		1
+	ShowPageBoundaries	off
+	ZoomFactor		"100"
+	SIDHighWatermark	"1609"
+	SIDPrevWatermark	"1608"
+	Block {
+	  BlockType		  BusCreator
+	  Name			  "Bus\nCreator1"
+	  SID			  "1359:1572"
+	  Ports			  [4, 1]
+	  Position		  [335, 421, 340, 509]
+	  ZOrder		  -1
+	  ShowName		  off
+	  DisplayOption		  "bar"
+	  Port {
+	    PortNumber		    1
+	    Name		    "vel_ref"
+	    PropagatedSignals	    "x_dot_ref, y_dot_ref, z_dot_ref, yaw_dot_ref"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  BusCreator
+	  Name			  "Bus\nCreator2"
+	  SID			  "1359:1573"
+	  Ports			  [2, 1]
+	  Position		  [440, 208, 445, 257]
+	  ZOrder		  -2
+	  ShowName		  off
+	  Inputs		  "2"
+	  DisplayOption		  "bar"
+	  Port {
+	    PortNumber		    1
+	    Name		    "ref"
+	    PropagatedSignals	    "pose_ref, vel_ref"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  BusCreator
+	  Name			  "Bus\nCreator8"
+	  SID			  "1359:1574"
+	  Ports			  [4, 1]
+	  Position		  [335, 91, 340, 179]
+	  ZOrder		  -3
+	  ShowName		  off
+	  DisplayOption		  "bar"
+	  Port {
+	    PortNumber		    1
+	    Name		    "pose_ref"
+	    PropagatedSignals	    "x_ref, y_ref, z_ref, yaw_ref"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  ManualSwitch
+	  Name			  "Manual Switch"
+	  SID			  "1359:1575"
+	  Position		  [165, 252, 195, 288]
+	  ZOrder		  -4
+	  CurrentSetting	  "0"
+	  Port {
+	    PortNumber		    1
+	    Name		    "z_ref"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  ManualSwitch
+	  Name			  "Manual Switch1"
+	  SID			  "1359:1576"
+	  Position		  [165, 72, 195, 108]
+	  ZOrder		  -5
+	  Port {
+	    PortNumber		    1
+	    Name		    "x_ref"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  ManualSwitch
+	  Name			  "Manual Switch2"
+	  SID			  "1359:1577"
+	  Position		  [165, 337, 195, 373]
+	  ZOrder		  -6
+	  CurrentSetting	  "0"
+	  Port {
+	    PortNumber		    1
+	    Name		    "yaw_ref"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  ManualSwitch
+	  Name			  "Manual Switch3"
+	  SID			  "1359:1578"
+	  Position		  [165, 167, 195, 203]
+	  ZOrder		  -7
+	  CurrentSetting	  "0"
+	  Port {
+	    PortNumber		    1
+	    Name		    "y_ref"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "h_set"
+	  SID			  "1359:1579"
+	  Position		  [90, 280, 120, 310]
+	  ZOrder		  -8
+	  BackgroundColor	  "red"
+	  Value			  "0"
+	  OutDataTypeStr	  "double"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "h_set1"
+	  SID			  "1359:1580"
+	  Position		  [90, 100, 120, 130]
+	  ZOrder		  -9
+	  BackgroundColor	  "red"
+	  Value			  "0"
+	  OutDataTypeStr	  "double"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "h_set2"
+	  SID			  "1359:1609"
+	  Position		  [25, 65, 55, 95]
+	  ZOrder		  2
+	  BackgroundColor	  "red"
+	  OutDataTypeStr	  "double"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "v_ref"
+	  SID			  "1359:1581"
+	  Position		  [90, 570, 120, 600]
+	  ZOrder		  -10
+	  BackgroundColor	  "red"
+	  Value			  "0"
+	  OutDataTypeStr	  "double"
+	  SampleTime		  "-1"
+	  Port {
+	    PortNumber		    1
+	    Name		    "yaw_dot_ref"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "v_ref1"
+	  SID			  "1359:1582"
+	  Position		  [90, 470, 120, 500]
+	  ZOrder		  -11
+	  BackgroundColor	  "red"
+	  Value			  "0"
+	  OutDataTypeStr	  "double"
+	  SampleTime		  "-1"
+	  Port {
+	    PortNumber		    1
+	    Name		    "y_dot_ref"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "v_ref2"
+	  SID			  "1359:1583"
+	  Position		  [90, 520, 120, 550]
+	  ZOrder		  -12
+	  BackgroundColor	  "red"
+	  Value			  "0"
+	  OutDataTypeStr	  "double"
+	  SampleTime		  "-1"
+	  Port {
+	    PortNumber		    1
+	    Name		    "z_dot_ref"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "v_ref3"
+	  SID			  "1359:1584"
+	  Position		  [90, 420, 120, 450]
+	  ZOrder		  -13
+	  BackgroundColor	  "red"
+	  Value			  "0"
+	  OutDataTypeStr	  "double"
+	  SampleTime		  "-1"
+	  Port {
+	    PortNumber		    1
+	    Name		    "x_dot_ref"
+	    RTWStorageClass	    "Auto"
+	    DataLoggingNameMode	    "SignalName"
+	  }
+	}
+	Block {
+	  BlockType		  Step
+	  Name			  "y_ref"
+	  SID			  "1359:1586"
+	  Position		  [25, 160, 55, 190]
+	  ZOrder		  -15
+	  Time			  "15"
+	  SampleTime		  "0"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "y_set"
+	  SID			  "1359:1587"
+	  Position		  [90, 195, 120, 225]
+	  ZOrder		  -16
+	  BackgroundColor	  "red"
+	  Value			  "0"
+	  OutDataTypeStr	  "double"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  Step
+	  Name			  "yaw_ref"
+	  SID			  "1359:1588"
+	  Position		  [25, 330, 55, 360]
+	  ZOrder		  -17
+	  Time			  "20"
+	  After			  "pi"
+	  SampleTime		  "0"
+	}
+	Block {
+	  BlockType		  Constant
+	  Name			  "yaw_set\n "
+	  SID			  "1359:1589"
+	  Position		  [90, 365, 120, 395]
+	  ZOrder		  -18
+	  BackgroundColor	  "red"
+	  Value			  "0"
+	  OutDataTypeStr	  "double"
+	  SampleTime		  "-1"
+	}
+	Block {
+	  BlockType		  Step
+	  Name			  "z_ref"
+	  SID			  "1359:1590"
+	  Position		  [25, 245, 55, 275]
+	  ZOrder		  -19
+	  Time			  "15"
+	  SampleTime		  "0"
+	}
+	Block {
+	  BlockType		  Outport
+	  Name			  "ref"
+	  SID			  "1359:1591"
+	  Position		  [510, 228, 540, 242]
+	  ZOrder		  -20
+	  IconDisplay		  "Port number"
+	}
+	Line {
+	  SrcBlock		  "h_set2"
+	  SrcPort		  1
+	  DstBlock		  "Manual Switch1"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "z_dot_ref"
+	  Labels		  [0, 0]
+	  SrcBlock		  "v_ref2"
+	  SrcPort		  1
+	  Points		  [185, 0; 0, -60]
+	  DstBlock		  "Bus\nCreator1"
+	  DstPort		  3
+	}
+	Line {
+	  Name			  "y_dot_ref"
+	  Labels		  [0, 0]
+	  SrcBlock		  "v_ref1"
+	  SrcPort		  1
+	  Points		  [95, 0; 0, -30]
+	  DstBlock		  "Bus\nCreator1"
+	  DstPort		  2
+	}
+	Line {
+	  Name			  "x_dot_ref"
+	  Labels		  [0, 0]
+	  SrcBlock		  "v_ref3"
+	  SrcPort		  1
+	  DstBlock		  "Bus\nCreator1"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "yaw_dot_ref"
+	  Labels		  [0, 0]
+	  SrcBlock		  "v_ref"
+	  SrcPort		  1
+	  Points		  [195, 0]
+	  DstBlock		  "Bus\nCreator1"
+	  DstPort		  4
+	}
+	Line {
+	  Name			  "z_ref"
+	  Labels		  [0, 0]
+	  SrcBlock		  "Manual Switch"
+	  SrcPort		  1
+	  Points		  [110, 0; 0, -125]
+	  DstBlock		  "Bus\nCreator8"
+	  DstPort		  3
+	}
+	Line {
+	  Name			  "yaw_ref"
+	  Labels		  [0, 0]
+	  SrcBlock		  "Manual Switch2"
+	  SrcPort		  1
+	  Points		  [120, 0]
+	  DstBlock		  "Bus\nCreator8"
+	  DstPort		  4
+	}
+	Line {
+	  Name			  "y_ref"
+	  Labels		  [3, 0]
+	  SrcBlock		  "Manual Switch3"
+	  SrcPort		  1
+	  Points		  [60, 0; 0, -60]
+	  DstBlock		  "Bus\nCreator8"
+	  DstPort		  2
+	}
+	Line {
+	  Name			  "x_ref"
+	  Labels		  [0, 0]
+	  SrcBlock		  "Manual Switch1"
+	  SrcPort		  1
+	  Points		  [60, 0; 0, 15]
+	  DstBlock		  "Bus\nCreator8"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "vel_ref"
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nCreator1"
+	  SrcPort		  1
+	  Points		  [40, 0; 0, -220]
+	  DstBlock		  "Bus\nCreator2"
+	  DstPort		  2
+	}
+	Line {
+	  Name			  "pose_ref"
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nCreator8"
+	  SrcPort		  1
+	  Points		  [40, 0; 0, 85]
+	  DstBlock		  "Bus\nCreator2"
+	  DstPort		  1
+	}
+	Line {
+	  Name			  "ref"
+	  Labels		  [0, 0]
+	  SrcBlock		  "Bus\nCreator2"
+	  SrcPort		  1
+	  DstBlock		  "ref"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "h_set1"
+	  SrcPort		  1
+	  Points		  [0, -15]
+	  DstBlock		  "Manual Switch1"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "y_set"
+	  SrcPort		  1
+	  Points		  [10, 0; 0, -15]
+	  DstBlock		  "Manual Switch3"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "y_ref"
+	  SrcPort		  1
+	  DstBlock		  "Manual Switch3"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "z_ref"
+	  SrcPort		  1
+	  DstBlock		  "Manual Switch"
+	  DstPort		  1
+	}
+	Line {
+	  SrcBlock		  "h_set"
+	  SrcPort		  1
+	  Points		  [10, 0; 0, -15]
+	  DstBlock		  "Manual Switch"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "yaw_set\n "
+	  SrcPort		  1
+	  Points		  [15, 0; 0, -15]
+	  DstBlock		  "Manual Switch2"
+	  DstPort		  2
+	}
+	Line {
+	  SrcBlock		  "yaw_ref"
+	  SrcPort		  1
+	  DstBlock		  "Manual Switch2"
+	  DstPort		  1
+	}
+      }
     }
     Block {
       BlockType		      SubSystem
@@ -5077,7 +4295,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"pos controller"
-	Location		[58, 24, 1375, 804]
+	Location		[57, -4, 2568, 1448]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -5090,7 +4308,7 @@ Model {
 	TiledPageScale		1
 	ShowPageBoundaries	off
 	ZoomFactor		"100"
-	SIDHighWatermark	"2377"
+	SIDHighWatermark	"2378"
 	SIDPrevWatermark	"2377"
 	Block {
 	  BlockType		  Inport
@@ -5141,12 +4359,12 @@ Model {
 	  Name			  "MAIN CONTROL LOOP1"
 	  SID			  "1363:1895"
 	  Ports			  [5, 2]
-	  Position		  [580, 238, 685, 382]
+	  Position		  [580, 243, 685, 387]
 	  ZOrder		  -7
 	  BackgroundColor	  "orange"
 	  Priority		  "2"
 	  AncestorBlock		  "Hquad_control_LIB_MPC/MAIN CONTROL LOOP"
-	  LibraryVersion	  "1.327"
+	  LibraryVersion	  "*1.327"
 	  TreatAsAtomicUnit	  on
 	  MinAlgLoopOccurrences	  off
 	  PropExecContextOutsideSubsystem off
@@ -5157,7 +4375,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "MAIN CONTROL LOOP1"
-	    Location		    [58, 24, 1375, 804]
+	    Location		    [57, -4, 2568, 1448]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -5170,7 +4388,7 @@ Model {
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
 	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "2381"
+	    SIDHighWatermark	    "2399"
 	    SIDPrevWatermark	    "2381"
 	    Block {
 	      BlockType		      Inport
@@ -5278,58 +4496,6 @@ Model {
 	      }
 	    }
 	    Block {
-	      BlockType		      Delay
-	      Name		      "Integer Delay"
-	      SID		      "1363:1895:2329"
-	      Ports		      [1, 1]
-	      Position		      [940, 108, 975, 142]
-	      ZOrder		      -9
-	      BlockMirror	      on
-	      UserDataPersistent      on
-	      UserData		      "DataTag0"
-	      InputPortMap	      "u0"
-	      DelayLength	      "1"
-	    }
-	    Block {
-	      BlockType		      Delay
-	      Name		      "Integer Delay1"
-	      SID		      "1363:1895:2330"
-	      Ports		      [1, 1]
-	      Position		      [940, 303, 975, 337]
-	      ZOrder		      -10
-	      BlockMirror	      on
-	      UserDataPersistent      on
-	      UserData		      "DataTag1"
-	      InputPortMap	      "u0"
-	      DelayLength	      "1"
-	    }
-	    Block {
-	      BlockType		      Delay
-	      Name		      "Integer Delay2"
-	      SID		      "1363:1895:2331"
-	      Ports		      [1, 1]
-	      Position		      [940, 523, 975, 557]
-	      ZOrder		      -11
-	      BlockMirror	      on
-	      UserDataPersistent      on
-	      UserData		      "DataTag2"
-	      InputPortMap	      "u0"
-	      DelayLength	      "1"
-	    }
-	    Block {
-	      BlockType		      Delay
-	      Name		      "Integer Delay3"
-	      SID		      "1363:1895:2332"
-	      Ports		      [1, 1]
-	      Position		      [940, 738, 975, 772]
-	      ZOrder		      -12
-	      BlockMirror	      on
-	      UserDataPersistent      on
-	      UserData		      "DataTag3"
-	      InputPortMap	      "u0"
-	      DelayLength	      "1"
-	    }
-	    Block {
 	      BlockType		      Product
 	      Name		      "Product"
 	      SID		      "1363:1895:2333"
@@ -5339,6 +4505,34 @@ Model {
 	      InputSameDT	      off
 	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
 	      SaturateOnIntegerOverflow	off
+	    }
+	    Block {
+	      BlockType		      RateTransition
+	      Name		      "Rate Transition"
+	      SID		      "1363:1895:2396"
+	      Position		      [705, 59, 745, 101]
+	      ZOrder		      7
+	    }
+	    Block {
+	      BlockType		      RateTransition
+	      Name		      "Rate Transition1"
+	      SID		      "1363:1895:2397"
+	      Position		      [660, 269, 700, 311]
+	      ZOrder		      8
+	    }
+	    Block {
+	      BlockType		      RateTransition
+	      Name		      "Rate Transition2"
+	      SID		      "1363:1895:2398"
+	      Position		      [660, 479, 700, 521]
+	      ZOrder		      9
+	    }
+	    Block {
+	      BlockType		      RateTransition
+	      Name		      "Rate Transition3"
+	      SID		      "1363:1895:2399"
+	      Position		      [650, 689, 690, 731]
+	      ZOrder		      10
 	    }
 	    Block {
 	      BlockType		      Sum
@@ -5444,7 +4638,7 @@ Model {
 	      BlockType		      SubSystem
 	      Name		      "demux"
 	      SID		      "1363:1895:2339"
-	      Ports		      [3, 12]
+	      Ports		      [3, 14]
 	      Position		      [215, 25, 285, 845]
 	      ZOrder		      -25
 	      LibraryVersion	      "1.225"
@@ -5457,7 +4651,7 @@ Model {
 	      MaskHideContents	      off
 	      System {
 		Name			"demux"
-		Location		[58, 24, 1375, 804]
+		Location		[57, -4, 2568, 1448]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -5482,7 +4676,7 @@ Model {
 		  BlockType		  Inport
 		  Name			  "ref"
 		  SID			  "1363:1895:2341"
-		  Position		  [75, 328, 105, 342]
+		  Position		  [60, 638, 90, 652]
 		  ZOrder		  -2
 		  Port			  "2"
 		  IconDisplay		  "Port number"
@@ -5491,7 +4685,7 @@ Model {
 		  BlockType		  Inport
 		  Name			  "reset"
 		  SID			  "1363:1895:2342"
-		  Position		  [75, 508, 105, 522]
+		  Position		  [60, 818, 90, 832]
 		  ZOrder		  -3
 		  Port			  "3"
 		  IconDisplay		  "Port number"
@@ -5501,7 +4695,7 @@ Model {
 		  Name			  "Bus\nCreator"
 		  SID			  "1363:1895:2343"
 		  Ports			  [3, 1]
-		  Position		  [305, 20, 310, 60]
+		  Position		  [585, 70, 590, 110]
 		  ZOrder		  -4
 		  ShowName		  off
 		  Inputs		  "3"
@@ -5510,10 +4704,10 @@ Model {
 		Block {
 		  BlockType		  BusCreator
 		  Name			  "Bus\nCreator1"
-		  SID			  "1363:1895:2344"
+		  SID			  "1363:1895:2384"
 		  Ports			  [3, 1]
-		  Position		  [305, 80, 310, 120]
-		  ZOrder		  -5
+		  Position		  [585, 165, 590, 205]
+		  ZOrder		  3
 		  ShowName		  off
 		  Inputs		  "3"
 		  DisplayOption		  "bar"
@@ -5523,7 +4717,7 @@ Model {
 		  Name			  "Bus\nCreator2"
 		  SID			  "1363:1895:2345"
 		  Ports			  [2, 1]
-		  Position		  [305, 130, 310, 170]
+		  Position		  [570, 320, 575, 360]
 		  ZOrder		  -6
 		  ShowName		  off
 		  Inputs		  "2"
@@ -5534,7 +4728,7 @@ Model {
 		  Name			  "Bus\nCreator3"
 		  SID			  "1363:1895:2346"
 		  Ports			  [2, 1]
-		  Position		  [305, 180, 310, 220]
+		  Position		  [570, 390, 575, 430]
 		  ZOrder		  -7
 		  ShowName		  off
 		  Inputs		  "2"
@@ -5545,7 +4739,7 @@ Model {
 		  Name			  "Bus\nSelector1"
 		  SID			  "1363:1895:2347"
 		  Ports			  [1, 4]
-		  Position		  [170, 250, 175, 410]
+		  Position		  [155, 560, 160, 720]
 		  ZOrder		  -8
 		  ShowName		  off
 		  OutputSignals		  "pose_ref.x_ref,pose_ref.y_ref,pose_ref.z_ref,pose_ref.yaw_ref"
@@ -5578,11 +4772,12 @@ Model {
 		  BlockType		  BusSelector
 		  Name			  "Bus\nSelector2"
 		  SID			  "1363:1895:2348"
-		  Ports			  [1, 10]
-		  Position		  [170, 19, 175, 201]
+		  Ports			  [1, 12]
+		  Position		  [170, 27, 175, 533]
 		  ZOrder		  -9
 		  ShowName		  off
-		  OutputSignals		  "pos.x,vel.x_dot,rpy.pitch,pos.y,vel.y_dot,rpy.roll,pos.z,vel.z_dot,rpy.yaw,ang_vel.ang_vel_z"
+		  OutputSignals		  "pos.x,vel.x_dot,rpy.pitch,pos.y,vel.y_dot,rpy.roll,pos.z,vel.z_dot,rpy.yaw,ang_vel.ang_vel_z,ang"
+		  "_vel.ang_vel_y,ang_vel.ang_vel_x"
 		  Port {
 		    PortNumber		    1
 		    Name		    "<x>"
@@ -5643,12 +4838,24 @@ Model {
 		    RTWStorageClass	    "Auto"
 		    DataLoggingNameMode	    "SignalName"
 		  }
+		  Port {
+		    PortNumber		    11
+		    Name		    "<ang_vel_y>"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		  }
+		  Port {
+		    PortNumber		    12
+		    Name		    "<ang_vel_x>"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		  }
 		}
 		Block {
 		  BlockType		  Outport
 		  Name			  "reset1"
 		  SID			  "1363:1895:2349"
-		  Position		  [375, 458, 405, 472]
+		  Position		  [360, 768, 390, 782]
 		  ZOrder		  -10
 		  IconDisplay		  "Port number"
 		}
@@ -5656,7 +4863,7 @@ Model {
 		  BlockType		  Outport
 		  Name			  "X_ref_x"
 		  SID			  "1363:1895:2350"
-		  Position		  [375, 263, 405, 277]
+		  Position		  [360, 573, 390, 587]
 		  ZOrder		  -11
 		  Port			  "2"
 		  IconDisplay		  "Port number"
@@ -5665,7 +4872,7 @@ Model {
 		  BlockType		  Outport
 		  Name			  "x_states_meas"
 		  SID			  "1363:1895:2351"
-		  Position		  [375, 33, 405, 47]
+		  Position		  [650, 83, 680, 97]
 		  ZOrder		  -12
 		  Port			  "3"
 		  IconDisplay		  "Port number"
@@ -5675,7 +4882,7 @@ Model {
 		  BlockType		  Outport
 		  Name			  "reset2"
 		  SID			  "1363:1895:2352"
-		  Position		  [375, 493, 405, 507]
+		  Position		  [360, 803, 390, 817]
 		  ZOrder		  -13
 		  Port			  "4"
 		  IconDisplay		  "Port number"
@@ -5684,7 +4891,7 @@ Model {
 		  BlockType		  Outport
 		  Name			  "X_ref_y"
 		  SID			  "1363:1895:2353"
-		  Position		  [375, 303, 405, 317]
+		  Position		  [360, 613, 390, 627]
 		  ZOrder		  -14
 		  Port			  "5"
 		  IconDisplay		  "Port number"
@@ -5693,7 +4900,7 @@ Model {
 		  BlockType		  Outport
 		  Name			  "y_states_meas"
 		  SID			  "1363:1895:2354"
-		  Position		  [375, 93, 405, 107]
+		  Position		  [660, 178, 690, 192]
 		  ZOrder		  -15
 		  Port			  "6"
 		  IconDisplay		  "Port number"
@@ -5703,7 +4910,7 @@ Model {
 		  BlockType		  Outport
 		  Name			  "reset3"
 		  SID			  "1363:1895:2355"
-		  Position		  [375, 528, 405, 542]
+		  Position		  [360, 838, 390, 852]
 		  ZOrder		  -16
 		  Port			  "7"
 		  IconDisplay		  "Port number"
@@ -5712,7 +4919,7 @@ Model {
 		  BlockType		  Outport
 		  Name			  "X_ref_z"
 		  SID			  "1363:1895:2356"
-		  Position		  [375, 343, 405, 357]
+		  Position		  [360, 653, 390, 667]
 		  ZOrder		  -17
 		  Port			  "8"
 		  IconDisplay		  "Port number"
@@ -5721,7 +4928,7 @@ Model {
 		  BlockType		  Outport
 		  Name			  "z_states_meas"
 		  SID			  "1363:1895:2357"
-		  Position		  [375, 143, 405, 157]
+		  Position		  [640, 333, 670, 347]
 		  ZOrder		  -18
 		  Port			  "9"
 		  IconDisplay		  "Port number"
@@ -5731,7 +4938,7 @@ Model {
 		  BlockType		  Outport
 		  Name			  "reset4"
 		  SID			  "1363:1895:2358"
-		  Position		  [375, 563, 405, 577]
+		  Position		  [360, 873, 390, 887]
 		  ZOrder		  -19
 		  Port			  "10"
 		  IconDisplay		  "Port number"
@@ -5740,7 +4947,7 @@ Model {
 		  BlockType		  Outport
 		  Name			  "X_ref_yaw"
 		  SID			  "1363:1895:2359"
-		  Position		  [375, 383, 405, 397]
+		  Position		  [360, 693, 390, 707]
 		  ZOrder		  -20
 		  Port			  "11"
 		  IconDisplay		  "Port number"
@@ -5749,11 +4956,29 @@ Model {
 		  BlockType		  Outport
 		  Name			  "yaw_states_meas"
 		  SID			  "1363:1895:2360"
-		  Position		  [375, 193, 405, 207]
+		  Position		  [640, 403, 670, 417]
 		  ZOrder		  -21
 		  Port			  "12"
 		  IconDisplay		  "Port number"
 		  PortDimensions	  "2"
+		}
+		Block {
+		  BlockType		  Outport
+		  Name			  "ang_pitch"
+		  SID			  "1363:1895:2394"
+		  Position		  [640, 453, 670, 467]
+		  ZOrder		  12
+		  Port			  "13"
+		  IconDisplay		  "Port number"
+		}
+		Block {
+		  BlockType		  Outport
+		  Name			  "ang_roll"
+		  SID			  "1363:1895:2395"
+		  Position		  [640, 493, 670, 507]
+		  ZOrder		  13
+		  Port			  "14"
+		  IconDisplay		  "Port number"
 		}
 		Line {
 		  Name			  "<yaw_ref>"
@@ -5772,26 +4997,18 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  Name			  "<roll>"
-		  Labels		  [0, 0]
-		  SrcBlock		  "Bus\nSelector2"
-		  SrcPort		  6
-		  Points		  [110, 0]
-		  DstBlock		  "Bus\nCreator1"
-		  DstPort		  3
-		}
-		Line {
 		  Name			  "<pitch>"
 		  Labels		  [0, 0]
 		  SrcBlock		  "Bus\nSelector2"
 		  SrcPort		  3
-		  Points		  [110, 0]
+		  Points		  [9, 0; 0, -35]
 		  DstBlock		  "Bus\nCreator"
 		  DstPort		  3
 		}
 		Line {
 		  SrcBlock		  "odometry"
 		  SrcPort		  1
+		  Points		  [28, 0; 0, 170]
 		  DstBlock		  "Bus\nSelector2"
 		  DstPort		  1
 		}
@@ -5806,7 +5023,7 @@ Model {
 		  Labels		  [0, 0]
 		  SrcBlock		  "Bus\nSelector2"
 		  SrcPort		  1
-		  Points		  [110, 0]
+		  Points		  [370, 0; 0, 15]
 		  DstBlock		  "Bus\nCreator"
 		  DstPort		  1
 		}
@@ -5815,37 +5032,25 @@ Model {
 		  Labels		  [0, 0]
 		  SrcBlock		  "Bus\nSelector2"
 		  SrcPort		  2
+		  Points		  [200, 0; 0, -10]
 		  DstBlock		  "Bus\nCreator"
 		  DstPort		  2
-		}
-		Line {
-		  Name			  "<y>"
-		  Labels		  [0, 0]
-		  SrcBlock		  "Bus\nSelector2"
-		  SrcPort		  4
-		  Points		  [110, 0]
-		  DstBlock		  "Bus\nCreator1"
-		  DstPort		  1
 		}
 		Line {
 		  Name			  "<y_dot>"
 		  Labels		  [0, 0]
 		  SrcBlock		  "Bus\nSelector2"
 		  SrcPort		  5
+		  Points		  [98, 0; 0, -35]
 		  DstBlock		  "Bus\nCreator1"
 		  DstPort		  2
-		}
-		Line {
-		  SrcBlock		  "Bus\nCreator1"
-		  SrcPort		  1
-		  DstBlock		  "y_states_meas"
-		  DstPort		  1
 		}
 		Line {
 		  Name			  "<z>"
 		  Labels		  [0, 0]
 		  SrcBlock		  "Bus\nSelector2"
 		  SrcPort		  7
+		  Points		  [192, 0; 0, 30]
 		  DstBlock		  "Bus\nCreator2"
 		  DstPort		  1
 		}
@@ -5854,6 +5059,7 @@ Model {
 		  Labels		  [0, 0]
 		  SrcBlock		  "Bus\nSelector2"
 		  SrcPort		  8
+		  Points		  [9, 0; 0, 10]
 		  DstBlock		  "Bus\nCreator2"
 		  DstPort		  2
 		}
@@ -5862,7 +5068,7 @@ Model {
 		  Labels		  [0, 0]
 		  SrcBlock		  "Bus\nSelector2"
 		  SrcPort		  9
-		  Points		  [70, 0; 0, 10]
+		  Points		  [192, 0; 0, 20]
 		  DstBlock		  "Bus\nCreator3"
 		  DstPort		  1
 		}
@@ -5871,7 +5077,7 @@ Model {
 		  Labels		  [0, 0]
 		  SrcBlock		  "Bus\nSelector2"
 		  SrcPort		  10
-		  Points		  [60, 0; 0, 10]
+		  Points		  [0, 0]
 		  DstBlock		  "Bus\nCreator3"
 		  DstPort		  2
 		}
@@ -5938,6 +5144,46 @@ Model {
 		    }
 		  }
 		}
+		Line {
+		  Name			  "<roll>"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Bus\nSelector2"
+		  SrcPort		  6
+		  Points		  [298, 0; 0, -60]
+		  DstBlock		  "Bus\nCreator1"
+		  DstPort		  3
+		}
+		Line {
+		  Name			  "<y>"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Bus\nSelector2"
+		  SrcPort		  4
+		  Points		  [200, 0; 0, -10]
+		  DstBlock		  "Bus\nCreator1"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Bus\nCreator1"
+		  SrcPort		  1
+		  DstBlock		  "y_states_meas"
+		  DstPort		  1
+		}
+		Line {
+		  Name			  "<ang_vel_y>"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Bus\nSelector2"
+		  SrcPort		  11
+		  DstBlock		  "ang_pitch"
+		  DstPort		  1
+		}
+		Line {
+		  Name			  "<ang_vel_x>"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Bus\nSelector2"
+		  SrcPort		  12
+		  DstBlock		  "ang_roll"
+		  DstPort		  1
+		}
 	      }
 	    }
 	    Block {
@@ -5952,8 +5198,8 @@ Model {
 	      BlockType		      SubSystem
 	      Name		      "x controller MPC FG\n "
 	      SID		      "1363:1895:2362"
-	      Ports		      [3, 1]
-	      Position		      [565, 32, 670, 128]
+	      Ports		      [4, 1]
+	      Position		      [515, 49, 620, 146]
 	      ZOrder		      -27
 	      BackgroundColor	      "orange"
 	      AncestorBlock	      "Hquad_control_LIB_MPC/x controller MPC FG\n "
@@ -5973,7 +5219,7 @@ Model {
 	      }
 	      System {
 		Name			"x controller MPC FG\n "
-		Location		[58, 24, 1375, 804]
+		Location		[57, -4, 2568, 1448]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -5986,7 +5232,7 @@ Model {
 		TiledPageScale		1
 		ShowPageBoundaries	off
 		ZoomFactor		"125"
-		SIDHighWatermark	"2389"
+		SIDHighWatermark	"2402"
 		SIDPrevWatermark	"2381"
 		Block {
 		  BlockType		  Inport
@@ -6016,6 +5262,16 @@ Model {
 		  IconDisplay		  "Port number"
 		}
 		Block {
+		  BlockType		  Inport
+		  Name			  "ang_pitch"
+		  SID			  "1363:1895:2362:2396"
+		  Position		  [35, 488, 65, 502]
+		  ZOrder		  13
+		  Port			  "4"
+		  IconDisplay		  "Port number"
+		  PortDimensions	  "1"
+		}
+		Block {
 		  BlockType		  Sum
 		  Name			  "Add"
 		  SID			  "1363:1895:2362:2383"
@@ -6028,39 +5284,190 @@ Model {
 		  SaturateOnIntegerOverflow off
 		}
 		Block {
-		  BlockType		  Demux
-		  Name			  "Demux"
-		  SID			  "1363:1895:2362:2384"
+		  BlockType		  BusSelector
+		  Name			  "Bus\nSelector"
+		  SID			  "1363:1895:2362:2397"
 		  Ports			  [1, 3]
-		  Position		  [100, 226, 105, 264]
-		  ZOrder		  3
+		  Position		  [100, 173, 105, 267]
+		  ZOrder		  14
 		  ShowName		  off
-		  Outputs		  "3"
-		  DisplayOption		  "bar"
-		}
-		Block {
-		  BlockType		  Derivative
-		  Name			  "Derivative"
-		  SID			  "1363:1895:2362:2387"
-		  Position		  [225, 200, 255, 230]
-		  ZOrder		  6
+		  OutputSignals		  "x,x_dot,pitch"
+		  Port {
+		    PortNumber		    1
+		    Name		    "<x>"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		  }
+		  Port {
+		    PortNumber		    2
+		    Name		    "<x_dot>"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		  }
+		  Port {
+		    PortNumber		    3
+		    Name		    "<pitch>"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		  }
 		}
 		Block {
 		  BlockType		  Mux
 		  Name			  "Mux"
 		  SID			  "1363:1895:2362:2385"
 		  Ports			  [4, 1]
-		  Position		  [305, 131, 310, 224]
+		  Position		  [305, 51, 310, 224]
 		  ZOrder		  4
 		  ShowName		  off
 		  DisplayOption		  "bar"
+		}
+		Block {
+		  BlockType		  RateTransition
+		  Name			  "Rate Transition2"
+		  SID			  "1363:1895:2362:2398"
+		  Position		  [350, 159, 390, 201]
+		  ZOrder		  15
+		}
+		Block {
+		  BlockType		  Saturate
+		  Name			  "Saturation"
+		  SID			  "1363:1895:2362:2399"
+		  Ports			  [1, 1]
+		  Position		  [220, 55, 250, 85]
+		  ZOrder		  16
+		  InputPortMap		  "u0"
+		  UpperLimit		  "0.2094"
+		  LowerLimit		  "-0.2094"
+		}
+		Block {
+		  BlockType		  Saturate
+		  Name			  "Saturation1"
+		  SID			  "1363:1895:2362:2400"
+		  Ports			  [1, 1]
+		  Position		  [220, 100, 250, 130]
+		  ZOrder		  17
+		  InputPortMap		  "u0"
+		  UpperLimit		  "2"
+		  LowerLimit		  "-2"
+		}
+		Block {
+		  BlockType		  Saturate
+		  Name			  "Saturation2"
+		  SID			  "1363:1895:2362:2401"
+		  Ports			  [1, 1]
+		  Position		  [220, 145, 250, 175]
+		  ZOrder		  18
+		  InputPortMap		  "u0"
+		  UpperLimit		  "0"
+		  LowerLimit		  "-1"
+		}
+		Block {
+		  BlockType		  Saturate
+		  Name			  "Saturation3"
+		  SID			  "1363:1895:2362:2402"
+		  Ports			  [1, 1]
+		  Position		  [220, 205, 250, 235]
+		  ZOrder		  19
+		  InputPortMap		  "u0"
+		  UpperLimit		  "1"
+		  LowerLimit		  "-1"
+		}
+		Block {
+		  BlockType		  Scope
+		  Name			  "Scope"
+		  SID			  "1363:1895:2362:2392"
+		  Ports			  [1]
+		  Position		  [325, 289, 355, 321]
+		  ZOrder		  9
+		  Floating		  off
+		  Location		  [517, 658, 841, 897]
+		  Open			  off
+		  NumInputPorts		  "1"
+		  List {
+		    ListType		    AxesTitles
+		    axes1		    "%<SignalLabel>"
+		  }
+		  List {
+		    ListType		    ScopeGraphics
+		    FigureColor		    "[0.5 0.5 0.5]"
+		    AxesColor		    "[0 0 0]"
+		    AxesTickColor	    "[1 1 1]"
+		    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+		    LineStyles		    "-|-|-|-|-|-"
+		    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+		    MarkerStyles	    "none|none|none|none|none|none"
+		  }
+		  ShowLegends		  off
+		  SaveName		  "ScopeData2"
+		  DataFormat		  "StructureWithTime"
+		  SampleTime		  "0"
+		}
+		Block {
+		  BlockType		  Scope
+		  Name			  "Scope1"
+		  SID			  "1363:1895:2362:2393"
+		  Ports			  [1]
+		  Position		  [465, 304, 495, 336]
+		  ZOrder		  10
+		  Floating		  off
+		  Location		  [66, 53, 2561, 1439]
+		  Open			  off
+		  NumInputPorts		  "1"
+		  List {
+		    ListType		    AxesTitles
+		    axes1		    "%<SignalLabel>"
+		  }
+		  List {
+		    ListType		    ScopeGraphics
+		    FigureColor		    "[0.5 0.5 0.5]"
+		    AxesColor		    "[0 0 0]"
+		    AxesTickColor	    "[1 1 1]"
+		    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+		    LineStyles		    "-|-|-|-|-|-"
+		    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+		    MarkerStyles	    "none|none|none|none|none|none"
+		  }
+		  ShowLegends		  off
+		  SaveName		  "ScopeData3"
+		  DataFormat		  "StructureWithTime"
+		  SampleTime		  "0"
+		}
+		Block {
+		  BlockType		  Scope
+		  Name			  "Scope2"
+		  SID			  "1363:1895:2362:2394"
+		  Ports			  [1]
+		  Position		  [710, 304, 740, 336]
+		  ZOrder		  11
+		  Floating		  off
+		  Location		  [66, 53, 2561, 1439]
+		  Open			  off
+		  NumInputPorts		  "1"
+		  List {
+		    ListType		    AxesTitles
+		    axes1		    "%<SignalLabel>"
+		  }
+		  List {
+		    ListType		    ScopeGraphics
+		    FigureColor		    "[0.5 0.5 0.5]"
+		    AxesColor		    "[0 0 0]"
+		    AxesTickColor	    "[1 1 1]"
+		    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+		    LineStyles		    "-|-|-|-|-|-"
+		    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+		    MarkerStyles	    "none|none|none|none|none|none"
+		  }
+		  ShowLegends		  off
+		  SaveName		  "ScopeData5"
+		  DataFormat		  "StructureWithTime"
+		  SampleTime		  "0"
 		}
 		Block {
 		  BlockType		  SubSystem
 		  Name			  "X direction Ctrl"
 		  SID			  "1363:1895:2362:2382"
 		  Ports			  [1, 1]
-		  Position		  [455, 140, 565, 220]
+		  Position		  [465, 140, 575, 220]
 		  ZOrder		  1
 		  ForegroundColor	  "blue"
 		  DropShadow		  on
@@ -6087,7 +5494,7 @@ Model {
 		  }
 		  System {
 		    Name		    "X direction Ctrl"
-		    Location		    [58, 24, 1375, 804]
+		    Location		    [57, -4, 2568, 1448]
 		    Open		    off
 		    ModelBrowserVisibility  off
 		    ModelBrowserWidth	    200
@@ -6100,7 +5507,7 @@ Model {
 		    TiledPageScale	    1
 		    ShowPageBoundaries	    off
 		    ZoomFactor		    "100"
-		    SIDHighWatermark	    "27"
+		    SIDHighWatermark	    "29"
 		    SIDPrevWatermark	    "25"
 		    Block {
 		    BlockType		    Inport
@@ -6161,95 +5568,125 @@ Model {
 		Line {
 		  SrcBlock		  "x_states_est\n "
 		  SrcPort		  1
-		  DstBlock		  "Demux"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "Demux"
-		  SrcPort		  1
-		  Points		  [15, 0]
-		  DstBlock		  "Add"
+		  Points		  [12, 0; 0, -25]
+		  DstBlock		  "Bus\nSelector"
 		  DstPort		  1
 		}
 		Line {
 		  SrcBlock		  "Add"
 		  SrcPort		  1
-		  Points		  [30, 0; 0, -165]
-		  DstBlock		  "Mux"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "Demux"
-		  SrcPort		  2
-		  Points		  [36, 0; 0, -80]
-		  DstBlock		  "Mux"
-		  DstPort		  2
-		}
-		Line {
-		  SrcBlock		  "Demux"
-		  SrcPort		  3
-		  Points		  [56, 0; 0, -40]
+		  Points		  [29, 0]
 		  Branch {
-		    DstBlock		    "Derivative"
+		    DstBlock		    "Scope"
 		    DstPort		    1
 		  }
 		  Branch {
-		    Points		    [0, -25]
-		    DstBlock		    "Mux"
-		    DstPort		    3
+		    Points		    [0, -145]
+		    DstBlock		    "Saturation2"
+		    DstPort		    1
 		  }
-		}
-		Line {
-		  SrcBlock		  "Derivative"
-		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  4
 		}
 		Line {
 		  SrcBlock		  "X direction Ctrl"
 		  SrcPort		  1
-		  DstBlock		  "pitch_cmd \n "
-		  DstPort		  1
+		  Points		  [109, 0]
+		  Branch {
+		    Points		    [0, 140]
+		    DstBlock		    "Scope2"
+		    DstPort		    1
+		  }
+		  Branch {
+		    DstBlock		    "pitch_cmd \n "
+		    DstPort		    1
+		  }
 		}
 		Line {
 		  SrcBlock		  "Mux"
 		  SrcPort		  1
-		  DstBlock		  "X direction Ctrl"
+		  Points		  [15, 0; 0, 40]
+		  DstBlock		  "Rate Transition2"
 		  DstPort		  1
 		}
-	      }
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "x states estimator bias"
-	      SID		      "1363:1895:2363"
-	      Ports		      [3, 2]
-	      Position		      [800, 108, 895, 212]
-	      ZOrder		      -28
-	      BlockMirror	      on
-	      BackgroundColor	      "cyan"
-	      LibraryVersion	      "1.327"
-	      SourceBlock	      "Hquad_control_LIB_MPC/x states estimator bias"
-	      SourceType	      "SubSystem"
-	      Port {
-		PortNumber		1
-		Name			"pitch_bias"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
-	      Port {
-		PortNumber		2
-		Name			"pitch_bias"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
+		Line {
+		  SrcBlock		  "ang_pitch"
+		  SrcPort		  1
+		  Points		  [125, 0; 0, -380]
+		  DstBlock		  "Saturation1"
+		  DstPort		  1
+		}
+		Line {
+		  Name			  "<x>"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Bus\nSelector"
+		  SrcPort		  1
+		  Points		  [12, 0; 0, 105]
+		  DstBlock		  "Add"
+		  DstPort		  1
+		}
+		Line {
+		  Name			  "<x_dot>"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Bus\nSelector"
+		  SrcPort		  2
+		  DstBlock		  "Saturation3"
+		  DstPort		  1
+		}
+		Line {
+		  Name			  "<pitch>"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Bus\nSelector"
+		  SrcPort		  3
+		  Points		  [68, 0; 0, -180]
+		  DstBlock		  "Saturation"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Rate Transition2"
+		  SrcPort		  1
+		  Points		  [37, 0]
+		  Branch {
+		    Points		    [0, 140]
+		    DstBlock		    "Scope1"
+		    DstPort		    1
+		  }
+		  Branch {
+		    DstBlock		    "X direction Ctrl"
+		    DstPort		    1
+		  }
+		}
+		Line {
+		  SrcBlock		  "Saturation"
+		  SrcPort		  1
+		  DstBlock		  "Mux"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Saturation1"
+		  SrcPort		  1
+		  DstBlock		  "Mux"
+		  DstPort		  2
+		}
+		Line {
+		  SrcBlock		  "Saturation2"
+		  SrcPort		  1
+		  DstBlock		  "Mux"
+		  DstPort		  3
+		}
+		Line {
+		  SrcBlock		  "Saturation3"
+		  SrcPort		  1
+		  Points		  [24, 0; 0, -15]
+		  DstBlock		  "Mux"
+		  DstPort		  4
+		}
 	      }
 	    }
 	    Block {
 	      BlockType		      SubSystem
 	      Name		      "y controller MPC FG"
 	      SID		      "1363:1895:2364"
-	      Ports		      [3, 1]
-	      Position		      [565, 242, 670, 338]
+	      Ports		      [4, 1]
+	      Position		      [515, 244, 620, 341]
 	      ZOrder		      -29
 	      BackgroundColor	      "[1.000000, 0.501961, 0.000000]"
 	      AncestorBlock	      "Hquad_control_LIB_MPC/y controller MPC FG"
@@ -6269,7 +5706,7 @@ Model {
 	      }
 	      System {
 		Name			"y controller MPC FG"
-		Location		[58, 24, 1375, 804]
+		Location		[57, -4, 2568, 1448]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -6282,7 +5719,7 @@ Model {
 		TiledPageScale		1
 		ShowPageBoundaries	off
 		ZoomFactor		"100"
-		SIDHighWatermark	"2389"
+		SIDHighWatermark	"2393"
 		SIDPrevWatermark	"2381"
 		Block {
 		  BlockType		  Inport
@@ -6312,6 +5749,16 @@ Model {
 		  IconDisplay		  "Port number"
 		}
 		Block {
+		  BlockType		  Inport
+		  Name			  "ang_roll"
+		  SID			  "1363:1895:2364:2392"
+		  Position		  [40, 518, 70, 532]
+		  ZOrder		  13
+		  Port			  "4"
+		  IconDisplay		  "Port number"
+		  PortDimensions	  "1"
+		}
+		Block {
 		  BlockType		  Sum
 		  Name			  "Add"
 		  SID			  "1363:1895:2364:2384"
@@ -6333,13 +5780,6 @@ Model {
 		  ShowName		  off
 		  Outputs		  "3"
 		  DisplayOption		  "bar"
-		}
-		Block {
-		  BlockType		  Derivative
-		  Name			  "Derivative"
-		  SID			  "1363:1895:2364:2386"
-		  Position		  [295, 225, 325, 255]
-		  ZOrder		  10
 		}
 		Block {
 		  BlockType		  SubSystem
@@ -6439,6 +5879,13 @@ Model {
 		  DisplayOption		  "bar"
 		}
 		Block {
+		  BlockType		  RateTransition
+		  Name			  "Rate Transition2"
+		  SID			  "1363:1895:2364:2393"
+		  Position		  [490, 184, 530, 226]
+		  ZOrder		  14
+		}
+		Block {
 		  BlockType		  Outport
 		  Name			  "roll_cmd"
 		  SID			  "1363:1895:2364:1850"
@@ -6467,43 +5914,9 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  SrcBlock		  "Add"
-		  SrcPort		  1
-		  Points		  [30, 0; 0, -165]
-		  DstBlock		  "Mux"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "Demux"
-		  SrcPort		  2
-		  Points		  [36, 0; 0, -80]
-		  DstBlock		  "Mux"
-		  DstPort		  2
-		}
-		Line {
-		  SrcBlock		  "Demux"
-		  SrcPort		  3
-		  Points		  [56, 0; 0, -40]
-		  Branch {
-		    DstBlock		    "Derivative"
-		    DstPort		    1
-		  }
-		  Branch {
-		    Points		    [0, -25]
-		    DstBlock		    "Mux"
-		    DstPort		    3
-		  }
-		}
-		Line {
-		  SrcBlock		  "Derivative"
-		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  4
-		}
-		Line {
 		  SrcBlock		  "Mux"
 		  SrcPort		  1
-		  DstBlock		  "Explicit Controller"
+		  DstBlock		  "Rate Transition2"
 		  DstPort		  1
 		}
 		Line {
@@ -6512,25 +5925,40 @@ Model {
 		  DstBlock		  "roll_cmd"
 		  DstPort		  1
 		}
-	      }
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "y states estimator bias"
-	      SID		      "1363:1895:2365"
-	      Ports		      [3, 2]
-	      Position		      [800, 302, 895, 398]
-	      ZOrder		      -30
-	      BlockMirror	      on
-	      BackgroundColor	      "cyan"
-	      LibraryVersion	      "1.327"
-	      SourceBlock	      "Hquad_control_LIB_MPC/y states estimator bias"
-	      SourceType	      "SubSystem"
-	      Port {
-		PortNumber		2
-		Name			"roll_bias"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
+		Line {
+		  SrcBlock		  "Add"
+		  SrcPort		  1
+		  Points		  [62, 0; 0, -115]
+		  DstBlock		  "Mux"
+		  DstPort		  3
+		}
+		Line {
+		  SrcBlock		  "Demux"
+		  SrcPort		  2
+		  Points		  [161, 0; 0, -30]
+		  DstBlock		  "Mux"
+		  DstPort		  4
+		}
+		Line {
+		  SrcBlock		  "Demux"
+		  SrcPort		  3
+		  Points		  [5, 0; 0, -115]
+		  DstBlock		  "Mux"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "ang_roll"
+		  SrcPort		  1
+		  Points		  [216, 0; 0, -335]
+		  DstBlock		  "Mux"
+		  DstPort		  2
+		}
+		Line {
+		  SrcBlock		  "Rate Transition2"
+		  SrcPort		  1
+		  DstBlock		  "Explicit Controller"
+		  DstPort		  1
+		}
 	      }
 	    }
 	    Block {
@@ -6538,7 +5966,7 @@ Model {
 	      Name		      "yaw controller MPC FG"
 	      SID		      "1363:1895:2366"
 	      Ports		      [3, 1]
-	      Position		      [565, 662, 670, 758]
+	      Position		      [485, 662, 590, 758]
 	      ZOrder		      -31
 	      BackgroundColor	      "orange"
 	      AncestorBlock	      "Hquad_control_LIB_MPC/yaw controller MPC FG"
@@ -6558,7 +5986,7 @@ Model {
 	      }
 	      System {
 		Name			"yaw controller MPC FG"
-		Location		[58, 24, 1375, 804]
+		Location		[57, -4, 2568, 1448]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -6571,7 +5999,7 @@ Model {
 		TiledPageScale		1
 		ShowPageBoundaries	off
 		ZoomFactor		"125"
-		SIDHighWatermark	"2387"
+		SIDHighWatermark	"2390"
 		SIDPrevWatermark	"2381"
 		Block {
 		  BlockType		  Inport
@@ -6655,8 +6083,8 @@ Model {
 		  }
 		  System {
 		    Name		    "Explicit Controller"
-		    Location		    [58, 24, 1375, 804]
-		    Open		    on
+		    Location		    [57, -4, 2568, 1448]
+		    Open		    off
 		    ModelBrowserVisibility  off
 		    ModelBrowserWidth	    200
 		    ScreenColor		    "white"
@@ -6711,6 +6139,13 @@ Model {
 		  }
 		}
 		Block {
+		  BlockType		  RateTransition
+		  Name			  "Rate Transition2"
+		  SID			  "1363:1895:2366:2390"
+		  Position		  [485, 129, 525, 171]
+		  ZOrder		  10
+		}
+		Block {
 		  BlockType		  Outport
 		  Name			  "yaw_rate_cmd"
 		  SID			  "1363:1895:2366:1888"
@@ -6741,7 +6176,7 @@ Model {
 		Line {
 		  SrcBlock		  "Add"
 		  SrcPort		  1
-		  DstBlock		  "Explicit Controller"
+		  DstBlock		  "Rate Transition2"
 		  DstPort		  1
 		}
 		Line {
@@ -6750,25 +6185,12 @@ Model {
 		  DstBlock		  "yaw_rate_cmd"
 		  DstPort		  1
 		}
-	      }
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "yaw states estimator bias"
-	      SID		      "1363:1895:2367"
-	      Ports		      [3, 2]
-	      Position		      [800, 737, 895, 833]
-	      ZOrder		      -32
-	      BlockMirror	      on
-	      BackgroundColor	      "cyan"
-	      LibraryVersion	      "1.327"
-	      SourceBlock	      "Hquad_control_LIB_MPC/yaw states estimator bias"
-	      SourceType	      "SubSystem"
-	      Port {
-		PortNumber		2
-		Name			"yaw_rate_bias"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
+		Line {
+		  SrcBlock		  "Rate Transition2"
+		  SrcPort		  1
+		  DstBlock		  "Explicit Controller"
+		  DstPort		  1
+		}
 	      }
 	    }
 	    Block {
@@ -6776,7 +6198,7 @@ Model {
 	      Name		      "z controller MPC FG"
 	      SID		      "1363:1895:2368"
 	      Ports		      [3, 1]
-	      Position		      [565, 452, 670, 548]
+	      Position		      [485, 452, 590, 548]
 	      ZOrder		      -33
 	      BackgroundColor	      "orange"
 	      AncestorBlock	      "Hquad_control_LIB_MPC/z controller MPC FG"
@@ -6796,7 +6218,7 @@ Model {
 	      }
 	      System {
 		Name			"z controller MPC FG"
-		Location		[58, 24, 1375, 804]
+		Location		[57, -4, 2568, 1448]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -6809,7 +6231,7 @@ Model {
 		TiledPageScale		1
 		ShowPageBoundaries	off
 		ZoomFactor		"100"
-		SIDHighWatermark	"2392"
+		SIDHighWatermark	"2395"
 		SIDPrevWatermark	"2381"
 		Block {
 		  BlockType		  Inport
@@ -6960,6 +6382,13 @@ Model {
 		  DisplayOption		  "bar"
 		}
 		Block {
+		  BlockType		  RateTransition
+		  Name			  "Rate Transition2"
+		  SID			  "1363:1895:2368:2395"
+		  Position		  [350, 109, 390, 151]
+		  ZOrder		  16
+		}
+		Block {
 		  BlockType		  Outport
 		  Name			  "thrust_cmd"
 		  SID			  "1363:1895:2368:1869"
@@ -7004,7 +6433,7 @@ Model {
 		Line {
 		  SrcBlock		  "Mux"
 		  SrcPort		  1
-		  DstBlock		  "Explicit Controller"
+		  DstBlock		  "Rate Transition2"
 		  DstPort		  1
 		}
 		Line {
@@ -7013,25 +6442,12 @@ Model {
 		  DstBlock		  "thrust_cmd"
 		  DstPort		  1
 		}
-	      }
-	    }
-	    Block {
-	      BlockType		      Reference
-	      Name		      "z states estimator bias"
-	      SID		      "1363:1895:2369"
-	      Ports		      [3, 2]
-	      Position		      [800, 522, 895, 618]
-	      ZOrder		      -34
-	      BlockMirror	      on
-	      BackgroundColor	      "cyan"
-	      LibraryVersion	      "1.327"
-	      SourceBlock	      "Hquad_control_LIB_MPC/z states estimator bias"
-	      SourceType	      "SubSystem"
-	      Port {
-		PortNumber		2
-		Name			"thrust_bias"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
+		Line {
+		  SrcBlock		  "Rate Transition2"
+		  SrcPort		  1
+		  DstBlock		  "Explicit Controller"
+		  DstPort		  1
+		}
 	      }
 	    }
 	    Block {
@@ -7056,63 +6472,34 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector9"
 	      SrcPort		      4
-	      Points		      [45, 0; 0, 555; 715, 0]
-	      DstBlock		      "yaw states estimator bias"
-	      DstPort		      3
+	      Points		      [45, 0; 0, 555; 715, 0; 0, -50; -145, 0]
+	      Branch {
+		Points			[0, -5; -30, 0]
+		DstBlock		"Sum3"
+		DstPort			2
+	      }
+	      Branch {
+		Labels			[2, 0]
+		Points			[0, 30; 500, 0; 0, -325]
+		DstBlock		"Bus\nCreator1"
+		DstPort			4
+	      }
 	    }
 	    Line {
 	      Name		      "yaw_rate_cmd"
 	      Labels		      [0, 0]
 	      SrcBlock		      "Sum3"
 	      SrcPort		      1
-	      Points		      [300, 0]
-	      Branch {
-		Points			[0, 45]
-		DstBlock		"Integer Delay3"
-		DstPort			1
-	      }
-	      Branch {
-		Points			[65, 0; 0, -390]
-		DstBlock		"Bus\nCreator"
-		DstPort			4
-	      }
+	      Points		      [365, 0; 0, -390]
+	      DstBlock		      "Bus\nCreator"
+	      DstPort		      4
 	    }
 	    Line {
 	      Name		      "yaw_rate_cmd"
 	      Labels		      [0, 0]
 	      SrcBlock		      "yaw controller MPC FG"
 	      SrcPort		      1
-	      DstBlock		      "Sum3"
-	      DstPort		      1
-	    }
-	    Line {
-	      Name		      "yaw_rate_bias"
-	      SrcBlock		      "yaw states estimator bias"
-	      SrcPort		      2
-	      Points		      [-30, 0]
-	      Branch {
-		Labels			[2, 0]
-		Points			[0, 35; 500, 0; 0, -325]
-		DstBlock		"Bus\nCreator1"
-		DstPort			4
-	      }
-	      Branch {
-		Points			[-30, 0]
-		DstBlock		"Sum3"
-		DstPort			2
-	      }
-	    }
-	    Line {
-	      SrcBlock		      "yaw states estimator bias"
-	      SrcPort		      1
-	      Points		      [-10, 0; 0, 15; -235, 0]
-	      DstBlock		      "yaw controller MPC FG"
-	      DstPort		      3
-	    }
-	    Line {
-	      SrcBlock		      "Integer Delay3"
-	      SrcPort		      1
-	      DstBlock		      "yaw states estimator bias"
+	      DstBlock		      "Rate Transition3"
 	      DstPort		      1
 	    }
 	    Line {
@@ -7120,60 +6507,61 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector9"
 	      SrcPort		      3
-	      Points		      [45, 0; 0, 355; 715, 0]
-	      DstBlock		      "z states estimator bias"
-	      DstPort		      3
-	    }
-	    Line {
-	      Name		      "pitch_bias"
-	      Labels		      [0, 0]
-	      SrcBlock		      "x states estimator bias"
-	      SrcPort		      2
-	      Points		      [0, 0]
+	      Points		      [45, 0; 0, 583; 565, 0; 0, -228]
 	      Branch {
-		Labels			[3, 0]
-		Points			[-10, 0; 0, 290]
-		DstBlock		"Bus\nCreator1"
-		DstPort			1
-	      }
-	      Branch {
-		DstBlock		"Sum"
+		Points			[0, -60; -20, 0; 0, -70]
+		DstBlock		"Sum2"
 		DstPort			2
 	      }
-	    }
-	    Line {
-	      Name		      "pitch_bias"
-	      Labels		      [0, 0]
-	      SrcBlock		      "x states estimator bias"
-	      SrcPort		      1
-	      Points		      [-10, 0; 0, 15; -235, 0]
-	      DstBlock		      "x controller MPC FG\n "
-	      DstPort		      3
-	    }
-	    Line {
-	      SrcBlock		      "demux"
-	      SrcPort		      12
-	      Points		      [0, 55; 645, 0; 0, -90]
-	      DstBlock		      "yaw states estimator bias"
-	      DstPort		      2
+	      Branch {
+		Labels			[1, 0]
+		Points			[490, 0; 0, -150]
+		DstBlock		"Bus\nCreator1"
+		DstPort			3
+	      }
 	    }
 	    Line {
 	      Name		      "<pitch_bias>"
 	      Labels		      [0, 0]
 	      SrcBlock		      "Bus\nSelector9"
 	      SrcPort		      1
-	      Points		      [185, 0; 0, -45; 575, 0]
-	      DstBlock		      "x states estimator bias"
+	      Points		      [30, 0; 0, -270; 598, 0; 0, 175; 7, 0]
+	      Branch {
+		Labels			[0, 1]
+		Points			[10, 0]
+		DstBlock		"Sum"
+		DstPort			2
+	      }
+	      Branch {
+		Labels			[2, 0]
+		Points			[0, 290]
+		DstBlock		"Bus\nCreator1"
+		DstPort			1
+	      }
+	    }
+	    Line {
+	      SrcBlock		      "demux"
+	      SrcPort		      12
+	      Points		      [125, 0; 0, 35]
+	      DstBlock		      "yaw controller MPC FG"
 	      DstPort		      3
 	    }
 	    Line {
 	      Name		      "<roll_bias>"
-	      Labels		      [0, 0]
+	      Labels		      [0, 0; -1, 1]
 	      SrcBlock		      "Bus\nSelector9"
 	      SrcPort		      2
-	      Points		      [360, 0; 0, 130; 420, 0; 0, -40]
-	      DstBlock		      "y states estimator bias"
-	      DstPort		      3
+	      Points		      [47, 0; 0, -273; 558, 0; 0, 368]
+	      Branch {
+		Points			[0, 105]
+		DstBlock		"Bus\nCreator1"
+		DstPort			2
+	      }
+	      Branch {
+		Points			[-20, 0]
+		DstBlock		"Sum1"
+		DstPort			2
+	      }
 	    }
 	    Line {
 	      SrcBlock		      "bias_W"
@@ -7201,152 +6589,65 @@ Model {
 	      Labels		      [0, 0]
 	      SrcBlock		      "Sum2"
 	      SrcPort		      1
-	      Points		      [245, 0]
-	      Branch {
-		DstBlock		"Sum5"
-		DstPort			1
-	      }
-	      Branch {
-		Points			[0, 40]
-		DstBlock		"Integer Delay2"
-		DstPort			1
-	      }
+	      DstBlock		      "Sum5"
+	      DstPort		      1
 	    }
 	    Line {
 	      Name		      "thrust_cmd"
 	      Labels		      [0, 0]
 	      SrcBlock		      "z controller MPC FG"
 	      SrcPort		      1
-	      DstBlock		      "Sum2"
+	      DstBlock		      "Rate Transition2"
 	      DstPort		      1
 	    }
 	    Line {
-	      Name		      "thrust_bias"
-	      SrcBlock		      "z states estimator bias"
-	      SrcPort		      2
-	      Points		      [-35, 0]
-	      Branch {
-		Labels			[2, 0]
-		Points			[0, 60; 490, 0; 0, -150]
-		DstBlock		"Bus\nCreator1"
-		DstPort			3
-	      }
-	      Branch {
-		Points			[-20, 0; 0, -70]
-		DstBlock		"Sum2"
-		DstPort			2
-	      }
-	    }
-	    Line {
-	      Name		      "roll_bias"
-	      Labels		      [0, 0]
-	      SrcBlock		      "y states estimator bias"
-	      SrcPort		      2
-	      Points		      [0, 10; -40, 0]
-	      Branch {
-		Points			[0, 105]
-		DstBlock		"Bus\nCreator1"
-		DstPort			2
-	      }
-	      Branch {
-		Points			[-20, 0]
-		DstBlock		"Sum1"
-		DstPort			2
-	      }
-	    }
-	    Line {
 	      Name		      "roll_cmd"
+	      Labels		      [1, 0]
 	      SrcBlock		      "Sum1"
 	      SrcPort		      1
-	      Points		      [240, 0]
-	      Branch {
-		Labels			[1, 0]
-		DstBlock		"Bus\nCreator"
-		DstPort			2
-	      }
-	      Branch {
-		DstBlock		"Integer Delay1"
-		DstPort			1
-	      }
+	      DstBlock		      "Bus\nCreator"
+	      DstPort		      2
 	    }
 	    Line {
 	      Name		      "roll_cmd"
 	      Labels		      [0, 0]
 	      SrcBlock		      "y controller MPC FG"
 	      SrcPort		      1
-	      DstBlock		      "Sum1"
+	      Points		      [0, -5]
+	      DstBlock		      "Rate Transition1"
 	      DstPort		      1
 	    }
 	    Line {
 	      Name		      "pitch_cmd"
-	      Labels		      [0, 0]
+	      Labels		      [0, 0; 3, 0]
 	      SrcBlock		      "Sum"
 	      SrcPort		      1
-	      Points		      [180, 0; 0, 45]
-	      Branch {
-		Labels			[2, 0]
-		Points			[0, 150]
-		DstBlock		"Bus\nCreator"
-		DstPort			1
-	      }
-	      Branch {
-		DstBlock		"Integer Delay"
-		DstPort			1
-	      }
+	      Points		      [180, 0; 0, 195]
+	      DstBlock		      "Bus\nCreator"
+	      DstPort		      1
 	    }
 	    Line {
 	      Name		      "pitch_cmd"
 	      Labels		      [0, 1]
 	      SrcBlock		      "x controller MPC FG\n "
 	      SrcPort		      1
-	      DstBlock		      "Sum"
+	      Points		      [63, 0; 0, -20]
+	      DstBlock		      "Rate Transition"
 	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "y states estimator bias"
-	      SrcPort		      1
-	      Points		      [0, 30; -245, 0]
-	      DstBlock		      "y controller MPC FG"
-	      DstPort		      3
-	    }
-	    Line {
-	      SrcBlock		      "Integer Delay"
-	      SrcPort		      1
-	      DstBlock		      "x states estimator bias"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "z states estimator bias"
-	      SrcPort		      1
-	      Points		      [0, 25; -245, 0]
-	      DstBlock		      "z controller MPC FG"
-	      DstPort		      3
 	    }
 	    Line {
 	      SrcBlock		      "demux"
 	      SrcPort		      8
-	      Points		      [95, 0; 0, -40]
+	      Points		      [0, 35]
 	      DstBlock		      "z controller MPC FG"
 	      DstPort		      2
 	    }
 	    Line {
 	      SrcBlock		      "demux"
 	      SrcPort		      2
-	      Points		      [75, 0; 0, -40]
+	      Points		      [75, 0; 0, -20]
 	      DstBlock		      "x controller MPC FG\n "
 	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "Integer Delay1"
-	      SrcPort		      1
-	      DstBlock		      "y states estimator bias"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "Integer Delay2"
-	      SrcPort		      1
-	      DstBlock		      "z states estimator bias"
-	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "odometry"
@@ -7369,31 +6670,35 @@ Model {
 	    Line {
 	      SrcBlock		      "demux"
 	      SrcPort		      1
+	      Points		      [110, 0; 0, 15]
 	      DstBlock		      "x controller MPC FG\n "
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "demux"
 	      SrcPort		      4
+	      Points		      [152, 0; 0, 30]
 	      DstBlock		      "y controller MPC FG"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "demux"
 	      SrcPort		      5
-	      Points		      [75, 0; 0, -40]
+	      Points		      [75, 0; 0, -5]
 	      DstBlock		      "y controller MPC FG"
 	      DstPort		      2
 	    }
 	    Line {
 	      SrcBlock		      "demux"
 	      SrcPort		      7
+	      Points		      [0, 65]
 	      DstBlock		      "z controller MPC FG"
 	      DstPort		      1
 	    }
 	    Line {
 	      SrcBlock		      "demux"
 	      SrcPort		      10
+	      Points		      [0, 95]
 	      DstBlock		      "yaw controller MPC FG"
 	      DstPort		      1
 	    }
@@ -7407,29 +6712,8 @@ Model {
 	    }
 	    Line {
 	      SrcBlock		      "demux"
-	      SrcPort		      3
-	      Points		      [235, 0; 0, 35; 410, 0; 0, -65]
-	      DstBlock		      "x states estimator bias"
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "demux"
-	      SrcPort		      6
-	      Points		      [180, 0; 0, 30; 470, 0; 0, -80]
-	      DstBlock		      "y states estimator bias"
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "demux"
-	      SrcPort		      9
-	      Points		      [155, 0; 0, 30; 495, 0; 0, -70]
-	      DstBlock		      "z states estimator bias"
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "demux"
 	      SrcPort		      11
-	      Points		      [120, 0; 0, -40]
+	      Points		      [37, 0; 0, 65]
 	      DstBlock		      "yaw controller MPC FG"
 	      DstPort		      2
 	    }
@@ -7452,6 +6736,65 @@ Model {
 	      SrcPort		      1
 	      Points		      [0, -45]
 	      DstBlock		      "Product"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "demux"
+	      SrcPort		      3
+	      Points		      [175, 0; 0, -55]
+	      DstBlock		      "x controller MPC FG\n "
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "demux"
+	      SrcPort		      6
+	      Points		      [148, 0; 0, -40]
+	      DstBlock		      "y controller MPC FG"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "demux"
+	      SrcPort		      9
+	      Points		      [58, 0; 0, 5]
+	      DstBlock		      "z controller MPC FG"
+	      DstPort		      3
+	    }
+	    Line {
+	      SrcBlock		      "demux"
+	      SrcPort		      13
+	      Points		      [100, 0; 0, -630]
+	      DstBlock		      "x controller MPC FG\n "
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      "demux"
+	      SrcPort		      14
+	      Points		      [171, 0; 0, -495]
+	      DstBlock		      "y controller MPC FG"
+	      DstPort		      4
+	    }
+	    Line {
+	      SrcBlock		      "Rate Transition"
+	      SrcPort		      1
+	      DstBlock		      "Sum"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Rate Transition1"
+	      SrcPort		      1
+	      DstBlock		      "Sum1"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Rate Transition2"
+	      SrcPort		      1
+	      DstBlock		      "Sum2"
+	      DstPort		      1
+	    }
+	    Line {
+	      SrcBlock		      "Rate Transition3"
+	      SrcPort		      1
+	      DstBlock		      "Sum3"
 	      DstPort		      1
 	    }
 	    Annotation {
@@ -7488,7 +6831,7 @@ Model {
 	  Name			  "rotate to world frame"
 	  SID			  "1363:2041"
 	  Ports			  [2, 2]
-	  Position		  [285, 217, 420, 308]
+	  Position		  [325, 217, 460, 308]
 	  ZOrder		  -11
 	  Priority		  "1"
 	  LibraryVersion	  "1.327"
@@ -7535,7 +6878,6 @@ Model {
 	Line {
 	  SrcBlock		  "rotate to world frame"
 	  SrcPort		  2
-	  Points		  [65, 0; 0, -5]
 	  DstBlock		  "MAIN CONTROL LOOP1"
 	  DstPort		  2
 	}
@@ -7554,21 +6896,21 @@ Model {
 	Line {
 	  SrcBlock		  "MAIN CONTROL LOOP1"
 	  SrcPort		  2
-	  Points		  [0, -5; 85, 0; 0, -50]
+	  Points		  [9, 0; 0, -10; 76, 0; 0, -50]
 	  DstBlock		  "decoupling and rotation"
 	  DstPort		  3
 	}
 	Line {
 	  SrcBlock		  "rotate to world frame"
 	  SrcPort		  1
-	  Points		  [105, 0]
+	  Points		  [65, 0]
 	  Branch {
 	    Points		    [0, -20]
 	    DstBlock		    "decoupling and rotation"
 	    DstPort		    1
 	  }
 	  Branch {
-	    Points		    [0, 10]
+	    Points		    [0, 15]
 	    DstBlock		    "MAIN CONTROL LOOP1"
 	    DstPort		    1
 	  }
@@ -7583,22 +6925,22 @@ Model {
 	Line {
 	  SrcBlock		  "reset"
 	  SrcPort		  1
-	  Points		  [460, 0; 0, -90]
+	  Points		  [460, 0; 0, -85]
 	  DstBlock		  "MAIN CONTROL LOOP1"
 	  DstPort		  4
+	}
+	Line {
+	  SrcBlock		  "MAIN CONTROL LOOP1"
+	  SrcPort		  1
+	  Points		  [9, 0; 0, -10; 96, 0]
+	  DstBlock		  "decoupling and rotation"
+	  DstPort		  2
 	}
 	Line {
 	  SrcBlock		  "odometry"
 	  SrcPort		  1
 	  DstBlock		  "rotate to world frame"
 	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "MAIN CONTROL LOOP1"
-	  SrcPort		  1
-	  Points		  [0, -5; 105, 0]
-	  DstBlock		  "decoupling and rotation"
-	  DstPort		  2
 	}
       }
     }
@@ -7659,20 +7001,6 @@ Model {
       RefreshTime	      0.035000
     }
     Line {
-      SrcBlock		      "pos controller"
-      SrcPort		      1
-      Points		      [0, 35; 10, 0]
-      Branch {
-	Points			[0, -165]
-	DstBlock		"cmds"
-	DstPort			1
-      }
-      Branch {
-	DstBlock		"Rate Transition1"
-	DstPort			1
-      }
-    }
-    Line {
       SrcBlock		      "Point Mass Model \nnonlinear model"
       SrcPort		      2
       Points		      [0, 20; 20, 0]
@@ -7698,42 +7026,37 @@ Model {
       SrcPort		      1
       Points		      [0, 5; 41, 0]
       Branch {
+	Points			[172, 0; 0, 355; -683, 0]
+	Branch {
+	  Points		  [0, -360]
+	  DstBlock		  "pos controller"
+	  DstPort		  1
+	}
+	Branch {
+	  Points		  [-330, 0]
+	  DstBlock		  "Bus\nSelector5"
+	  DstPort		  1
+	}
+      }
+      Branch {
 	Points			[0, -105]
 	DstBlock		"Bus\nSelector"
 	DstPort			1
       }
-      Branch {
-	DstBlock		"Rate Transition5"
-	DstPort			1
-      }
     }
     Line {
-      SrcBlock		      "Error Model"
+      SrcBlock		      "pos controller"
       SrcPort		      1
-      Points		      [-250, 0]
+      Points		      [0, 35; 10, 0]
       Branch {
-	Points			[0, -360]
-	DstBlock		"pos controller"
+	DstBlock		"Point Mass Model \nnonlinear model"
 	DstPort			1
       }
       Branch {
-	Points			[-330, 0]
-	DstBlock		"Bus\nSelector5"
+	Points			[0, -165]
+	DstBlock		"cmds"
 	DstPort			1
       }
-    }
-    Line {
-      SrcBlock		      "Rate Transition5"
-      SrcPort		      1
-      Points		      [55, 0; 0, 355]
-      DstBlock		      "Error Model"
-      DstPort		      1
-    }
-    Line {
-      SrcBlock		      "Rate Transition1"
-      SrcPort		      1
-      DstBlock		      "Point Mass Model \nnonlinear model"
-      DstPort		      1
     }
     Line {
       SrcBlock		      "pos controller"
@@ -7805,29 +7128,6 @@ Model {
       Position		      [727, 585]
       ZOrder		      -1
     }
-  }
-}
-MatData {
-  NumRecords		  4
-  DataRecord {
-    Tag			    DataTag0
-    Data		    "  %)30     .    B     8    (     @         %    \"     $    !     0         %  0 $P    $    3    :&%S26"
-    "YH97)I=&5D3W!T:6]N        #@   #     &    \"     D\"        !0    @    !     0    $          @ !  $    "
-  }
-  DataRecord {
-    Tag			    DataTag1
-    Data		    "  %)30     .    B     8    (     @         %    \"     $    !     0         %  0 $P    $    3    :&%S26"
-    "YH97)I=&5D3W!T:6]N        #@   #     &    \"     D\"        !0    @    !     0    $          @ !  $    "
-  }
-  DataRecord {
-    Tag			    DataTag2
-    Data		    "  %)30     .    B     8    (     @         %    \"     $    !     0         %  0 $P    $    3    :&%S26"
-    "YH97)I=&5D3W!T:6]N        #@   #     &    \"     D\"        !0    @    !     0    $          @ !  $    "
-  }
-  DataRecord {
-    Tag			    DataTag3
-    Data		    "  %)30     .    B     8    (     @         %    \"     $    !     0         %  0 $P    $    3    :&%S26"
-    "YH97)I=&5D3W!T:6]N        #@   #     &    \"     D\"        !0    @    !     0    $          @ !  $    "
   }
 }
 # Finite State Machines

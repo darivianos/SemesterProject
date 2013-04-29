@@ -15,7 +15,7 @@ g = 9.8065;
 
 Theta = -deg2rad(3); % Docking angle
 % Controller Sampling Time
-Ts = 0.02;
+Ts = 0.08;
 modelXdirection = GenerateModel('QuadXDirection',Theta,Ts);
 % Simulation Sampling Time (50 Hz)
 TsReal = 0.02;
@@ -83,8 +83,8 @@ ctrl.model.u.reference = uref;
 expmpcXdirection = ctrl.toExplicit();
 save;
 % Create Look Up Table, code in C
-exportToC_MLD(expmpcXdirection,Ts,'XdirectionCtrl');
-cd mpt_explicit_controller
+exportToC_MLD(expmpcXdirection,Ts,'XdirectionCtrl','Xdirection');
+cd Xdirection
 mex mpt_getInput_sfunc_Xdirection.c;
 cd ..
 x0 = [0;0;-1;0];
@@ -126,7 +126,8 @@ x0 = [0;0;-1;0];
 % plot(time,ClosedData.U(:)); grid on;ylabel('Input')
 
 %% Ydirection Controller (No Hybrid Model) (Roll Controller)
-DF = -0.9606;
+%DF = -0.9606;
+DF = 0;
 a1 = 59.71;
 a0 = 491;
 c0 = 491;
