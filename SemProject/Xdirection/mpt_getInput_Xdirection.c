@@ -7,35 +7,29 @@
 /*    which violates the less constraints */
 /* 2) Round the input at the third decimal in order to be closer to real applications */
 
-#ifndef XdirectionCtrl_h 
-#include "XdirectionCtrl.h" 
+#ifndef XdirectionCtrl_h
+#include "XdirectionCtrl.h"
 #endif
-#include <math.h>
 
 static float mpt_getInput_Xdirection(float *X, float *U)
 {
     int ix, iu, ic, nc, isinside;
-    unsigned long ireg, abspos;
-    float hx, region;
-    int minReg, minViol, regionViol;
-    
-    for (ix=0; ix<MPT_NX; ix++) {
-        X[ix] = round(1000*X[ix])/1000;
-    }
+    unsigned long ireg, abspos, minreg;
+    float hx, region, tolerance, sumViol;
     
     abspos = 0;
     region = 0;
-    
-    minReg = -1;
-    minViol = 1000;
+    tolerance = 1;
+    sumViol = 0;
+    minreg = 0;
     
     /* initialize U to zero*/
     for (iu=0; iu<MPT_NU; iu++) {
         U[iu] = 0;
     }
-
+    
     for (ireg=0; ireg<MPT_NR; ireg++) {
-        regionViol = 0;
+        sumViol = 0;
         isinside = 1;
         nc = MPT_NC[ireg];
         for (ic=0; ic<nc; ic++) {
@@ -43,12 +37,17 @@ static float mpt_getInput_Xdirection(float *X, float *U)
             for (ix=0; ix<MPT_NX; ix++) {
                 hx = hx + MPT_H[abspos*MPT_NX+ic*MPT_NX+ix]*X[ix];
             }
+            
             if ((hx - MPT_K[abspos+ic]) > MPT_ABSTOL) {
                 /* constraint is violated, continue with next region */
-                regionViol = regionViol + 1;
                 isinside = 0;
-                break;
-            } 
+                sumViol = sumViol + (hx - MPT_K[abspos+ic]);
+            }
+            
+        }
+        if (sumViol < tolerance){
+            tolerance = sumViol;
+            minreg = ireg;
         }
         if (isinside==1) {
             /* state belongs to this region, extract control law and exit */
@@ -58,29 +57,18 @@ static float mpt_getInput_Xdirection(float *X, float *U)
                     U[iu] = U[iu] + MPT_F[ireg*MPT_NX*MPT_NU + iu*MPT_NX + ix]*X[ix];
                 }
                 U[iu] = U[iu] + MPT_G[ireg*MPT_NU + iu];
-                /* round up at the third decimal */
-                U[iu] = round(U[iu]*1000)/1000;
             }
             return region;
         }
         abspos = abspos + MPT_NC[ireg];
-        
-        /* Check which region has the least number of constraints violation */
-        if(regionViol < minViol){
-            minViol = regionViol;
-            minReg = ireg;
-        }
     }
-       /* case in which not a feasible control law found */
-    region = minReg + 1;
+    ireg = minreg;
+    region = ireg + 1;
     for (iu=0; iu<MPT_NU; iu++) {
         for (ix=0; ix<MPT_NX; ix++) {
-            U[iu] = U[iu] + MPT_F[minReg*MPT_NX*MPT_NU + iu*MPT_NX + ix]*X[ix];
+            U[iu] = U[iu] + MPT_F[ireg*MPT_NX*MPT_NU + iu*MPT_NX + ix]*X[ix];
         }
-        U[iu] = U[iu] + MPT_G[minReg*MPT_NU + iu];
-        /* round up at the third decimal */
-        U[iu] = round(U[iu]*1000)/1000;
+        U[iu] = U[iu] + MPT_G[ireg*MPT_NU + iu];
     }
     return region;
-   
 }
