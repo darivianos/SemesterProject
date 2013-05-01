@@ -30,7 +30,7 @@ static float mpt_getInput_Xdirection(float *X, float *U)
     }
     for (ix=0; ix<MPT_NX; ix++) {
         temp = X[ix];
-        X[ix] = round(10000*temp)/10000;
+        X[ix] = round(1000*temp)/1000;
     }
     for (ireg=0; ireg<MPT_NR; ireg++) {
         sumViol = 0;
@@ -62,7 +62,6 @@ static float mpt_getInput_Xdirection(float *X, float *U)
                 }
                 U[iu] = U[iu] + MPT_G[ireg*MPT_NU + iu];
             }
-            printf("region = %.1f\n",region);
             return region;
         }
         abspos = abspos + MPT_NC[ireg];
@@ -75,6 +74,5 @@ static float mpt_getInput_Xdirection(float *X, float *U)
         }
         U[iu] = U[iu] + MPT_G[ireg*MPT_NU + iu];
     }
-    printf("region2 = %.1f\n",region);
     return region;
 }

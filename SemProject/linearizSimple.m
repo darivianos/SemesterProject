@@ -1,4 +1,4 @@
-function [Aff,Bff,Cff,Dff,Add,Bdd,Cdd,Ddd] = linearizSimple(Theta,Ts)
+function [Aff,Bff,Cff,Dff,Add,Bdd,Cdd,Ddd] = linearizSimple(Theta,Ts,m,l,gamma,J,a1,a0,c0,DF)
 
 
 % Linearization function that returns the discrete state space
@@ -10,25 +10,11 @@ function [Aff,Bff,Cff,Dff,Add,Bdd,Cdd,Ddd] = linearizSimple(Theta,Ts)
 % Ts : sampling time
 % -------------------------------------------------------------
 
-
-
-% Initialization
-m = 0.65;
-g = 9.8065;
-l = 0.30;
-gamma = 0;
-
-% for the mass of inertia, we use the approximation of Thin, solid disk of radius r and mass m
-J = m*l*l/4; % Inertia
-
 % Equilibrium Position
+g = 9.8065;
 la = l*sin(gamma+Theta)/J;
-%DF = -0.9606;
-DF = 0;
 
-a1 = 59.71;
-a0 = 491;
-c0 = 491;
+
 
 % Calculation of linearized Matrices around Theta
 Af = zeros(4,4);

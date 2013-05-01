@@ -21,7 +21,7 @@ static int MPT_NC[] = {
 2 };
 
 static float MPT_F[] = {
--2.863110e-01 };
+-2.847540e-01 };
 
 static float MPT_G[] = {
--4.440892e-16 };
+4.440892e-16 };

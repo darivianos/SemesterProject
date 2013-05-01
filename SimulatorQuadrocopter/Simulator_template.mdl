@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.723"
+    ComputedModelVersion    "1.729"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -30,7 +30,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [57.0, -4.0, 2511.0, 1452.0]
+      Location		      [58.0, 24.0, 2527.0, 1488.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -52,11 +52,11 @@ Model {
 	$ObjectID		5
 	$ClassName		"Simulink.EditorInfo"
 	IsActive		[1]
-	ViewObjType		"SimulinkTopLevel"
-	LoadSaveID		"0"
-	Extents			[2459.0, 1276.0]
-	ZoomFactor		[1.0532665799650678]
-	Offset			[69.473643400750632, -296.47272873879268]
+	ViewObjType		"SimulinkSubsys"
+	LoadSaveID		"1236"
+	Extents			[2475.0, 1312.0]
+	ZoomFactor		[1.5371017885317062]
+	Offset			[645.89194996424192, 258.720845199479]
       }
     }
   }
@@ -66,9 +66,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "root"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Wed May 01 13:22:23 2013"
-  RTWModifiedTimeStamp	  289315328
-  ModelVersionFormat	  "1.%<AutoIncrement:723>"
+  LastModifiedDate	  "Wed May 01 18:25:56 2013"
+  RTWModifiedTimeStamp	  289333550
+  ModelVersionFormat	  "1.%<AutoIncrement:729>"
   ConfigurationManager	  "customverctrl"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -170,7 +170,7 @@ Model {
 	  $ObjectID		  8
 	  Version		  "1.13.0"
 	  StartTime		  "0.0"
-	  StopTime		  "7"
+	  StopTime		  "17"
 	  AbsTol		  "auto"
 	  FixedStep		  "0.02"
 	  InitialStep		  "auto"
@@ -879,15 +879,6 @@ Model {
       SampleTime	      "-1"
     }
     Block {
-      BlockType		      RateTransition
-      Integrity		      on
-      Deterministic	      on
-      X0		      "0"
-      OutPortSampleTimeOpt    "Specify"
-      OutPortSampleTimeMultiple	"1"
-      OutPortSampleTime	      "-1"
-    }
-    Block {
       BlockType		      S-Function
       FunctionName	      "system"
       SFunctionModules	      "''"
@@ -1036,8 +1027,8 @@ Model {
   }
   System {
     Name		    "Simulator_template"
-    Location		    [57, -4, 2568, 1448]
-    Open		    on
+    Location		    [58, 24, 2585, 1512]
+    Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
     ScreenColor		    "white"
@@ -1048,26 +1039,61 @@ Model {
     TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "105"
+    ZoomFactor		    "206"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "1433"
+    SIDHighWatermark	    "1439"
     Block {
       BlockType		      BusSelector
       Name		      "Bus\nSelector"
-      SID		      "1432"
-      Ports		      [1, 1]
-      Position		      [1125, 36, 1130, 74]
-      ZOrder		      9
+      SID		      "1434"
+      Ports		      [1, 6]
+      Position		      [1065, 80, 1070, 175]
+      ZOrder		      10
       ShowName		      off
-      OutputSignals	      "pos.x,vel.x_dot,rpy.pitch"
-      OutputAsBus	      on
+      OutputSignals	      "pos.x,vel.x_dot,pos.y,vel.y_dot,pos.z,vel.z_dot"
+      Port {
+	PortNumber		1
+	Name			"<x>"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      Port {
+	PortNumber		2
+	Name			"<x_dot>"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      Port {
+	PortNumber		3
+	Name			"<y>"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      Port {
+	PortNumber		4
+	Name			"<y_dot>"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      Port {
+	PortNumber		5
+	Name			"<z>"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
+      Port {
+	PortNumber		6
+	Name			"<z_dot>"
+	RTWStorageClass		"Auto"
+	DataLoggingNameMode	"SignalName"
+      }
     }
     Block {
       BlockType		      BusSelector
       Name		      "Bus\nSelector4"
       SID		      "1364"
       Ports		      [1, 1]
-      Position		      [695, 265, 700, 305]
+      Position		      [695, 315, 700, 355]
       ZOrder		      -4
       ShowName		      off
       OutputSignals	      "pitch_bias,roll_bias,thrust_bias"
@@ -1077,7 +1103,7 @@ Model {
       BlockType		      Constant
       Name		      "Constant1"
       SID		      "1276"
-      Position		      [560, 360, 590, 390]
+      Position		      [560, 410, 590, 440]
       ZOrder		      -7
       BlockMirror	      on
       Value		      "0"
@@ -1086,7 +1112,7 @@ Model {
       BlockType		      Constant
       Name		      "Constant2"
       SID		      "1368"
-      Position		      [385, 260, 415, 290]
+      Position		      [385, 310, 415, 340]
       ZOrder		      -8
       Value		      "mass"
     }
@@ -1095,7 +1121,7 @@ Model {
       Name		      "Force"
       SID		      "642"
       Ports		      [1]
-      Position		      [1050, 259, 1080, 291]
+      Position		      [1050, 309, 1080, 341]
       ZOrder		      -31
       BackgroundColor	      "magenta"
       Floating		      off
@@ -1129,7 +1155,7 @@ Model {
       BlockType		      Gain
       Name		      "Gain"
       SID		      "1365"
-      Position		      [730, 270, 760, 300]
+      Position		      [730, 320, 760, 350]
       ZOrder		      -15
       Gain		      "180/pi"
       ParamDataTypeStr	      "Inherit: Inherit via internal rule"
@@ -1137,46 +1163,44 @@ Model {
       SaturateOnIntegerOverflow	off
     }
     Block {
-      BlockType		      Scope
-      Name		      "Output"
-      SID		      "1426"
-      Ports		      [1]
-      Position		      [1190, 39, 1220, 71]
-      ZOrder		      3
-      BackgroundColor	      "magenta"
-      Floating		      off
-      Location		      [517, 134, 1040, 644]
-      Open		      off
-      NumInputPorts	      "1"
-      List {
-	ListType		AxesTitles
-	axes1			"%<SignalLabel>"
-      }
-      List {
-	ListType		ScopeGraphics
-	FigureColor		"[0.5 0.5 0.5]"
-	AxesColor		"[0 0 0]"
-	AxesTickColor		"[1 1 1]"
-	LineColors		"[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
-	LineStyles		"-|-|-|-|-|-"
-	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
-	MarkerStyles		"none|none|none|none|none|none"
-      }
-      ShowLegends	      off
-      TimeRange		      "40"
-      YMin		      "-0.5"
-      YMax		      "0.5"
-      SaveName		      "ScopeData4"
-      DataFormat	      "StructureWithTime"
-      LimitDataPoints	      off
-      SampleTime	      "0"
+      BlockType		      Mux
+      Name		      "Mux"
+      SID		      "1435"
+      Ports		      [3, 1]
+      Position		      [1130, 16, 1135, 54]
+      ZOrder		      11
+      ShowName		      off
+      Inputs		      "3"
+      DisplayOption	      "bar"
+    }
+    Block {
+      BlockType		      Mux
+      Name		      "Mux1"
+      SID		      "1438"
+      Ports		      [2, 1]
+      Position		      [1130, 81, 1135, 119]
+      ZOrder		      14
+      ShowName		      off
+      Inputs		      "2"
+      DisplayOption	      "bar"
+    }
+    Block {
+      BlockType		      Mux
+      Name		      "Mux2"
+      SID		      "1439"
+      Ports		      [2, 1]
+      Position		      [1130, 146, 1135, 184]
+      ZOrder		      15
+      ShowName		      off
+      Inputs		      "2"
+      DisplayOption	      "bar"
     }
     Block {
       BlockType		      SubSystem
       Name		      "Point Mass Model \nnonlinear model"
       SID		      "1236"
       Ports		      [1, 4]
-      Position		      [845, 132, 945, 298]
+      Position		      [845, 182, 945, 348]
       ZOrder		      -17
       BackgroundColor	      "[0.000000, 0.819608, 0.819608]"
       AncestorBlock	      "Hqaud_model_LIB_SI/Point Mass Model \nnonlinear model"
@@ -1190,8 +1214,8 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Point Mass Model \nnonlinear model"
-	Location		[57, -4, 2568, 1448]
-	Open			off
+	Location		[58, 24, 2585, 1512]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1202,7 +1226,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"153"
+	ZoomFactor		"154"
 	SIDHighWatermark	"372"
 	SIDPrevWatermark	"344"
 	Block {
@@ -1685,7 +1709,7 @@ Model {
 	  SID			  "1236:352"
 	  Position		  [1840, 635, 1890, 675]
 	  ZOrder		  8
-	  Threshold		  "1"
+	  Threshold		  "WallPos"
 	  InputSameDT		  off
 	  SaturateOnIntegerOverflow off
 	  Port {
@@ -1865,7 +1889,7 @@ Model {
 	  }
 	  System {
 	    Name		    "pitch dynamics\n "
-	    Location		    [57, -4, 2568, 1448]
+	    Location		    [58, 24, 2585, 1512]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -1877,7 +1901,7 @@ Model {
 	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
+	    ZoomFactor		    "262"
 	    SIDHighWatermark	    "357"
 	    SIDPrevWatermark	    "344"
 	    Block {
@@ -2758,14 +2782,14 @@ Model {
       BlockType		      Terminator
       Name		      "Terminator"
       SID		      "1239"
-      Position		      [1010, 205, 1030, 225]
+      Position		      [1000, 235, 1020, 255]
       ZOrder		      -21
     }
     Block {
       BlockType		      UnitDelay
       Name		      "Unit Delay"
       SID		      "1366"
-      Position		      [565, 303, 600, 337]
+      Position		      [565, 353, 600, 387]
       ZOrder		      -22
       BlockMirror	      on
       InputProcessing	      "Elements as channels (sample based)"
@@ -2773,10 +2797,115 @@ Model {
     }
     Block {
       BlockType		      Scope
+      Name		      "X-axis"
+      SID		      "1426"
+      Ports		      [1]
+      Position		      [1180, 19, 1210, 51]
+      ZOrder		      3
+      BackgroundColor	      "magenta"
+      Floating		      off
+      Location		      [66, 53, 2561, 1439]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      List {
+	ListType		ScopeGraphics
+	FigureColor		"[0.5 0.5 0.5]"
+	AxesColor		"[0 0 0]"
+	AxesTickColor		"[1 1 1]"
+	LineColors		"[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+	LineStyles		"-|-|-|-|-|-"
+	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
+	MarkerStyles		"none|none|none|none|none|none"
+      }
+      ShowLegends	      off
+      TimeRange		      "40"
+      YMin		      "-0.5"
+      YMax		      "0.5"
+      SaveName		      "ScopeData4"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Y-axis"
+      SID		      "1436"
+      Ports		      [1]
+      Position		      [1180, 84, 1210, 116]
+      ZOrder		      12
+      BackgroundColor	      "magenta"
+      Floating		      off
+      Location		      [517, 134, 1040, 644]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      List {
+	ListType		ScopeGraphics
+	FigureColor		"[0.5 0.5 0.5]"
+	AxesColor		"[0 0 0]"
+	AxesTickColor		"[1 1 1]"
+	LineColors		"[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+	LineStyles		"-|-|-|-|-|-"
+	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
+	MarkerStyles		"none|none|none|none|none|none"
+      }
+      ShowLegends	      off
+      TimeRange		      "40"
+      YMin		      "-0.5"
+      YMax		      "0.5"
+      SaveName		      "ScopeData7"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
+      Name		      "Z-axis"
+      SID		      "1437"
+      Ports		      [1]
+      Position		      [1180, 149, 1210, 181]
+      ZOrder		      13
+      BackgroundColor	      "magenta"
+      Floating		      off
+      Location		      [517, 134, 1040, 644]
+      Open		      off
+      NumInputPorts	      "1"
+      List {
+	ListType		AxesTitles
+	axes1			"%<SignalLabel>"
+      }
+      List {
+	ListType		ScopeGraphics
+	FigureColor		"[0.5 0.5 0.5]"
+	AxesColor		"[0 0 0]"
+	AxesTickColor		"[1 1 1]"
+	LineColors		"[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+	LineStyles		"-|-|-|-|-|-"
+	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
+	MarkerStyles		"none|none|none|none|none|none"
+      }
+      ShowLegends	      off
+      TimeRange		      "40"
+      YMin		      "-0.5"
+      YMax		      "0.5"
+      SaveName		      "ScopeData10"
+      DataFormat	      "StructureWithTime"
+      LimitDataPoints	      off
+      SampleTime	      "0"
+    }
+    Block {
+      BlockType		      Scope
       Name		      "bias"
       SID		      "1367"
       Ports		      [1]
-      Position		      [790, 269, 820, 301]
+      Position		      [790, 319, 820, 351]
       ZOrder		      -24
       Floating		      off
       Location		      [67, 81, 1745, 1051]
@@ -2808,12 +2937,12 @@ Model {
       Name		      "cmds"
       SID		      "1117"
       Ports		      [1]
-      Position		      [700, 34, 730, 66]
+      Position		      [700, 84, 730, 116]
       ZOrder		      -25
       BackgroundColor	      "magenta"
       Floating		      off
       Location		      [546, 235, 1069, 745]
-      Open		      on
+      Open		      off
       NumInputPorts	      "1"
       List {
 	ListType		AxesTitles
@@ -2843,7 +2972,7 @@ Model {
       Name		      "create ref"
       SID		      "1359"
       Ports		      [0, 1]
-      Position		      [85, 183, 125, 247]
+      Position		      [85, 233, 125, 297]
       ZOrder		      -26
       AncestorBlock	      "Hquad_control_LIB_LQRI/create ref"
       LibraryVersion	      "*1.319"
@@ -2856,7 +2985,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"create ref"
-	Location		[57, -4, 2568, 1448]
+	Location		[58, 24, 2585, 1512]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -2985,7 +3114,7 @@ Model {
 	  Position		  [90, 280, 120, 310]
 	  ZOrder		  -8
 	  BackgroundColor	  "red"
-	  Value			  "0"
+	  Value			  "0.7"
 	  OutDataTypeStr	  "double"
 	  SampleTime		  "-1"
 	}
@@ -3004,9 +3133,10 @@ Model {
 	  BlockType		  Constant
 	  Name			  "h_set2"
 	  SID			  "1359:1609"
-	  Position		  [25, 65, 55, 95]
+	  Position		  [25, 67, 80, 103]
 	  ZOrder		  2
 	  BackgroundColor	  "red"
+	  Value			  "WallPos"
 	  OutDataTypeStr	  "double"
 	  SampleTime		  "-1"
 	}
@@ -3094,7 +3224,7 @@ Model {
 	  Position		  [90, 195, 120, 225]
 	  ZOrder		  -16
 	  BackgroundColor	  "red"
-	  Value			  "0"
+	  Value			  "0.5"
 	  OutDataTypeStr	  "double"
 	  SampleTime		  "-1"
 	}
@@ -3139,6 +3269,7 @@ Model {
 	Line {
 	  SrcBlock		  "h_set2"
 	  SrcPort		  1
+	  Points		  [65, 0]
 	  DstBlock		  "Manual Switch1"
 	  DstPort		  1
 	}
@@ -3292,7 +3423,7 @@ Model {
       Name		      "pos controller"
       SID		      "1363"
       Ports		      [5, 2]
-      Position		      [525, 143, 630, 287]
+      Position		      [525, 193, 630, 337]
       ZOrder		      -30
       AncestorBlock	      "Hquad_control_LIB_MPC/pos controller"
       LibraryVersion	      "*1.327"
@@ -3305,7 +3436,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"pos controller"
-	Location		[57, -4, 2568, 1448]
+	Location		[58, 24, 2585, 1512]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -3385,7 +3516,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "MAIN CONTROL LOOP1"
-	    Location		    [57, -4, 2568, 1448]
+	    Location		    [58, 24, 2585, 1512]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -4172,7 +4303,7 @@ Model {
 	      MaskHideContents	      off
 	      System {
 		Name			"x controller MPC FG\n "
-		Location		[57, -4, 2568, 1448]
+		Location		[58, 24, 2585, 1512]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -4185,7 +4316,7 @@ Model {
 		TiledPageScale		1
 		ShowPageBoundaries	off
 		ZoomFactor		"125"
-		SIDHighWatermark	"2419"
+		SIDHighWatermark	"2421"
 		SIDPrevWatermark	"2381"
 		Block {
 		  BlockType		  Inport
@@ -4313,6 +4444,66 @@ Model {
 		  InputPortMap		  "u0"
 		  UpperLimit		  "0"
 		  LowerLimit		  "-1"
+		}
+		Block {
+		  BlockType		  Scope
+		  Name			  "Scope"
+		  SID			  "1363:1895:2362:2420"
+		  Ports			  [1]
+		  Position		  [430, 259, 460, 291]
+		  ZOrder		  36
+		  Floating		  off
+		  Location		  [188, 390, 512, 629]
+		  Open			  off
+		  NumInputPorts		  "1"
+		  List {
+		    ListType		    AxesTitles
+		    axes1		    "%<SignalLabel>"
+		  }
+		  List {
+		    ListType		    ScopeGraphics
+		    FigureColor		    "[0.5 0.5 0.5]"
+		    AxesColor		    "[0 0 0]"
+		    AxesTickColor	    "[1 1 1]"
+		    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+		    LineStyles		    "-|-|-|-|-|-"
+		    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+		    MarkerStyles	    "none|none|none|none|none|none"
+		  }
+		  ShowLegends		  off
+		  SaveName		  "ScopeData11"
+		  DataFormat		  "StructureWithTime"
+		  SampleTime		  "0"
+		}
+		Block {
+		  BlockType		  Scope
+		  Name			  "Scope1"
+		  SID			  "1363:1895:2362:2421"
+		  Ports			  [1]
+		  Position		  [430, 329, 460, 361]
+		  ZOrder		  37
+		  Floating		  off
+		  Location		  [188, 390, 512, 629]
+		  Open			  off
+		  NumInputPorts		  "1"
+		  List {
+		    ListType		    AxesTitles
+		    axes1		    "%<SignalLabel>"
+		  }
+		  List {
+		    ListType		    ScopeGraphics
+		    FigureColor		    "[0.5 0.5 0.5]"
+		    AxesColor		    "[0 0 0]"
+		    AxesTickColor	    "[1 1 1]"
+		    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+		    LineStyles		    "-|-|-|-|-|-"
+		    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+		    MarkerStyles	    "none|none|none|none|none|none"
+		  }
+		  ShowLegends		  off
+		  SaveName		  "ScopeData12"
+		  DataFormat		  "StructureWithTime"
+		  SampleTime		  "0"
 		}
 		Block {
 		  BlockType		  SubSystem
@@ -4490,14 +4681,30 @@ Model {
 		Line {
 		  SrcBlock		  "Saturation2"
 		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  4
+		  Points		  [58, 0]
+		  Branch {
+		    Points		    [0, 155]
+		    DstBlock		    "Scope1"
+		    DstPort		    1
+		  }
+		  Branch {
+		    DstBlock		    "Mux"
+		    DstPort		    4
+		  }
 		}
 		Line {
 		  SrcBlock		  "Saturation3"
 		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  3
+		  Points		  [9, 0]
+		  Branch {
+		    Points		    [0, 125]
+		    DstBlock		    "Scope"
+		    DstPort		    1
+		  }
+		  Branch {
+		    DstBlock		    "Mux"
+		    DstPort		    3
+		  }
 		}
 	      }
 	    }
@@ -4520,7 +4727,7 @@ Model {
 	      MaskHideContents	      off
 	      System {
 		Name			"y controller MPC FG"
-		Location		[57, -4, 2568, 1448]
+		Location		[58, 24, 2585, 1512]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -4532,8 +4739,8 @@ Model {
 		TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 		TiledPageScale		1
 		ShowPageBoundaries	off
-		ZoomFactor		"100"
-		SIDHighWatermark	"2394"
+		ZoomFactor		"250"
+		SIDHighWatermark	"2404"
 		SIDPrevWatermark	"2381"
 		Block {
 		  BlockType		  Inport
@@ -4548,7 +4755,7 @@ Model {
 		  BlockType		  Inport
 		  Name			  "X_ref_y\n "
 		  SID			  "1363:1895:2364:1833"
-		  Position		  [40, 328, 70, 342]
+		  Position		  [40, 348, 70, 362]
 		  ZOrder		  -2
 		  Port			  "2"
 		  IconDisplay		  "Port number"
@@ -4565,24 +4772,48 @@ Model {
 		Block {
 		  BlockType		  Sum
 		  Name			  "Add"
-		  SID			  "1363:1895:2364:2384"
+		  SID			  "1363:1895:2364:2395"
 		  Ports			  [2, 1]
-		  Position		  [230, 277, 260, 308]
-		  ZOrder		  7
+		  Position		  [315, 332, 345, 363]
+		  ZOrder		  36
 		  Inputs		  "+-"
 		  InputSameDT		  off
 		  OutDataTypeStr	  "Inherit: Inherit via internal rule"
 		  SaturateOnIntegerOverflow off
 		}
 		Block {
-		  BlockType		  Demux
-		  Name			  "Demux"
-		  SID			  "1363:1895:2364:2385"
+		  BlockType		  BusSelector
+		  Name			  "Bus\nSelector"
+		  SID			  "1363:1895:2364:2396"
 		  Ports			  [1, 4]
-		  Position		  [155, 100, 160, 230]
-		  ZOrder		  8
+		  Position		  [225, 125, 230, 285]
+		  ZOrder		  38
 		  ShowName		  off
-		  DisplayOption		  "bar"
+		  OutputSignals		  "roll,ang_vel_x,y,y_dot"
+		  Port {
+		    PortNumber		    1
+		    Name		    "<roll>"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		  }
+		  Port {
+		    PortNumber		    2
+		    Name		    "<ang_vel_x>"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		  }
+		  Port {
+		    PortNumber		    3
+		    Name		    "<y>"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		  }
+		  Port {
+		    PortNumber		    4
+		    Name		    "<y_dot>"
+		    RTWStorageClass	    "Auto"
+		    DataLoggingNameMode	    "SignalName"
+		  }
 		}
 		Block {
 		  BlockType		  SubSystem
@@ -4616,7 +4847,7 @@ Model {
 		  }
 		  System {
 		    Name		    "Explicit Controller"
-		    Location		    [1305, 24, 2568, 1448]
+		    Location		    [58, 24, 2585, 1512]
 		    Open		    off
 		    ModelBrowserVisibility  off
 		    ModelBrowserWidth	    200
@@ -4674,12 +4905,146 @@ Model {
 		Block {
 		  BlockType		  Mux
 		  Name			  "Mux"
-		  SID			  "1363:1895:2364:2387"
+		  SID			  "1363:1895:2364:2397"
 		  Ports			  [4, 1]
-		  Position		  [375, 101, 380, 229]
-		  ZOrder		  9
+		  Position		  [460, 126, 465, 284]
+		  ZOrder		  37
 		  ShowName		  off
 		  DisplayOption		  "bar"
+		}
+		Block {
+		  BlockType		  Saturate
+		  Name			  "Saturation"
+		  SID			  "1363:1895:2364:2398"
+		  Ports			  [1, 1]
+		  Position		  [270, 130, 300, 160]
+		  ZOrder		  39
+		  InputPortMap		  "u0"
+		  UpperLimit		  "0.2094"
+		  LowerLimit		  "-0.2094"
+		}
+		Block {
+		  BlockType		  Saturate
+		  Name			  "Saturation1"
+		  SID			  "1363:1895:2364:2399"
+		  Ports			  [1, 1]
+		  Position		  [305, 170, 335, 200]
+		  ZOrder		  40
+		  InputPortMap		  "u0"
+		  UpperLimit		  "2"
+		  LowerLimit		  "-2"
+		}
+		Block {
+		  BlockType		  Saturate
+		  Name			  "Saturation2"
+		  SID			  "1363:1895:2364:2400"
+		  Ports			  [1, 1]
+		  Position		  [330, 250, 360, 280]
+		  ZOrder		  41
+		  InputPortMap		  "u0"
+		  UpperLimit		  "1"
+		  LowerLimit		  "-1"
+		}
+		Block {
+		  BlockType		  Saturate
+		  Name			  "Saturation3"
+		  SID			  "1363:1895:2364:2401"
+		  Ports			  [1, 1]
+		  Position		  [400, 210, 430, 240]
+		  ZOrder		  42
+		  InputPortMap		  "u0"
+		  UpperLimit		  "1"
+		  LowerLimit		  "-1"
+		}
+		Block {
+		  BlockType		  Scope
+		  Name			  "Scope"
+		  SID			  "1363:1895:2364:2402"
+		  Ports			  [1]
+		  Position		  [525, 259, 555, 291]
+		  ZOrder		  43
+		  Floating		  off
+		  Location		  [67, 81, 2562, 1467]
+		  Open			  off
+		  NumInputPorts		  "1"
+		  List {
+		    ListType		    AxesTitles
+		    axes1		    "%<SignalLabel>"
+		  }
+		  List {
+		    ListType		    ScopeGraphics
+		    FigureColor		    "[0.5 0.5 0.5]"
+		    AxesColor		    "[0 0 0]"
+		    AxesTickColor	    "[1 1 1]"
+		    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+		    LineStyles		    "-|-|-|-|-|-"
+		    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+		    MarkerStyles	    "none|none|none|none|none|none"
+		  }
+		  ShowLegends		  off
+		  SaveName		  "ScopeData3"
+		  DataFormat		  "StructureWithTime"
+		  SampleTime		  "0"
+		}
+		Block {
+		  BlockType		  Scope
+		  Name			  "Scope1"
+		  SID			  "1363:1895:2364:2403"
+		  Ports			  [1]
+		  Position		  [450, 334, 480, 366]
+		  ZOrder		  44
+		  Floating		  off
+		  Location		  [67, 81, 2562, 1467]
+		  Open			  off
+		  NumInputPorts		  "1"
+		  List {
+		    ListType		    AxesTitles
+		    axes1		    "%<SignalLabel>"
+		  }
+		  List {
+		    ListType		    ScopeGraphics
+		    FigureColor		    "[0.5 0.5 0.5]"
+		    AxesColor		    "[0 0 0]"
+		    AxesTickColor	    "[1 1 1]"
+		    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+		    LineStyles		    "-|-|-|-|-|-"
+		    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+		    MarkerStyles	    "none|none|none|none|none|none"
+		  }
+		  ShowLegends		  off
+		  SaveName		  "ScopeData5"
+		  DataFormat		  "StructureWithTime"
+		  SampleTime		  "0"
+		}
+		Block {
+		  BlockType		  Scope
+		  Name			  "Scope2"
+		  SID			  "1363:1895:2364:2404"
+		  Ports			  [1]
+		  Position		  [850, 274, 880, 306]
+		  ZOrder		  45
+		  Floating		  off
+		  Location		  [67, 81, 2562, 1467]
+		  Open			  off
+		  NumInputPorts		  "1"
+		  List {
+		    ListType		    AxesTitles
+		    axes1		    "%<SignalLabel>"
+		  }
+		  List {
+		    ListType		    ScopeGraphics
+		    FigureColor		    "[0.5 0.5 0.5]"
+		    AxesColor		    "[0 0 0]"
+		    AxesTickColor	    "[1 1 1]"
+		    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+		    LineStyles		    "-|-|-|-|-|-"
+		    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+		    MarkerStyles	    "none|none|none|none|none|none"
+		  }
+		  ShowLegends		  off
+		  SaveName		  "ScopeData6"
+		  DataFormat		  "StructureWithTime"
+		  SampleTime		  "0"
 		}
 		Block {
 		  BlockType		  Outport
@@ -4691,63 +5056,115 @@ Model {
 		  PortDimensions	  "1"
 		}
 		Line {
+		  SrcBlock		  "Explicit Controller"
+		  SrcPort		  1
+		  Points		  [47, 0]
+		  Branch {
+		    Points		    [0, 85]
+		    DstBlock		    "Scope2"
+		    DstPort		    1
+		  }
+		  Branch {
+		    DstBlock		    "roll_cmd"
+		    DstPort		    1
+		  }
+		}
+		Line {
 		  SrcBlock		  "X_ref_y\n "
 		  SrcPort		  1
-		  Points		  [75, 0; 0, -35]
 		  DstBlock		  "Add"
 		  DstPort		  2
 		}
 		Line {
-		  SrcBlock		  "y_states_est\n "
+		  Name			  "<roll>"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Bus\nSelector"
 		  SrcPort		  1
-		  Points		  [37, 0; 0, -40]
-		  DstBlock		  "Demux"
+		  DstBlock		  "Saturation"
 		  DstPort		  1
 		}
 		Line {
-		  SrcBlock		  "Mux"
-		  SrcPort		  1
-		  Points		  [115, 0; 0, 40]
-		  DstBlock		  "Explicit Controller"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "Explicit Controller"
-		  SrcPort		  1
-		  DstBlock		  "roll_cmd"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "Demux"
-		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "Demux"
+		  Name			  "<ang_vel_x>"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Bus\nSelector"
 		  SrcPort		  2
-		  DstBlock		  "Mux"
-		  DstPort		  2
+		  DstBlock		  "Saturation1"
+		  DstPort		  1
 		}
 		Line {
-		  SrcBlock		  "Demux"
+		  Name			  "<y>"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Bus\nSelector"
 		  SrcPort		  3
-		  Points		  [30, 0; 0, 105]
+		  Points		  [37, 0; 0, 115]
 		  DstBlock		  "Add"
 		  DstPort		  1
 		}
 		Line {
 		  SrcBlock		  "Add"
 		  SrcPort		  1
-		  Points		  [52, 0; 0, -115]
-		  DstBlock		  "Mux"
-		  DstPort		  3
+		  Points		  [38, 0]
+		  Branch {
+		    DstBlock		    "Scope1"
+		    DstPort		    1
+		  }
+		  Branch {
+		    Points		    [0, -125]
+		    DstBlock		    "Saturation3"
+		    DstPort		    1
+		  }
 		}
 		Line {
-		  SrcBlock		  "Demux"
+		  Name			  "<y_dot>"
+		  Labels		  [0, 0]
+		  SrcBlock		  "Bus\nSelector"
 		  SrcPort		  4
+		  DstBlock		  "Saturation2"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Mux"
+		  SrcPort		  1
+		  Points		  [31, 0]
+		  Branch {
+		    Points		    [0, 70]
+		    DstBlock		    "Scope"
+		    DstPort		    1
+		  }
+		  Branch {
+		    DstBlock		    "Explicit Controller"
+		    DstPort		    1
+		  }
+		}
+		Line {
+		  SrcBlock		  "y_states_est\n "
+		  SrcPort		  1
+		  DstBlock		  "Bus\nSelector"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Saturation"
+		  SrcPort		  1
+		  DstBlock		  "Mux"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Saturation1"
+		  SrcPort		  1
+		  DstBlock		  "Mux"
+		  DstPort		  2
+		}
+		Line {
+		  SrcBlock		  "Saturation2"
+		  SrcPort		  1
 		  DstBlock		  "Mux"
 		  DstPort		  4
+		}
+		Line {
+		  SrcBlock		  "Saturation3"
+		  SrcPort		  1
+		  DstBlock		  "Mux"
+		  DstPort		  3
 		}
 	      }
 	    }
@@ -4770,7 +5187,7 @@ Model {
 	      MaskHideContents	      off
 	      System {
 		Name			"yaw controller MPC FG"
-		Location		[1305, 24, 2568, 1448]
+		Location		[57, -4, 2568, 1448]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -4783,7 +5200,7 @@ Model {
 		TiledPageScale		1
 		ShowPageBoundaries	off
 		ZoomFactor		"125"
-		SIDHighWatermark	"2392"
+		SIDHighWatermark	"2393"
 		SIDPrevWatermark	"2381"
 		Block {
 		  BlockType		  Inport
@@ -4798,7 +5215,7 @@ Model {
 		  BlockType		  Inport
 		  Name			  "X_ref_yaw"
 		  SID			  "1363:1895:2366:1871"
-		  Position		  [170, 193, 200, 207]
+		  Position		  [160, 193, 190, 207]
 		  ZOrder		  -2
 		  Port			  "2"
 		  IconDisplay		  "Port number"
@@ -4817,7 +5234,7 @@ Model {
 		  Name			  "Add"
 		  SID			  "1363:1895:2366:2382"
 		  Ports			  [2, 1]
-		  Position		  [385, 132, 415, 163]
+		  Position		  [400, 132, 430, 163]
 		  ZOrder		  4
 		  Inputs		  "+-"
 		  InputSameDT		  off
@@ -4923,48 +5340,15 @@ Model {
 		  }
 		}
 		Block {
-		  BlockType		  RateTransition
-		  Name			  "Rate Transition"
-		  SID			  "1363:1895:2366:2391"
-		  Position		  [835, 129, 875, 171]
-		  ZOrder		  11
-		}
-		Block {
-		  BlockType		  RateTransition
-		  Name			  "Rate Transition2"
-		  SID			  "1363:1895:2366:2390"
-		  Position		  [485, 129, 525, 171]
-		  ZOrder		  10
-		}
-		Block {
-		  BlockType		  Scope
-		  Name			  "Scope"
-		  SID			  "1363:1895:2366:2392"
-		  Ports			  [1]
-		  Position		  [585, 284, 615, 316]
-		  ZOrder		  12
-		  Floating		  off
-		  Location		  [188, 390, 512, 629]
-		  Open			  off
-		  NumInputPorts		  "1"
-		  List {
-		    ListType		    AxesTitles
-		    axes1		    "%<SignalLabel>"
-		  }
-		  List {
-		    ListType		    ScopeGraphics
-		    FigureColor		    "[0.5 0.5 0.5]"
-		    AxesColor		    "[0 0 0]"
-		    AxesTickColor	    "[1 1 1]"
-		    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
-		    LineStyles		    "-|-|-|-|-|-"
-		    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
-		    MarkerStyles	    "none|none|none|none|none|none"
-		  }
-		  ShowLegends		  off
-		  SaveName		  "ScopeData6"
-		  DataFormat		  "StructureWithTime"
-		  SampleTime		  "0"
+		  BlockType		  Saturate
+		  Name			  "Saturation"
+		  SID			  "1363:1895:2366:2393"
+		  Ports			  [1, 1]
+		  Position		  [510, 135, 540, 165]
+		  ZOrder		  13
+		  InputPortMap		  "u0"
+		  UpperLimit		  "0.0873"
+		  LowerLimit		  "-0.0873"
 		}
 		Block {
 		  BlockType		  Outport
@@ -4978,7 +5362,7 @@ Model {
 		Line {
 		  SrcBlock		  "X_ref_yaw"
 		  SrcPort		  1
-		  Points		  [95, 0; 0, -45]
+		  Points		  [105, 0; 0, -45]
 		  DstBlock		  "Add"
 		  DstPort		  2
 		}
@@ -4997,33 +5381,19 @@ Model {
 		Line {
 		  SrcBlock		  "Add"
 		  SrcPort		  1
-		  DstBlock		  "Rate Transition2"
+		  DstBlock		  "Saturation"
 		  DstPort		  1
 		}
 		Line {
 		  SrcBlock		  "Explicit Controller"
 		  SrcPort		  1
-		  DstBlock		  "Rate Transition"
+		  DstBlock		  "yaw_rate_cmd"
 		  DstPort		  1
 		}
 		Line {
-		  SrcBlock		  "Rate Transition2"
+		  SrcBlock		  "Saturation"
 		  SrcPort		  1
-		  Points		  [28, 0]
-		  Branch {
-		    Points		    [0, 150]
-		    DstBlock		    "Scope"
-		    DstPort		    1
-		  }
-		  Branch {
-		    DstBlock		    "Explicit Controller"
-		    DstPort		    1
-		  }
-		}
-		Line {
-		  SrcBlock		  "Rate Transition"
-		  SrcPort		  1
-		  DstBlock		  "yaw_rate_cmd"
+		  DstBlock		  "Explicit Controller"
 		  DstPort		  1
 		}
 	      }
@@ -5033,7 +5403,7 @@ Model {
 	      Name		      "z controller MPC FG"
 	      SID		      "1363:1895:2368"
 	      Ports		      [3, 1]
-	      Position		      [485, 452, 590, 548]
+	      Position		      [515, 452, 620, 548]
 	      ZOrder		      -33
 	      BackgroundColor	      "orange"
 	      AncestorBlock	      "Hquad_control_LIB_MPC/z controller MPC FG"
@@ -5047,7 +5417,7 @@ Model {
 	      MaskHideContents	      off
 	      System {
 		Name			"z controller MPC FG"
-		Location		[57, -4, 2568, 1448]
+		Location		[58, 24, 2585, 1512]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -5059,8 +5429,8 @@ Model {
 		TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 		TiledPageScale		1
 		ShowPageBoundaries	off
-		ZoomFactor		"100"
-		SIDHighWatermark	"2398"
+		ZoomFactor		"318"
+		SIDHighWatermark	"2401"
 		SIDPrevWatermark	"2381"
 		Block {
 		  BlockType		  Inport
@@ -5094,7 +5464,7 @@ Model {
 		  Name			  "Add"
 		  SID			  "1363:1895:2368:2390"
 		  Ports			  [2, 1]
-		  Position		  [155, 177, 185, 208]
+		  Position		  [135, 177, 165, 208]
 		  ZOrder		  13
 		  Inputs		  "+-"
 		  InputSameDT		  off
@@ -5106,7 +5476,7 @@ Model {
 		  Name			  "Demux"
 		  SID			  "1363:1895:2368:2388"
 		  Ports			  [1, 2]
-		  Position		  [105, 111, 110, 149]
+		  Position		  [105, 91, 110, 164]
 		  ZOrder		  11
 		  ShowName		  off
 		  Outputs		  "2"
@@ -5204,33 +5574,41 @@ Model {
 		  Name			  "Mux"
 		  SID			  "1363:1895:2368:2389"
 		  Ports			  [2, 1]
-		  Position		  [230, 111, 235, 149]
+		  Position		  [300, 91, 305, 164]
 		  ZOrder		  12
 		  ShowName		  off
 		  Inputs		  "2"
 		  DisplayOption		  "bar"
 		}
 		Block {
-		  BlockType		  RateTransition
-		  Name			  "Rate Transition"
-		  SID			  "1363:1895:2368:2396"
-		  Position		  [650, 109, 690, 151]
-		  ZOrder		  17
+		  BlockType		  Saturate
+		  Name			  "Saturation"
+		  SID			  "1363:1895:2368:2399"
+		  Ports			  [1, 1]
+		  Position		  [170, 130, 200, 160]
+		  ZOrder		  20
+		  InputPortMap		  "u0"
+		  UpperLimit		  "1"
+		  LowerLimit		  "-1"
 		}
 		Block {
-		  BlockType		  RateTransition
-		  Name			  "Rate Transition2"
-		  SID			  "1363:1895:2368:2395"
-		  Position		  [350, 109, 390, 151]
-		  ZOrder		  16
+		  BlockType		  Saturate
+		  Name			  "Saturation1"
+		  SID			  "1363:1895:2368:2400"
+		  Ports			  [1, 1]
+		  Position		  [195, 180, 225, 210]
+		  ZOrder		  21
+		  InputPortMap		  "u0"
+		  UpperLimit		  "1"
+		  LowerLimit		  "-1"
 		}
 		Block {
 		  BlockType		  Scope
 		  Name			  "Scope"
-		  SID			  "1363:1895:2368:2397"
+		  SID			  "1363:1895:2368:2401"
 		  Ports			  [1]
-		  Position		  [450, 274, 480, 306]
-		  ZOrder		  18
+		  Position		  [375, 194, 405, 226]
+		  ZOrder		  22
 		  Floating		  off
 		  Location		  [188, 390, 512, 629]
 		  Open			  off
@@ -5250,37 +5628,7 @@ Model {
 		    MarkerStyles	    "none|none|none|none|none|none"
 		  }
 		  ShowLegends		  off
-		  SaveName		  "ScopeData7"
-		  DataFormat		  "StructureWithTime"
-		  SampleTime		  "0"
-		}
-		Block {
-		  BlockType		  Scope
-		  Name			  "Scope1"
-		  SID			  "1363:1895:2368:2398"
-		  Ports			  [1]
-		  Position		  [670, 284, 700, 316]
-		  ZOrder		  19
-		  Floating		  off
-		  Location		  [188, 390, 512, 629]
-		  Open			  off
-		  NumInputPorts		  "1"
-		  List {
-		    ListType		    AxesTitles
-		    axes1		    "%<SignalLabel>"
-		  }
-		  List {
-		    ListType		    ScopeGraphics
-		    FigureColor		    "[0.5 0.5 0.5]"
-		    AxesColor		    "[0 0 0]"
-		    AxesTickColor	    "[1 1 1]"
-		    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
-		    LineStyles		    "-|-|-|-|-|-"
-		    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
-		    MarkerStyles	    "none|none|none|none|none|none"
-		  }
-		  ShowLegends		  off
-		  SaveName		  "ScopeData10"
+		  SaveName		  "ScopeData2"
 		  DataFormat		  "StructureWithTime"
 		  SampleTime		  "0"
 		}
@@ -5302,13 +5650,13 @@ Model {
 		Line {
 		  SrcBlock		  "Demux"
 		  SrcPort		  2
-		  DstBlock		  "Mux"
-		  DstPort		  2
+		  DstBlock		  "Saturation"
+		  DstPort		  1
 		}
 		Line {
 		  SrcBlock		  "Demux"
 		  SrcPort		  1
-		  Points		  [17, 0; 0, 65]
+		  Points		  [5, 0]
 		  DstBlock		  "Add"
 		  DstPort		  1
 		}
@@ -5322,36 +5670,21 @@ Model {
 		Line {
 		  SrcBlock		  "Add"
 		  SrcPort		  1
-		  Points		  [17, 0; 0, -75]
-		  DstBlock		  "Mux"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "Mux"
-		  SrcPort		  1
-		  DstBlock		  "Rate Transition2"
+		  DstBlock		  "Saturation1"
 		  DstPort		  1
 		}
 		Line {
 		  SrcBlock		  "Explicit Controller"
 		  SrcPort		  1
-		  Points		  [26, 0]
-		  Branch {
-		    Points		    [0, 170]
-		    DstBlock		    "Scope1"
-		    DstPort		    1
-		  }
-		  Branch {
-		    DstBlock		    "Rate Transition"
-		    DstPort		    1
-		  }
+		  DstBlock		  "thrust_cmd"
+		  DstPort		  1
 		}
 		Line {
-		  SrcBlock		  "Rate Transition2"
+		  SrcBlock		  "Mux"
 		  SrcPort		  1
-		  Points		  [28, 0]
+		  Points		  [38, 0]
 		  Branch {
-		    Points		    [0, 160]
+		    Points		    [0, 80]
 		    DstBlock		    "Scope"
 		    DstPort		    1
 		  }
@@ -5361,9 +5694,16 @@ Model {
 		  }
 		}
 		Line {
-		  SrcBlock		  "Rate Transition"
+		  SrcBlock		  "Saturation"
 		  SrcPort		  1
-		  DstBlock		  "thrust_cmd"
+		  DstBlock		  "Mux"
+		  DstPort		  2
+		}
+		Line {
+		  SrcBlock		  "Saturation1"
+		  SrcPort		  1
+		  Points		  [4, 0; 0, -85]
+		  DstBlock		  "Mux"
 		  DstPort		  1
 		}
 	      }
@@ -5547,7 +5887,7 @@ Model {
 	    Line {
 	      SrcBlock		      "demux"
 	      SrcPort		      7
-	      Points		      [185, 0]
+	      Points		      [215, 0]
 	      DstBlock		      "z controller MPC FG"
 	      DstPort		      1
 	    }
@@ -5821,7 +6161,7 @@ Model {
       Name		      "thrust1"
       SID		      "1351"
       Ports		      [1]
-      Position		      [1095, 329, 1125, 361]
+      Position		      [1095, 379, 1125, 411]
       ZOrder		      -32
       BackgroundColor	      "magenta"
       Floating		      off
@@ -5875,16 +6215,8 @@ Model {
     Line {
       SrcBlock		      "Point Mass Model \nnonlinear model"
       SrcPort		      2
-      Points		      [0, 20; 20, 0]
-      Branch {
-	DstBlock		"Terminator"
-	DstPort			1
-      }
-      Branch {
-	Points			[0, 130]
-	DstBlock		"thrust1"
-	DstPort			1
-      }
+      DstBlock		      "Terminator"
+      DstPort		      1
     }
     Line {
       SrcBlock		      "Constant1"
@@ -5898,13 +6230,13 @@ Model {
       SrcPort		      1
       Points		      [0, 5; 41, 0]
       Branch {
-	Points			[172, 0; 0, 355; -683, 0; 0, -360]
-	DstBlock		"pos controller"
+	Points			[0, -80]
+	DstBlock		"Bus\nSelector"
 	DstPort			1
       }
       Branch {
-	Points			[0, -105]
-	DstBlock		"Bus\nSelector"
+	Points			[172, 0; 0, 355; -683, 0; 0, -360]
+	DstBlock		"pos controller"
 	DstPort			1
       }
     }
@@ -5970,18 +6302,99 @@ Model {
     Line {
       SrcBlock		      "Point Mass Model \nnonlinear model"
       SrcPort		      4
-      DstBlock		      "Force"
+      Points		      [50, 0]
+      Branch {
+	Points			[0, -44; 40, 0; 0, -236]
+	DstBlock		"Mux"
+	DstPort			3
+      }
+      Branch {
+	DstBlock		"Force"
+	DstPort			1
+      }
+    }
+    Line {
+      SrcBlock		      "Point Mass Model \nnonlinear model"
+      SrcPort		      3
+      Points		      [22, 0; 0, 110]
+      DstBlock		      "thrust1"
       DstPort		      1
     }
     Line {
+      SrcBlock		      "Mux"
+      SrcPort		      1
+      DstBlock		      "X-axis"
+      DstPort		      1
+    }
+    Line {
+      Name		      "<x>"
+      Labels		      [0, 0]
       SrcBlock		      "Bus\nSelector"
       SrcPort		      1
-      DstBlock		      "Output"
+      Points		      [25, 0; 0, -65]
+      DstBlock		      "Mux"
+      DstPort		      1
+    }
+    Line {
+      Name		      "<x_dot>"
+      Labels		      [0, 0]
+      SrcBlock		      "Bus\nSelector"
+      SrcPort		      2
+      Points		      [40, 0]
+      DstBlock		      "Mux"
+      DstPort		      2
+    }
+    Line {
+      Name		      "<y>"
+      Labels		      [0, 0]
+      SrcBlock		      "Bus\nSelector"
+      SrcPort		      3
+      Points		      [33, 0; 0, -30]
+      DstBlock		      "Mux1"
+      DstPort		      1
+    }
+    Line {
+      Name		      "<y_dot>"
+      Labels		      [0, 0]
+      SrcBlock		      "Bus\nSelector"
+      SrcPort		      4
+      Points		      [14, 0; 0, -25]
+      DstBlock		      "Mux1"
+      DstPort		      2
+    }
+    Line {
+      Name		      "<z>"
+      Labels		      [0, 0]
+      SrcBlock		      "Bus\nSelector"
+      SrcPort		      5
+      Points		      [40, 0]
+      DstBlock		      "Mux2"
+      DstPort		      1
+    }
+    Line {
+      Name		      "<z_dot>"
+      Labels		      [0, 0]
+      SrcBlock		      "Bus\nSelector"
+      SrcPort		      6
+      Points		      [40, 0]
+      DstBlock		      "Mux2"
+      DstPort		      2
+    }
+    Line {
+      SrcBlock		      "Mux1"
+      SrcPort		      1
+      DstBlock		      "Y-axis"
+      DstPort		      1
+    }
+    Line {
+      SrcBlock		      "Mux2"
+      SrcPort		      1
+      DstBlock		      "Z-axis"
       DstPort		      1
     }
     Annotation {
       SID		      "1422"
-      Position		      [727, 585]
+      Position		      [727, 635]
       ZOrder		      -1
     }
   }

@@ -5,21 +5,40 @@ close all
 clear all
 clear classes
 clc
+%% Parameters Initialization
+m = 0.650;
+g = 9.8065;
+l = 0.30;
+gamma = 0;
+J = m*l*l/4; % Inertia, we use the approximation of Thin, solid disk of radius r and mass m
+
+Ts = 0.08;
+TsReal = 0.01;
+
+DF_roll = 0;
+a1_roll = 54.9;
+a0_roll = 419.1;
+c0_roll = 419.1;
+
+DF_pitch = 0;
+a1_pitch = 59.71;
+a0_pitch = 491;
+c0_pitch = 491;
+
+a0_yaw = 5.9;
+c0_yaw = 5.9;
+
+Theta = -deg2rad(3); % Docking angle
+
+% Optimization Parameters
+N = 5;
+norm = 2;
 
 %% Xdirection Controller (Yaw Controller)
 
-% Initialization
-% Define Parameters
-m = 0.650;
-g = 9.8065;
-
-Theta = -deg2rad(3); % Docking angle
-% Controller Sampling Time
-Ts = 0.08;
-modelXdirection = GenerateModel('QuadXDirection',Theta,Ts);
-% Simulation Sampling Time (50 Hz)
-TsReal = 0.01;
-modelXdirectionReal = GenerateModel('QuadXDirectionSimulink',Theta,TsReal);
+modelXdirection = GenerateModel('QuadXDirection',Theta,Ts,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
+% Simulation Model
+modelXdirectionReal = GenerateModel('QuadXDirectionSimulink',Theta,TsReal,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
 
 %
 
@@ -57,10 +76,6 @@ B = modelXdirection.B{1};
 A = modelXdirection.A{1};
 uref = (B'*B)\B'*(eye(4) - A)*xref;
 
-
-N = 5;
-norm = 2;
-
 ctrl = MPCController(modelXdirection);
 ctrl.N = N;
 
@@ -81,7 +96,6 @@ ctrl.model.u.reference = uref;
 % ctrl.model.x.with('terminalSet');
 % ctrl.model.x.terminalSet = Polyhedron('Ae',Ae,'be',be);
 expmpcXdirection = ctrl.toExplicit();
-save;
 % Create Look Up Table, code in C
 exportToC_MLD(expmpcXdirection,Ts,'XdirectionCtrl','Xdirection');
 cd Xdirection
@@ -127,18 +141,14 @@ x0 = [0;0;-1;0];
 
 %% Ydirection Controller (No Hybrid Model) (Roll Controller)
 %DF = -0.9606;
-DF = 0;
-a1 = 59.71;
-a0 = 491;
-c0 = 491;
 
 Af = zeros(4,4);
 Bf = zeros(4,1);
 Df = zeros(4,1);
 % Free Flight
-Af(1,2) = 1; Af(2,1) = -a0; Af(2,2) = -a1; Af(3,4) = 1; 
-Af(4,1) = -g; Af(4,4) = DF;
-Bf(2,1) = c0;
+Af(1,2) = 1; Af(2,1) = -a0_roll; Af(2,2) = -a1_roll; Af(3,4) = 1; 
+Af(4,1) = g; Af(4,4) = DF_roll;
+Bf(2,1) = c0_roll;
 Cf = eye(4);
 
 sysfc = ss(Af,Bf,Cf,Df);
@@ -180,7 +190,7 @@ y0 = [0;0;-1;0];
 % %Simulate the closed loop
 % N_sim = 50;
 % 
-% Create the closed-loop system:
+% %Create the closed-loop system:
 % loop = ClosedLoop(expmpcYdirection, modelYdirection);
 % ClosedData = loop.simulate(y0, N_sim);
 % 
@@ -198,7 +208,7 @@ y0 = [0;0;-1;0];
 % end
 % 
 % 
-% plot the output
+% %plot the output
 % figure(3);
 % subplot(5,1,1)
 % plot(time,ClosedData.Y(1,:),time,thetaref,'-g'); grid on;ylabel('angle');
@@ -273,8 +283,8 @@ z0 = [-1;0];
 
 %% (Yaw controller)
 
-Ay = -5.9;
-By = 5.9;
+Ay = -a0_yaw;
+By = c0_yaw;
 Cy = 1;
 Dy = 0;
 
@@ -327,3 +337,5 @@ yaw0 = -0.0873;
 % plot(time,ClosedData.Y(1,:)); grid on;ylabel('position')
 % subplot(2,1,2)
 % plot(time,ClosedData.U(:)); grid on;ylabel('Input')
+%%
+save;

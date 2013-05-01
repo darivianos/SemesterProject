@@ -16,7 +16,7 @@ static float mpt_getInput_Zdirection(float *X, float *U)
 {
     int ix, iu, ic, nc, isinside;
     unsigned long ireg, abspos, minreg;
-    float hx, region, tolerance, sumViol;
+    float hx, region, tolerance, sumViol, temp;
     
     abspos = 0;
     region = 0;
@@ -27,6 +27,10 @@ static float mpt_getInput_Zdirection(float *X, float *U)
     /* initialize U to zero*/
     for (iu=0; iu<MPT_NU; iu++) {
         U[iu] = 0;
+    }
+    for (ix=0; ix<MPT_NX; ix++) {
+        temp = X[ix];
+        X[ix] = round(1000*temp)/1000;
     }
     
     for (ireg=0; ireg<MPT_NR; ireg++) {

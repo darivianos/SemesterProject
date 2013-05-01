@@ -1,4 +1,4 @@
-function model = GenerateModel(fname,Theta,Ts)
+function model = GenerateModel(fname,Theta,Ts,m,l,gamma,J,a1,a0,c0,DF)
 % Creates the discrete Model of the system for
 % different sampling times Ts and desired angles Theta
 %
@@ -7,7 +7,7 @@ function model = GenerateModel(fname,Theta,Ts)
 % Created by Darivianakis Georgios (gdarivia@student.ethz.ch)
 
 
-[Aff,Bff,Cff,Dff,Add,Bdd,Cdd,Ddd] = linearizSimple(Theta,Ts);
+[Aff,Bff,Cff,Dff,Add,Bdd,Cdd,Ddd] = linearizSimple(Theta,Ts,m,l,gamma,J,a1,a0,c0,DF);
 
 % Free Flight set parameters
 for i = 1:4
