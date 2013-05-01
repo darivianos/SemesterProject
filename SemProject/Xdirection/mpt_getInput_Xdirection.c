@@ -10,12 +10,13 @@
 #ifndef XdirectionCtrl_h
 #include "XdirectionCtrl.h"
 #endif
+#include <math.h>
 
 static float mpt_getInput_Xdirection(float *X, float *U)
 {
     int ix, iu, ic, nc, isinside;
     unsigned long ireg, abspos, minreg;
-    float hx, region, tolerance, sumViol;
+    float hx, region, tolerance, sumViol, temp;
     
     abspos = 0;
     region = 0;
@@ -27,7 +28,10 @@ static float mpt_getInput_Xdirection(float *X, float *U)
     for (iu=0; iu<MPT_NU; iu++) {
         U[iu] = 0;
     }
-    
+    for (ix=0; ix<MPT_NX; ix++) {
+        temp = X[ix];
+        X[ix] = round(10000*temp)/10000;
+    }
     for (ireg=0; ireg<MPT_NR; ireg++) {
         sumViol = 0;
         isinside = 1;
@@ -58,6 +62,7 @@ static float mpt_getInput_Xdirection(float *X, float *U)
                 }
                 U[iu] = U[iu] + MPT_G[ireg*MPT_NU + iu];
             }
+            printf("region = %.1f\n",region);
             return region;
         }
         abspos = abspos + MPT_NC[ireg];
@@ -70,5 +75,6 @@ static float mpt_getInput_Xdirection(float *X, float *U)
         }
         U[iu] = U[iu] + MPT_G[ireg*MPT_NU + iu];
     }
+    printf("region2 = %.1f\n",region);
     return region;
 }

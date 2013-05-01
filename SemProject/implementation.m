@@ -180,7 +180,7 @@ y0 = [0;0;-1;0];
 % %Simulate the closed loop
 % N_sim = 50;
 % 
-% % Create the closed-loop system:
+% Create the closed-loop system:
 % loop = ClosedLoop(expmpcYdirection, modelYdirection);
 % ClosedData = loop.simulate(y0, N_sim);
 % 
@@ -198,7 +198,7 @@ y0 = [0;0;-1;0];
 % end
 % 
 % 
-% % plot the output
+% plot the output
 % figure(3);
 % subplot(5,1,1)
 % plot(time,ClosedData.Y(1,:),time,thetaref,'-g'); grid on;ylabel('angle');
