@@ -9,7 +9,7 @@
 #define MPT_TS 0.080000
 #define MPT_DUMODE 0
 #define MPT_TRACKING 0
-#define MPT_ABSTOL 1.000000e-03
+#define MPT_ABSTOL 1.000000e-08
 
 static float MPT_H[] = {
 1.000000e+00,	-1.000000e+00 };
@@ -24,4 +24,4 @@ static float MPT_F[] = {
 -2.847540e-01 };
 
 static float MPT_G[] = {
-4.440892e-16 };
+0.000000e+00 };

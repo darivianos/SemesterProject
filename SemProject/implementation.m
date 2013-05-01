@@ -15,10 +15,10 @@ g = 9.8065;
 
 Theta = -deg2rad(3); % Docking angle
 % Controller Sampling Time
-Ts = 0.2;
+Ts = 0.08;
 modelXdirection = GenerateModel('QuadXDirection',Theta,Ts);
 % Simulation Sampling Time (50 Hz)
-TsReal = 0.02;
+TsReal = 0.01;
 modelXdirectionReal = GenerateModel('QuadXDirectionSimulink',Theta,TsReal);
 
 %
@@ -58,8 +58,8 @@ A = modelXdirection.A{1};
 uref = (B'*B)\B'*(eye(4) - A)*xref;
 
 
-N = 7;
-norm = 1;
+N = 5;
+norm = 2;
 
 ctrl = MPCController(modelXdirection);
 ctrl.N = N;

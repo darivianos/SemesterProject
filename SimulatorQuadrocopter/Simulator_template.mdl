@@ -6,7 +6,7 @@ Model {
     NumRootInports	    0
     NumRootOutports	    0
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.716"
+    ComputedModelVersion    "1.719"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -30,7 +30,7 @@ Model {
       $ObjectID		      2
       $ClassName	      "Simulink.WindowInfo"
       IsActive		      [1]
-      Location		      [57.0, -4.0, 2511.0, 1452.0]
+      Location		      [57.0, -4.0, 1317.0, 780.0]
       Object {
 	$PropName		"ModelBrowserInfo"
 	$ObjectID		3
@@ -45,7 +45,7 @@ Model {
 	$PropName		"ExplorerBarInfo"
 	$ObjectID		4
 	$ClassName		"Simulink.ExplorerBarInfo"
-	Visible			[1]
+	Visible			[0]
       }
       Object {
 	$PropName		"EditorsInfo"
@@ -53,10 +53,10 @@ Model {
 	$ClassName		"Simulink.EditorInfo"
 	IsActive		[1]
 	ViewObjType		"SimulinkSubsys"
-	LoadSaveID		"1236"
-	Extents			[2459.0, 1276.0]
-	ZoomFactor		[0.8]
-	Offset			[749.2999999999995, -201.14999999999998]
+	LoadSaveID		"1363:1895:2362"
+	Extents			[1265.0, 634.0]
+	ZoomFactor		[1.25]
+	Offset			[0.0, 0.0]
       }
     }
   }
@@ -66,9 +66,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "root"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Mon Apr 29 15:48:20 2013"
-  RTWModifiedTimeStamp	  289151294
-  ModelVersionFormat	  "1.%<AutoIncrement:716>"
+  LastModifiedDate	  "Wed May 01 09:40:15 2013"
+  RTWModifiedTimeStamp	  289302012
+  ModelVersionFormat	  "1.%<AutoIncrement:719>"
   ConfigurationManager	  "customverctrl"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -839,21 +839,6 @@ Model {
       SampleTime	      "-1"
     }
     Block {
-      BlockType		      Math
-      Operator		      "exp"
-      OutputSignalType	      "auto"
-      SampleTime	      "-1"
-      OutMin		      "[]"
-      OutMax		      "[]"
-      OutDataTypeStr	      "Inherit: Same as first input"
-      LockScale		      off
-      RndMeth		      "Floor"
-      SaturateOnIntegerOverflow	on
-      IntermediateResultsDataTypeStr "Inherit: Inherit via internal rule"
-      AlgorithmType	      "Newton-Raphson"
-      Iterations	      "3"
-    }
-    Block {
       BlockType		      Mux
       Inputs		      "4"
       DisplayOption	      "none"
@@ -903,31 +888,11 @@ Model {
       OutPortSampleTime	      "-1"
     }
     Block {
-      BlockType		      Reshape
-      OutputDimensionality    "1-D array"
-      OutputDimensions	      "[1,1]"
-    }
-    Block {
       BlockType		      S-Function
       FunctionName	      "system"
       SFunctionModules	      "''"
       PortCounts	      "[]"
       SFunctionDeploymentMode off
-    }
-    Block {
-      BlockType		      Saturate
-      UpperLimitSource	      "Dialog"
-      UpperLimit	      "0.5"
-      LowerLimitSource	      "Dialog"
-      LowerLimit	      "-0.5"
-      LinearizeAsGain	      on
-      ZeroCross		      on
-      SampleTime	      "-1"
-      OutMin		      "[]"
-      OutMax		      "[]"
-      OutDataTypeStr	      "Inherit: Same as input"
-      LockScale		      off
-      RndMeth		      "Floor"
     }
     Block {
       BlockType		      Scope
@@ -1056,7 +1021,7 @@ Model {
   }
   System {
     Name		    "Simulator_template"
-    Location		    [57, -4, 2568, 1448]
+    Location		    [57, -4, 1374, 776]
     Open		    off
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1068,7 +1033,7 @@ Model {
     TiledPaperMargins	    [1.270000, 1.270000, 1.270000, 1.270000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "100"
+    ZoomFactor		    "109"
     ReportName		    "simulink-default.rpt"
     SIDHighWatermark	    "1433"
     Block {
@@ -1092,22 +1057,6 @@ Model {
       ShowName		      off
       OutputSignals	      "pitch_bias,roll_bias,thrust_bias"
       OutputAsBus	      on
-    }
-    Block {
-      BlockType		      BusSelector
-      Name		      "Bus\nSelector5"
-      SID		      "1398"
-      Ports		      [1, 1]
-      Position		      [165, 455, 170, 495]
-      ZOrder		      -5
-      ShowName		      off
-      OutputSignals	      "rpy.yaw"
-      Port {
-	PortNumber		1
-	Name			"<yaw>"
-	RTWStorageClass		"Auto"
-	DataLoggingNameMode	"SignalName"
-      }
     }
     Block {
       BlockType		      Constant
@@ -1181,7 +1130,7 @@ Model {
       ZOrder		      3
       BackgroundColor	      "magenta"
       Floating		      off
-      Location		      [351, 114, 874, 624]
+      Location		      [517, 134, 1040, 644]
       Open		      off
       NumInputPorts	      "1"
       List {
@@ -1226,8 +1175,8 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"Point Mass Model \nnonlinear model"
-	Location		[57, -4, 2568, 1448]
-	Open			on
+	Location		[64, -4, 1367, 769]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1238,7 +1187,7 @@ Model {
 	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
 	TiledPageScale		1
 	ShowPageBoundaries	off
-	ZoomFactor		"80"
+	ZoomFactor		"78"
 	SIDHighWatermark	"371"
 	SIDPrevWatermark	"344"
 	Block {
@@ -3325,960 +3274,6 @@ Model {
     }
     Block {
       BlockType		      SubSystem
-      Name		      "create traj"
-      SID		      "1399"
-      Ports		      [1, 1]
-      Position		      [245, 443, 285, 507]
-      ZOrder		      -28
-      MinAlgLoopOccurrences   off
-      PropExecContextOutsideSubsystem off
-      RTWSystemCode	      "Auto"
-      FunctionWithSeparateData off
-      Opaque		      off
-      RequestExecContextInheritance off
-      MaskHideContents	      off
-      System {
-	Name			"create traj"
-	Location		[758, 45, 1591, 1123]
-	Open			off
-	ModelBrowserVisibility	off
-	ModelBrowserWidth	200
-	ScreenColor		"white"
-	PaperOrientation	"landscape"
-	PaperPositionMode	"auto"
-	PaperType		"usletter"
-	PaperUnits		"inches"
-	TiledPaperMargins	[0.500000, 0.500000, 0.500000, 0.500000]
-	TiledPageScale		1
-	ShowPageBoundaries	off
-	ZoomFactor		"100"
-	Block {
-	  BlockType		  Inport
-	  Name			  "yaw"
-	  SID			  "1400"
-	  Position		  [25, 708, 55, 722]
-	  ZOrder		  -1
-	  IconDisplay		  "Port number"
-	}
-	Block {
-	  BlockType		  BusCreator
-	  Name			  "Bus\nCreator8"
-	  SID			  "1401"
-	  Ports			  [4, 1]
-	  Position		  [675, 206, 680, 294]
-	  ZOrder		  -2
-	  ShowName		  off
-	  DisplayOption		  "bar"
-	  Port {
-	    PortNumber		    1
-	    Name		    "ref"
-	    PropagatedSignals	    "X_ref_x, X_ref_y, X_ref_z, X_ref_yaw"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant"
-	  SID			  "1402"
-	  Position		  [25, 75, 55, 105]
-	  ZOrder		  -3
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "Constant1"
-	  SID			  "1403"
-	  Position		  [205, 145, 235, 175]
-	  ZOrder		  -4
-	}
-	Block {
-	  BlockType		  Math
-	  Name			  "Math\nFunction"
-	  SID			  "1404"
-	  Ports			  [2, 1]
-	  Position		  [205, 82, 235, 113]
-	  ZOrder		  -5
-	  Operator		  "mod"
-	}
-	Block {
-	  BlockType		  Reshape
-	  Name			  "Reshape"
-	  SID			  "1405"
-	  Ports			  [1, 1]
-	  Position		  [535, 548, 565, 572]
-	  ZOrder		  -6
-	  Port {
-	    PortNumber		    1
-	    Name		    "X_ref_yaw"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reshape
-	  Name			  "Reshape1"
-	  SID			  "1406"
-	  Ports			  [1, 1]
-	  Position		  [520, 388, 550, 412]
-	  ZOrder		  -7
-	  Port {
-	    PortNumber		    1
-	    Name		    "X_ref_z"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reshape
-	  Name			  "Reshape2"
-	  SID			  "1407"
-	  Ports			  [1, 1]
-	  Position		  [520, 68, 550, 92]
-	  ZOrder		  -8
-	  Port {
-	    PortNumber		    1
-	    Name		    "X_ref_x"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Reshape
-	  Name			  "Reshape3"
-	  SID			  "1408"
-	  Ports			  [1, 1]
-	  Position		  [520, 228, 550, 252]
-	  ZOrder		  -9
-	  Port {
-	    PortNumber		    1
-	    Name		    "X_ref_y"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum"
-	  SID			  "1409"
-	  Ports			  [2, 1]
-	  Position		  [80, 80, 100, 100]
-	  ZOrder		  -10
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "|++"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  Sum
-	  Name			  "Sum2"
-	  SID			  "1410"
-	  Ports			  [2, 1]
-	  Position		  [255, 90, 275, 110]
-	  ZOrder		  -11
-	  ShowName		  off
-	  IconShape		  "round"
-	  Inputs		  "|++"
-	  InputSameDT		  off
-	  OutDataTypeStr	  "Inherit: Inherit via internal rule"
-	  SaturateOnIntegerOverflow off
-	}
-	Block {
-	  BlockType		  UnitDelay
-	  Name			  "Unit Delay"
-	  SID			  "1411"
-	  Position		  [105, 108, 140, 142]
-	  ZOrder		  -12
-	  BlockMirror		  on
-	  InputProcessing	  "Elements as channels (sample based)"
-	  SampleTime		  "-1"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "X_ref_x"
-	  SID			  "1412"
-	  Position		  [25, 25, 55, 55]
-	  ZOrder		  -13
-	  Value			  "traj_FG.X_ref_x"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "X_ref_y"
-	  SID			  "1413"
-	  Position		  [25, 205, 55, 235]
-	  ZOrder		  -14
-	  Value			  "traj_FG.X_ref_y"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "X_ref_yaw"
-	  SID			  "1414"
-	  Position		  [25, 520, 55, 550]
-	  ZOrder		  -15
-	  Value			  "traj_FG.X_ref_yaw"
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "X_ref_z"
-	  SID			  "1415"
-	  Position		  [25, 365, 55, 395]
-	  ZOrder		  -16
-	  Value			  "traj_FG.X_ref_z"
-	}
-	Block {
-	  BlockType		  SubSystem
-	  Name			  "generate_X_ref_x"
-	  SID			  "1416"
-	  Ports			  [2, 1]
-	  Position		  [350, 42, 460, 118]
-	  ZOrder		  -17
-	  LibraryVersion	  "1.31"
-	  ErrorFcn		  "Stateflow.Translate.translate"
-	  PermitHierarchicalResolution "ExplicitOnly"
-	  TreatAsAtomicUnit	  on
-	  MinAlgLoopOccurrences	  off
-	  PropExecContextOutsideSubsystem off
-	  RTWSystemCode		  "Auto"
-	  FunctionWithSeparateData off
-	  Opaque		  off
-	  RequestExecContextInheritance	off
-	  MaskHideContents	  off
-	  SFBlockType		  "MATLAB Function"
-	  Port {
-	    PortNumber		    1
-	    Name		    "x_ref_x"
-	    PropagatedSignals	    "X_ref_x"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  System {
-	    Name		    "generate_X_ref_x"
-	    Location		    [223, 338, 826, 833]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "45"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "traj_x"
-	      SID		      "1416::1"
-	      Position		      [20, 101, 40, 119]
-	      ZOrder		      -1
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "idx"
-	      SID		      "1416::38"
-	      Position		      [20, 136, 40, 154]
-	      ZOrder		      -2
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Demux
-	      Name		      " Demux "
-	      SID		      "1416::44"
-	      Ports		      [1, 1]
-	      Position		      [270, 230, 320, 270]
-	      ZOrder		      2
-	      Outputs		      "1"
-	    }
-	    Block {
-	      BlockType		      S-Function
-	      Name		      " SFunction "
-	      SID		      "1416::43"
-	      Tag		      "Stateflow S-Function Simulator_template 4"
-	      Ports		      [2, 2]
-	      Position		      [180, 100, 230, 160]
-	      ZOrder		      1
-	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[2 2]"
-	      EnableBusSupport	      on
-	      Port {
-		PortNumber		2
-		Name			"X_ref_x"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
-	    }
-	    Block {
-	      BlockType		      Terminator
-	      Name		      " Terminator "
-	      SID		      "1416::45"
-	      Position		      [460, 241, 480, 259]
-	      ZOrder		      3
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "X_ref_x"
-	      SID		      "1416::36"
-	      Position		      [460, 101, 480, 119]
-	      ZOrder		      -6
-	      IconDisplay	      "Port number"
-	    }
-	    Line {
-	      SrcBlock		      "traj_x"
-	      SrcPort		      1
-	      Points		      [120, 0]
-	      DstBlock		      " SFunction "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "idx"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      2
-	    }
-	    Line {
-	      Name		      "X_ref_x"
-	      Labels		      [0, 0]
-	      SrcBlock		      " SFunction "
-	      SrcPort		      2
-	      DstBlock		      "X_ref_x"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      " Demux "
-	      SrcPort		      1
-	      DstBlock		      " Terminator "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      " SFunction "
-	      SrcPort		      1
-	      DstBlock		      " Demux "
-	      DstPort		      1
-	    }
-	  }
-	}
-	Block {
-	  BlockType		  SubSystem
-	  Name			  "generate_X_ref_y"
-	  SID			  "1417"
-	  Ports			  [2, 1]
-	  Position		  [350, 202, 460, 278]
-	  ZOrder		  -18
-	  LibraryVersion	  "1.31"
-	  ErrorFcn		  "Stateflow.Translate.translate"
-	  PermitHierarchicalResolution "ExplicitOnly"
-	  TreatAsAtomicUnit	  on
-	  MinAlgLoopOccurrences	  off
-	  PropExecContextOutsideSubsystem off
-	  RTWSystemCode		  "Auto"
-	  FunctionWithSeparateData off
-	  Opaque		  off
-	  RequestExecContextInheritance	off
-	  MaskHideContents	  off
-	  SFBlockType		  "MATLAB Function"
-	  Port {
-	    PortNumber		    1
-	    Name		    "X_ref_y"
-	    PropagatedSignals	    "X_ref_y"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  System {
-	    Name		    "generate_X_ref_y"
-	    Location		    [223, 338, 826, 833]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "45"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "traj_y"
-	      SID		      "1417::1"
-	      Position		      [20, 101, 40, 119]
-	      ZOrder		      -1
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "idx"
-	      SID		      "1417::38"
-	      Position		      [20, 136, 40, 154]
-	      ZOrder		      -2
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Demux
-	      Name		      " Demux "
-	      SID		      "1417::44"
-	      Ports		      [1, 1]
-	      Position		      [270, 230, 320, 270]
-	      ZOrder		      2
-	      Outputs		      "1"
-	    }
-	    Block {
-	      BlockType		      S-Function
-	      Name		      " SFunction "
-	      SID		      "1417::43"
-	      Tag		      "Stateflow S-Function Simulator_template 2"
-	      Ports		      [2, 2]
-	      Position		      [180, 100, 230, 160]
-	      ZOrder		      1
-	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[2 2]"
-	      EnableBusSupport	      on
-	      Port {
-		PortNumber		2
-		Name			"X_ref_y"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
-	    }
-	    Block {
-	      BlockType		      Terminator
-	      Name		      " Terminator "
-	      SID		      "1417::45"
-	      Position		      [460, 241, 480, 259]
-	      ZOrder		      3
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "X_ref_y"
-	      SID		      "1417::36"
-	      Position		      [460, 101, 480, 119]
-	      ZOrder		      -6
-	      IconDisplay	      "Port number"
-	    }
-	    Line {
-	      SrcBlock		      "traj_y"
-	      SrcPort		      1
-	      Points		      [120, 0]
-	      DstBlock		      " SFunction "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "idx"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      2
-	    }
-	    Line {
-	      Name		      "X_ref_y"
-	      Labels		      [0, 0]
-	      SrcBlock		      " SFunction "
-	      SrcPort		      2
-	      DstBlock		      "X_ref_y"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      " Demux "
-	      SrcPort		      1
-	      DstBlock		      " Terminator "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      " SFunction "
-	      SrcPort		      1
-	      DstBlock		      " Demux "
-	      DstPort		      1
-	    }
-	  }
-	}
-	Block {
-	  BlockType		  SubSystem
-	  Name			  "generate_X_ref_yaw"
-	  SID			  "1418"
-	  Ports			  [3, 1]
-	  Position		  [350, 522, 460, 598]
-	  ZOrder		  -19
-	  LibraryVersion	  "1.31"
-	  ErrorFcn		  "Stateflow.Translate.translate"
-	  PermitHierarchicalResolution "ExplicitOnly"
-	  TreatAsAtomicUnit	  on
-	  MinAlgLoopOccurrences	  off
-	  PropExecContextOutsideSubsystem off
-	  RTWSystemCode		  "Auto"
-	  FunctionWithSeparateData off
-	  Opaque		  off
-	  RequestExecContextInheritance	off
-	  MaskHideContents	  off
-	  SFBlockType		  "MATLAB Function"
-	  Port {
-	    PortNumber		    1
-	    Name		    "X_ref_yaw"
-	    PropagatedSignals	    "X_ref_yaw"
-	    RTWStorageClass	    "Auto"
-	    DataLoggingNameMode	    "SignalName"
-	  }
-	  System {
-	    Name		    "generate_X_ref_yaw"
-	    Location		    [223, 338, 826, 833]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "45"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "X_ref_yaw_unbounded"
-	      SID		      "1418::1"
-	      Position		      [20, 101, 40, 119]
-	      ZOrder		      -1
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "yaw_meas"
-	      SID		      "1418::37"
-	      Position		      [20, 136, 40, 154]
-	      ZOrder		      -2
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "idx"
-	      SID		      "1418::38"
-	      Position		      [20, 171, 40, 189]
-	      ZOrder		      -3
-	      Port		      "3"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Demux
-	      Name		      " Demux "
-	      SID		      "1418::44"
-	      Ports		      [1, 1]
-	      Position		      [270, 230, 320, 270]
-	      ZOrder		      2
-	      Outputs		      "1"
-	    }
-	    Block {
-	      BlockType		      S-Function
-	      Name		      " SFunction "
-	      SID		      "1418::43"
-	      Tag		      "Stateflow S-Function Simulator_template 6"
-	      Ports		      [3, 2]
-	      Position		      [180, 100, 230, 180]
-	      ZOrder		      1
-	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[3 2]"
-	      EnableBusSupport	      on
-	      Port {
-		PortNumber		2
-		Name			"X_ref_yaw"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
-	    }
-	    Block {
-	      BlockType		      Terminator
-	      Name		      " Terminator "
-	      SID		      "1418::45"
-	      Position		      [460, 241, 480, 259]
-	      ZOrder		      3
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "X_ref_yaw"
-	      SID		      "1418::36"
-	      Position		      [460, 101, 480, 119]
-	      ZOrder		      -7
-	      IconDisplay	      "Port number"
-	    }
-	    Line {
-	      SrcBlock		      "X_ref_yaw_unbounded"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "yaw_meas"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      2
-	    }
-	    Line {
-	      SrcBlock		      "idx"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      3
-	    }
-	    Line {
-	      Name		      "X_ref_yaw"
-	      Labels		      [0, 0]
-	      SrcBlock		      " SFunction "
-	      SrcPort		      2
-	      DstBlock		      "X_ref_yaw"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      " Demux "
-	      SrcPort		      1
-	      DstBlock		      " Terminator "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      " SFunction "
-	      SrcPort		      1
-	      Points		      [20, 0]
-	      DstBlock		      " Demux "
-	      DstPort		      1
-	    }
-	  }
-	}
-	Block {
-	  BlockType		  SubSystem
-	  Name			  "generate_X_ref_z"
-	  SID			  "1419"
-	  Ports			  [2, 1]
-	  Position		  [350, 362, 460, 438]
-	  ZOrder		  -20
-	  LibraryVersion	  "1.31"
-	  ErrorFcn		  "Stateflow.Translate.translate"
-	  PermitHierarchicalResolution "ExplicitOnly"
-	  TreatAsAtomicUnit	  on
-	  MinAlgLoopOccurrences	  off
-	  PropExecContextOutsideSubsystem off
-	  RTWSystemCode		  "Auto"
-	  FunctionWithSeparateData off
-	  Opaque		  off
-	  RequestExecContextInheritance	off
-	  MaskHideContents	  off
-	  SFBlockType		  "MATLAB Function"
-	  System {
-	    Name		    "generate_X_ref_z"
-	    Location		    [223, 338, 826, 833]
-	    Open		    off
-	    ModelBrowserVisibility  off
-	    ModelBrowserWidth	    200
-	    ScreenColor		    "white"
-	    PaperOrientation	    "landscape"
-	    PaperPositionMode	    "auto"
-	    PaperType		    "usletter"
-	    PaperUnits		    "inches"
-	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
-	    TiledPageScale	    1
-	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
-	    SIDHighWatermark	    "45"
-	    Block {
-	      BlockType		      Inport
-	      Name		      "traj_z"
-	      SID		      "1419::1"
-	      Position		      [20, 101, 40, 119]
-	      ZOrder		      -1
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Inport
-	      Name		      "idx"
-	      SID		      "1419::38"
-	      Position		      [20, 136, 40, 154]
-	      ZOrder		      -2
-	      Port		      "2"
-	      IconDisplay	      "Port number"
-	    }
-	    Block {
-	      BlockType		      Demux
-	      Name		      " Demux "
-	      SID		      "1419::44"
-	      Ports		      [1, 1]
-	      Position		      [270, 230, 320, 270]
-	      ZOrder		      2
-	      Outputs		      "1"
-	    }
-	    Block {
-	      BlockType		      S-Function
-	      Name		      " SFunction "
-	      SID		      "1419::43"
-	      Tag		      "Stateflow S-Function Simulator_template 1"
-	      Ports		      [2, 2]
-	      Position		      [180, 100, 230, 160]
-	      ZOrder		      1
-	      FunctionName	      "sf_sfun"
-	      PortCounts	      "[2 2]"
-	      EnableBusSupport	      on
-	      Port {
-		PortNumber		2
-		Name			"X_ref_z"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
-	    }
-	    Block {
-	      BlockType		      Terminator
-	      Name		      " Terminator "
-	      SID		      "1419::45"
-	      Position		      [460, 241, 480, 259]
-	      ZOrder		      3
-	    }
-	    Block {
-	      BlockType		      Outport
-	      Name		      "X_ref_z"
-	      SID		      "1419::36"
-	      Position		      [460, 101, 480, 119]
-	      ZOrder		      -6
-	      IconDisplay	      "Port number"
-	    }
-	    Line {
-	      SrcBlock		      "traj_z"
-	      SrcPort		      1
-	      Points		      [120, 0]
-	      DstBlock		      " SFunction "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      "idx"
-	      SrcPort		      1
-	      DstBlock		      " SFunction "
-	      DstPort		      2
-	    }
-	    Line {
-	      Name		      "X_ref_z"
-	      Labels		      [0, 0]
-	      SrcBlock		      " SFunction "
-	      SrcPort		      2
-	      DstBlock		      "X_ref_z"
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      " Demux "
-	      SrcPort		      1
-	      DstBlock		      " Terminator "
-	      DstPort		      1
-	    }
-	    Line {
-	      SrcBlock		      " SFunction "
-	      SrcPort		      1
-	      DstBlock		      " Demux "
-	      DstPort		      1
-	    }
-	  }
-	}
-	Block {
-	  BlockType		  Constant
-	  Name			  "total_samples"
-	  SID			  "1420"
-	  Position		  [25, 145, 55, 175]
-	  ZOrder		  -21
-	  Value			  "traj_FG.total_samples"
-	}
-	Block {
-	  BlockType		  Outport
-	  Name			  "ref"
-	  SID			  "1421"
-	  Position		  [725, 223, 755, 237]
-	  ZOrder		  -22
-	  IconDisplay		  "Port number"
-	}
-	Line {
-	  Name			  "ref"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Bus\nCreator8"
-	  SrcPort		  1
-	  Points		  [0, -20]
-	  DstBlock		  "ref"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Constant"
-	  SrcPort		  1
-	  DstBlock		  "Sum"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Unit Delay"
-	  SrcPort		  1
-	  Points		  [-10, 0]
-	  DstBlock		  "Sum"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Sum"
-	  SrcPort		  1
-	  Points		  [50, 0]
-	  Branch {
-	    DstBlock		    "Unit Delay"
-	    DstPort		    1
-	  }
-	  Branch {
-	    DstBlock		    "Math\nFunction"
-	    DstPort		    1
-	  }
-	}
-	Line {
-	  SrcBlock		  "total_samples"
-	  SrcPort		  1
-	  Points		  [130, 0]
-	  DstBlock		  "Math\nFunction"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Math\nFunction"
-	  SrcPort		  1
-	  DstBlock		  "Sum2"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "X_ref_yaw"
-	  SrcPort		  1
-	  DstBlock		  "generate_X_ref_yaw"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "Constant1"
-	  SrcPort		  1
-	  Points		  [25, 0]
-	  DstBlock		  "Sum2"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "yaw"
-	  SrcPort		  1
-	  Points		  [90, 0; 0, -155]
-	  DstBlock		  "generate_X_ref_yaw"
-	  DstPort		  2
-	}
-	Line {
-	  SrcBlock		  "Sum2"
-	  SrcPort		  1
-	  Points		  [10, 0]
-	  Branch {
-	    DstBlock		    "generate_X_ref_x"
-	    DstPort		    2
-	  }
-	  Branch {
-	    Points		    [0, 160]
-	    Branch {
-	      Points		      [0, 160]
-	      Branch {
-		Points			[0, 165]
-		DstBlock		"generate_X_ref_yaw"
-		DstPort			3
-	      }
-	      Branch {
-		Points			[0, 0]
-		DstBlock		"generate_X_ref_z"
-		DstPort			2
-	      }
-	    }
-	    Branch {
-	      DstBlock		      "generate_X_ref_y"
-	      DstPort		      2
-	    }
-	  }
-	}
-	Line {
-	  Name			  "X_ref_yaw"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Reshape"
-	  SrcPort		  1
-	  Points		  [90, 0]
-	  DstBlock		  "Bus\nCreator8"
-	  DstPort		  4
-	}
-	Line {
-	  Name			  "X_ref_yaw"
-	  Labels		  [0, 0]
-	  SrcBlock		  "generate_X_ref_yaw"
-	  SrcPort		  1
-	  DstBlock		  "Reshape"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "generate_X_ref_z"
-	  SrcPort		  1
-	  DstBlock		  "Reshape1"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "X_ref_z"
-	  Labels		  [3, 0]
-	  SrcBlock		  "Reshape1"
-	  SrcPort		  1
-	  Points		  [35, 0; 0, -140]
-	  DstBlock		  "Bus\nCreator8"
-	  DstPort		  3
-	}
-	Line {
-	  SrcBlock		  "X_ref_z"
-	  SrcPort		  1
-	  DstBlock		  "generate_X_ref_z"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "X_ref_y"
-	  SrcPort		  1
-	  DstBlock		  "generate_X_ref_y"
-	  DstPort		  1
-	}
-	Line {
-	  SrcBlock		  "X_ref_x"
-	  SrcPort		  1
-	  Points		  [135, 0; 0, 20]
-	  DstBlock		  "generate_X_ref_x"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "x_ref_x"
-	  Labels		  [0, 0]
-	  SrcBlock		  "generate_X_ref_x"
-	  SrcPort		  1
-	  DstBlock		  "Reshape2"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "X_ref_y"
-	  Labels		  [0, 0]
-	  SrcBlock		  "generate_X_ref_y"
-	  SrcPort		  1
-	  DstBlock		  "Reshape3"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "X_ref_x"
-	  Labels		  [3, 0]
-	  SrcBlock		  "Reshape2"
-	  SrcPort		  1
-	  Points		  [5, 0; 0, 140]
-	  DstBlock		  "Bus\nCreator8"
-	  DstPort		  1
-	}
-	Line {
-	  Name			  "X_ref_y"
-	  Labels		  [0, 0]
-	  SrcBlock		  "Reshape3"
-	  SrcPort		  1
-	  DstBlock		  "Bus\nCreator8"
-	  DstPort		  2
-	}
-      }
-    }
-    Block {
-      BlockType		      SubSystem
       Name		      "pos controller"
       SID		      "1363"
       Ports		      [5, 2]
@@ -4295,7 +3290,7 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"pos controller"
-	Location		[57, -4, 2568, 1448]
+	Location		[57, -4, 1374, 776]
 	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -4375,7 +3370,7 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "MAIN CONTROL LOOP1"
-	    Location		    [57, -4, 2568, 1448]
+	    Location		    [57, -4, 1374, 776]
 	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
@@ -4387,7 +3382,7 @@ Model {
 	    TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
 	    TiledPageScale	    1
 	    ShowPageBoundaries	    off
-	    ZoomFactor		    "100"
+	    ZoomFactor		    "69"
 	    SIDHighWatermark	    "2399"
 	    SIDPrevWatermark	    "2381"
 	    Block {
@@ -4505,34 +3500,6 @@ Model {
 	      InputSameDT	      off
 	      OutDataTypeStr	      "Inherit: Inherit via internal rule"
 	      SaturateOnIntegerOverflow	off
-	    }
-	    Block {
-	      BlockType		      RateTransition
-	      Name		      "Rate Transition"
-	      SID		      "1363:1895:2396"
-	      Position		      [705, 59, 745, 101]
-	      ZOrder		      7
-	    }
-	    Block {
-	      BlockType		      RateTransition
-	      Name		      "Rate Transition1"
-	      SID		      "1363:1895:2397"
-	      Position		      [660, 269, 700, 311]
-	      ZOrder		      8
-	    }
-	    Block {
-	      BlockType		      RateTransition
-	      Name		      "Rate Transition2"
-	      SID		      "1363:1895:2398"
-	      Position		      [660, 479, 700, 521]
-	      ZOrder		      9
-	    }
-	    Block {
-	      BlockType		      RateTransition
-	      Name		      "Rate Transition3"
-	      SID		      "1363:1895:2399"
-	      Position		      [650, 689, 690, 731]
-	      ZOrder		      10
 	    }
 	    Block {
 	      BlockType		      Sum
@@ -5211,16 +4178,10 @@ Model {
 	      Opaque		      off
 	      RequestExecContextInheritance off
 	      MaskHideContents	      off
-	      Port {
-		PortNumber		1
-		Name			"pitch_cmd"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
 	      System {
 		Name			"x controller MPC FG\n "
-		Location		[57, -4, 2568, 1448]
-		Open			off
+		Location		[57, -4, 1374, 776]
+		Open			on
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
 		ScreenColor		"white"
@@ -5232,7 +4193,7 @@ Model {
 		TiledPageScale		1
 		ShowPageBoundaries	off
 		ZoomFactor		"125"
-		SIDHighWatermark	"2402"
+		SIDHighWatermark	"2403"
 		SIDPrevWatermark	"2381"
 		Block {
 		  BlockType		  Inport
@@ -5323,54 +4284,17 @@ Model {
 		}
 		Block {
 		  BlockType		  RateTransition
+		  Name			  "Rate Transition"
+		  SID			  "1363:1895:2362:2403"
+		  Position		  [620, 159, 660, 201]
+		  ZOrder		  20
+		}
+		Block {
+		  BlockType		  RateTransition
 		  Name			  "Rate Transition2"
 		  SID			  "1363:1895:2362:2398"
 		  Position		  [350, 159, 390, 201]
 		  ZOrder		  15
-		}
-		Block {
-		  BlockType		  Saturate
-		  Name			  "Saturation"
-		  SID			  "1363:1895:2362:2399"
-		  Ports			  [1, 1]
-		  Position		  [220, 55, 250, 85]
-		  ZOrder		  16
-		  InputPortMap		  "u0"
-		  UpperLimit		  "0.2094"
-		  LowerLimit		  "-0.2094"
-		}
-		Block {
-		  BlockType		  Saturate
-		  Name			  "Saturation1"
-		  SID			  "1363:1895:2362:2400"
-		  Ports			  [1, 1]
-		  Position		  [220, 100, 250, 130]
-		  ZOrder		  17
-		  InputPortMap		  "u0"
-		  UpperLimit		  "2"
-		  LowerLimit		  "-2"
-		}
-		Block {
-		  BlockType		  Saturate
-		  Name			  "Saturation2"
-		  SID			  "1363:1895:2362:2401"
-		  Ports			  [1, 1]
-		  Position		  [220, 145, 250, 175]
-		  ZOrder		  18
-		  InputPortMap		  "u0"
-		  UpperLimit		  "0"
-		  LowerLimit		  "-1"
-		}
-		Block {
-		  BlockType		  Saturate
-		  Name			  "Saturation3"
-		  SID			  "1363:1895:2362:2402"
-		  Ports			  [1, 1]
-		  Position		  [220, 205, 250, 235]
-		  ZOrder		  19
-		  InputPortMap		  "u0"
-		  UpperLimit		  "1"
-		  LowerLimit		  "-1"
 		}
 		Block {
 		  BlockType		  Scope
@@ -5410,7 +4334,7 @@ Model {
 		  Position		  [465, 304, 495, 336]
 		  ZOrder		  10
 		  Floating		  off
-		  Location		  [66, 53, 2561, 1439]
+		  Location		  [67, 81, 1368, 795]
 		  Open			  off
 		  NumInputPorts		  "1"
 		  List {
@@ -5573,45 +4497,16 @@ Model {
 		  DstPort		  1
 		}
 		Line {
-		  SrcBlock		  "Add"
-		  SrcPort		  1
-		  Points		  [29, 0]
-		  Branch {
-		    DstBlock		    "Scope"
-		    DstPort		    1
-		  }
-		  Branch {
-		    Points		    [0, -145]
-		    DstBlock		    "Saturation2"
-		    DstPort		    1
-		  }
-		}
-		Line {
 		  SrcBlock		  "X direction Ctrl"
 		  SrcPort		  1
-		  Points		  [109, 0]
-		  Branch {
-		    Points		    [0, 140]
-		    DstBlock		    "Scope2"
-		    DstPort		    1
-		  }
-		  Branch {
-		    DstBlock		    "pitch_cmd \n "
-		    DstPort		    1
-		  }
+		  DstBlock		  "Rate Transition"
+		  DstPort		  1
 		}
 		Line {
 		  SrcBlock		  "Mux"
 		  SrcPort		  1
 		  Points		  [15, 0; 0, 40]
 		  DstBlock		  "Rate Transition2"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "ang_pitch"
-		  SrcPort		  1
-		  Points		  [125, 0; 0, -380]
-		  DstBlock		  "Saturation1"
 		  DstPort		  1
 		}
 		Line {
@@ -5628,16 +4523,17 @@ Model {
 		  Labels		  [0, 0]
 		  SrcBlock		  "Bus\nSelector"
 		  SrcPort		  2
-		  DstBlock		  "Saturation3"
-		  DstPort		  1
+		  Points		  [4, 0; 0, -15]
+		  DstBlock		  "Mux"
+		  DstPort		  4
 		}
 		Line {
 		  Name			  "<pitch>"
 		  Labels		  [0, 0]
 		  SrcBlock		  "Bus\nSelector"
 		  SrcPort		  3
-		  Points		  [68, 0; 0, -180]
-		  DstBlock		  "Saturation"
+		  Points		  [47, 0; 0, -180]
+		  DstBlock		  "Mux"
 		  DstPort		  1
 		}
 		Line {
@@ -5655,29 +4551,39 @@ Model {
 		  }
 		}
 		Line {
-		  SrcBlock		  "Saturation"
+		  SrcBlock		  "ang_pitch"
 		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  1
-		}
-		Line {
-		  SrcBlock		  "Saturation1"
-		  SrcPort		  1
+		  Points		  [121, 0; 0, -380]
 		  DstBlock		  "Mux"
 		  DstPort		  2
 		}
 		Line {
-		  SrcBlock		  "Saturation2"
+		  SrcBlock		  "Add"
 		  SrcPort		  1
-		  DstBlock		  "Mux"
-		  DstPort		  3
+		  Points		  [29, 0]
+		  Branch {
+		    Points		    [0, -145]
+		    DstBlock		    "Mux"
+		    DstPort		    3
+		  }
+		  Branch {
+		    DstBlock		    "Scope"
+		    DstPort		    1
+		  }
 		}
 		Line {
-		  SrcBlock		  "Saturation3"
+		  SrcBlock		  "Rate Transition"
 		  SrcPort		  1
-		  Points		  [24, 0; 0, -15]
-		  DstBlock		  "Mux"
-		  DstPort		  4
+		  Points		  [24, 0]
+		  Branch {
+		    Points		    [0, 140]
+		    DstBlock		    "Scope2"
+		    DstPort		    1
+		  }
+		  Branch {
+		    DstBlock		    "pitch_cmd \n "
+		    DstPort		    1
+		  }
 		}
 	      }
 	    }
@@ -5698,15 +4604,9 @@ Model {
 	      Opaque		      off
 	      RequestExecContextInheritance off
 	      MaskHideContents	      off
-	      Port {
-		PortNumber		1
-		Name			"roll_cmd"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
 	      System {
 		Name			"y controller MPC FG"
-		Location		[57, -4, 2568, 1448]
+		Location		[64, -4, 1367, 769]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -5719,7 +4619,7 @@ Model {
 		TiledPageScale		1
 		ShowPageBoundaries	off
 		ZoomFactor		"100"
-		SIDHighWatermark	"2393"
+		SIDHighWatermark	"2394"
 		SIDPrevWatermark	"2381"
 		Block {
 		  BlockType		  Inport
@@ -5880,6 +4780,13 @@ Model {
 		}
 		Block {
 		  BlockType		  RateTransition
+		  Name			  "Rate Transition"
+		  SID			  "1363:1895:2364:2394"
+		  Position		  [810, 184, 850, 226]
+		  ZOrder		  15
+		}
+		Block {
+		  BlockType		  RateTransition
 		  Name			  "Rate Transition2"
 		  SID			  "1363:1895:2364:2393"
 		  Position		  [490, 184, 530, 226]
@@ -5922,7 +4829,7 @@ Model {
 		Line {
 		  SrcBlock		  "Explicit Controller"
 		  SrcPort		  1
-		  DstBlock		  "roll_cmd"
+		  DstBlock		  "Rate Transition"
 		  DstPort		  1
 		}
 		Line {
@@ -5959,6 +4866,12 @@ Model {
 		  DstBlock		  "Explicit Controller"
 		  DstPort		  1
 		}
+		Line {
+		  SrcBlock		  "Rate Transition"
+		  SrcPort		  1
+		  DstBlock		  "roll_cmd"
+		  DstPort		  1
+		}
 	      }
 	    }
 	    Block {
@@ -5978,15 +4891,9 @@ Model {
 	      Opaque		      off
 	      RequestExecContextInheritance off
 	      MaskHideContents	      off
-	      Port {
-		PortNumber		1
-		Name			"yaw_rate_cmd"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
 	      System {
 		Name			"yaw controller MPC FG"
-		Location		[57, -4, 2568, 1448]
+		Location		[64, -4, 1367, 769]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -5999,7 +4906,7 @@ Model {
 		TiledPageScale		1
 		ShowPageBoundaries	off
 		ZoomFactor		"125"
-		SIDHighWatermark	"2390"
+		SIDHighWatermark	"2391"
 		SIDPrevWatermark	"2381"
 		Block {
 		  BlockType		  Inport
@@ -6140,6 +5047,13 @@ Model {
 		}
 		Block {
 		  BlockType		  RateTransition
+		  Name			  "Rate Transition"
+		  SID			  "1363:1895:2366:2391"
+		  Position		  [835, 129, 875, 171]
+		  ZOrder		  11
+		}
+		Block {
+		  BlockType		  RateTransition
 		  Name			  "Rate Transition2"
 		  SID			  "1363:1895:2366:2390"
 		  Position		  [485, 129, 525, 171]
@@ -6182,13 +5096,19 @@ Model {
 		Line {
 		  SrcBlock		  "Explicit Controller"
 		  SrcPort		  1
-		  DstBlock		  "yaw_rate_cmd"
+		  DstBlock		  "Rate Transition"
 		  DstPort		  1
 		}
 		Line {
 		  SrcBlock		  "Rate Transition2"
 		  SrcPort		  1
 		  DstBlock		  "Explicit Controller"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Rate Transition"
+		  SrcPort		  1
+		  DstBlock		  "yaw_rate_cmd"
 		  DstPort		  1
 		}
 	      }
@@ -6210,15 +5130,9 @@ Model {
 	      Opaque		      off
 	      RequestExecContextInheritance off
 	      MaskHideContents	      off
-	      Port {
-		PortNumber		1
-		Name			"thrust_cmd"
-		RTWStorageClass		"Auto"
-		DataLoggingNameMode	"SignalName"
-	      }
 	      System {
 		Name			"z controller MPC FG"
-		Location		[57, -4, 2568, 1448]
+		Location		[64, -4, 1367, 769]
 		Open			off
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
@@ -6231,7 +5145,7 @@ Model {
 		TiledPageScale		1
 		ShowPageBoundaries	off
 		ZoomFactor		"100"
-		SIDHighWatermark	"2395"
+		SIDHighWatermark	"2396"
 		SIDPrevWatermark	"2381"
 		Block {
 		  BlockType		  Inport
@@ -6383,6 +5297,13 @@ Model {
 		}
 		Block {
 		  BlockType		  RateTransition
+		  Name			  "Rate Transition"
+		  SID			  "1363:1895:2368:2396"
+		  Position		  [650, 109, 690, 151]
+		  ZOrder		  17
+		}
+		Block {
+		  BlockType		  RateTransition
 		  Name			  "Rate Transition2"
 		  SID			  "1363:1895:2368:2395"
 		  Position		  [350, 109, 390, 151]
@@ -6439,13 +5360,19 @@ Model {
 		Line {
 		  SrcBlock		  "Explicit Controller"
 		  SrcPort		  1
-		  DstBlock		  "thrust_cmd"
+		  DstBlock		  "Rate Transition"
 		  DstPort		  1
 		}
 		Line {
 		  SrcBlock		  "Rate Transition2"
 		  SrcPort		  1
 		  DstBlock		  "Explicit Controller"
+		  DstPort		  1
+		}
+		Line {
+		  SrcBlock		  "Rate Transition"
+		  SrcPort		  1
+		  DstBlock		  "thrust_cmd"
 		  DstPort		  1
 		}
 	      }
@@ -6493,14 +5420,6 @@ Model {
 	      Points		      [365, 0; 0, -390]
 	      DstBlock		      "Bus\nCreator"
 	      DstPort		      4
-	    }
-	    Line {
-	      Name		      "yaw_rate_cmd"
-	      Labels		      [0, 0]
-	      SrcBlock		      "yaw controller MPC FG"
-	      SrcPort		      1
-	      DstBlock		      "Rate Transition3"
-	      DstPort		      1
 	    }
 	    Line {
 	      Name		      "<thrust_bias>"
@@ -6593,14 +5512,6 @@ Model {
 	      DstPort		      1
 	    }
 	    Line {
-	      Name		      "thrust_cmd"
-	      Labels		      [0, 0]
-	      SrcBlock		      "z controller MPC FG"
-	      SrcPort		      1
-	      DstBlock		      "Rate Transition2"
-	      DstPort		      1
-	    }
-	    Line {
 	      Name		      "roll_cmd"
 	      Labels		      [1, 0]
 	      SrcBlock		      "Sum1"
@@ -6609,30 +5520,12 @@ Model {
 	      DstPort		      2
 	    }
 	    Line {
-	      Name		      "roll_cmd"
-	      Labels		      [0, 0]
-	      SrcBlock		      "y controller MPC FG"
-	      SrcPort		      1
-	      Points		      [0, -5]
-	      DstBlock		      "Rate Transition1"
-	      DstPort		      1
-	    }
-	    Line {
 	      Name		      "pitch_cmd"
 	      Labels		      [0, 0; 3, 0]
 	      SrcBlock		      "Sum"
 	      SrcPort		      1
 	      Points		      [180, 0; 0, 195]
 	      DstBlock		      "Bus\nCreator"
-	      DstPort		      1
-	    }
-	    Line {
-	      Name		      "pitch_cmd"
-	      Labels		      [0, 1]
-	      SrcBlock		      "x controller MPC FG\n "
-	      SrcPort		      1
-	      Points		      [63, 0; 0, -20]
-	      DstBlock		      "Rate Transition"
 	      DstPort		      1
 	    }
 	    Line {
@@ -6774,25 +5667,27 @@ Model {
 	      DstPort		      4
 	    }
 	    Line {
-	      SrcBlock		      "Rate Transition"
+	      SrcBlock		      "x controller MPC FG\n "
 	      SrcPort		      1
+	      Points		      [63, 0; 0, -20]
 	      DstBlock		      "Sum"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Rate Transition1"
+	      SrcBlock		      "y controller MPC FG"
 	      SrcPort		      1
+	      Points		      [47, 0; 0, -5]
 	      DstBlock		      "Sum1"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Rate Transition2"
+	      SrcBlock		      "z controller MPC FG"
 	      SrcPort		      1
 	      DstBlock		      "Sum2"
 	      DstPort		      1
 	    }
 	    Line {
-	      SrcBlock		      "Rate Transition3"
+	      SrcBlock		      "yaw controller MPC FG"
 	      SrcPort		      1
 	      DstBlock		      "Sum3"
 	      DstPort		      1
@@ -6953,7 +5848,7 @@ Model {
       ZOrder		      -32
       BackgroundColor	      "magenta"
       Floating		      off
-      Location		      [83, 81, 1361, 1019]
+      Location		      [66, 53, 1367, 767]
       Open		      off
       NumInputPorts	      "1"
       ZoomMode		      "xonly"
@@ -7026,17 +5921,9 @@ Model {
       SrcPort		      1
       Points		      [0, 5; 41, 0]
       Branch {
-	Points			[172, 0; 0, 355; -683, 0]
-	Branch {
-	  Points		  [0, -360]
-	  DstBlock		  "pos controller"
-	  DstPort		  1
-	}
-	Branch {
-	  Points		  [-330, 0]
-	  DstBlock		  "Bus\nSelector5"
-	  DstPort		  1
-	}
+	Points			[172, 0; 0, 355; -683, 0; 0, -360]
+	DstBlock		"pos controller"
+	DstPort			1
       }
       Branch {
 	Points			[0, -105]
@@ -7098,14 +5985,6 @@ Model {
       DstPort		      5
     }
     Line {
-      Name		      "<yaw>"
-      Labels		      [0, 0]
-      SrcBlock		      "Bus\nSelector5"
-      SrcPort		      1
-      DstBlock		      "create traj"
-      DstPort		      1
-    }
-    Line {
       SrcBlock		      "create ref"
       SrcPort		      1
       DstBlock		      "pos controller"
@@ -7142,612 +6021,20 @@ Stateflow {
     name		    "Simulator_template"
     created		    "06-Apr-2010 16:38:37"
     isLibrary		    0
-    firstTarget		    35
+    firstTarget		    2
     sfVersion		    76014001.0015
   }
-  chart {
-    id			    2
-    name		    "create traj/generate_X_ref_z"
-    windowPosition	    [477.867 669 200 423]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 2560 1440 1.25]
-    treeNode		    [0 3 0 0]
-    firstTransition	    8
-    firstJunction	    7
-    viewObj		    2
-    machine		    1
-    ssIdHighWaterMark	    26
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    firstData		    4
-    chartFileNumber	    1
-    disableImplicitCasting  1
-    eml {
-      name		      "fcn"
-    }
-  }
-  state {
-    id			    3
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    2
-    treeNode		    [2 0 0 0]
-    superState		    SUBCHART
-    subviewer		    2
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function X_ref_z  = fcn(traj_z,idx)\n\npred_horizon_z=30;\n\nX_ref_z=traj_z(:,idx:idx+pred_horizo"
-      "n_z);"
-      editorLayout	      "100 M4x1[453 208 1080 675]"
-    }
-  }
-  data {
-    id			    4
-    ssIdNumber		    4
-    name		    "traj_z"
-    linkNode		    [2 0 5]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    5
-    ssIdNumber		    18
-    name		    "X_ref_z"
-    linkNode		    [2 4 6]
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    6
-    ssIdNumber		    26
-    name		    "idx"
-    linkNode		    [2 5 0]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  junction {
-    id			    7
-    position		    [23.5747 49.5747 7]
-    chart		    2
-    linkNode		    [2 0 0]
-    subviewer		    2
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-  }
-  transition {
-    id			    8
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [32.125 19.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      7
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    2
-    linkNode		    [2 0 0]
-    dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    2
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-  }
-  instance {
-    id			    9
-    name		    "create traj/generate_X_ref_z"
-    machine		    1
-    chart		    2
-  }
-  chart {
-    id			    10
-    name		    "create traj/generate_X_ref_y"
-    windowPosition	    [504.178 669 200 423]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 2560 1440 1.25]
-    treeNode		    [0 11 0 0]
-    firstTransition	    16
-    firstJunction	    15
-    viewObj		    10
-    machine		    1
-    ssIdHighWaterMark	    26
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    firstData		    12
-    chartFileNumber	    2
-    disableImplicitCasting  1
-    eml {
-      name		      "fcn"
-    }
-  }
-  state {
-    id			    11
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    10
-    treeNode		    [10 0 0 0]
-    superState		    SUBCHART
-    subviewer		    10
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function X_ref_y  = fcn(traj_y,idx)\n\npred_horizon_y=30;\n\nX_ref_y=traj_y(:,idx:idx+pred_horizo"
-      "n_y);"
-      editorLayout	      "100 M4x1[444 124 1080 675]"
-    }
-  }
-  data {
-    id			    12
-    ssIdNumber		    4
-    name		    "traj_y"
-    linkNode		    [10 0 13]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    13
-    ssIdNumber		    18
-    name		    "X_ref_y"
-    linkNode		    [10 12 14]
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    14
-    ssIdNumber		    26
-    name		    "idx"
-    linkNode		    [10 13 0]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  junction {
-    id			    15
-    position		    [23.5747 49.5747 7]
-    chart		    10
-    linkNode		    [10 0 0]
-    subviewer		    10
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-  }
-  transition {
-    id			    16
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [32.125 19.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      15
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    10
-    linkNode		    [10 0 0]
-    dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    10
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-  }
-  instance {
-    id			    17
-    name		    "create traj/generate_X_ref_y"
-    machine		    1
-    chart		    10
-  }
-  chart {
-    id			    18
-    name		    "create traj/generate_X_ref_x"
-    windowPosition	    [491.378 669 200 423]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 2560 1440 1.25]
-    treeNode		    [0 19 0 0]
-    firstTransition	    24
-    firstJunction	    23
-    viewObj		    18
-    machine		    1
-    ssIdHighWaterMark	    26
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    firstData		    20
-    chartFileNumber	    4
-    disableImplicitCasting  1
-    eml {
-      name		      "fcn"
-    }
-  }
-  state {
-    id			    19
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    18
-    treeNode		    [18 0 0 0]
-    superState		    SUBCHART
-    subviewer		    18
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function X_ref_x  = fcn(traj_x,idx)\n\npred_horizon_x=30;\n\nX_ref_x=traj_x(:,idx:idx+pred_horizo"
-      "n_x);"
-      editorLayout	      "100 M4x1[444 124 1080 675]"
-    }
-  }
-  data {
-    id			    20
-    ssIdNumber		    4
-    name		    "traj_x"
-    linkNode		    [18 0 21]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    21
-    ssIdNumber		    18
-    name		    "X_ref_x"
-    linkNode		    [18 20 22]
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    22
-    ssIdNumber		    26
-    name		    "idx"
-    linkNode		    [18 21 0]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  junction {
-    id			    23
-    position		    [23.5747 49.5747 7]
-    chart		    18
-    linkNode		    [18 0 0]
-    subviewer		    18
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-  }
-  transition {
-    id			    24
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [32.125 19.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      23
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    18
-    linkNode		    [18 0 0]
-    dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    18
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-  }
-  instance {
-    id			    25
-    name		    "create traj/generate_X_ref_x"
-    machine		    1
-    chart		    18
-  }
-  chart {
-    id			    26
-    name		    "create traj/generate_X_ref_yaw"
-    windowPosition	    [464.356 669 200 423]
-    viewLimits		    [0 156.75 0 153.75]
-    screen		    [1 1 2560 1440 1.25]
-    treeNode		    [0 27 0 0]
-    firstTransition	    33
-    firstJunction	    32
-    viewObj		    26
-    machine		    1
-    ssIdHighWaterMark	    26
-    decomposition	    CLUSTER_CHART
-    type		    EML_CHART
-    firstData		    28
-    chartFileNumber	    6
-    disableImplicitCasting  1
-    eml {
-      name		      "fcn"
-    }
-  }
-  state {
-    id			    27
-    labelString		    "eML_blk_kernel()"
-    position		    [18 64.5 118 66]
-    fontSize		    12
-    chart		    26
-    treeNode		    [26 0 0 0]
-    superState		    SUBCHART
-    subviewer		    26
-    ssIdNumber		    1
-    type		    FUNC_STATE
-    decomposition	    CLUSTER_STATE
-    eml {
-      isEML		      1
-      script		      "function X_ref_yaw  = fcn(X_ref_yaw_unbounded,yaw_meas,idx)\n\npred_horizon_yaw=30;\n\nyaw0=X_ref"
-      "_yaw_unbounded(1,idx);\nyaw_diff=yaw_meas-yaw0;\n\n\nyaw_offset=round(yaw_diff/(2*pi))*2*pi;\n\nX_ref_yaw=[X_ref"
-      "_yaw_unbounded(1,idx:idx+pred_horizon_yaw)+yaw_offset;...\n    X_ref_yaw_unbounded(2,idx:idx+pred_horizon_yaw)];"
-      "\n"
-      editorLayout	      "100 M4x1[452 375 1080 675]"
-    }
-  }
-  data {
-    id			    28
-    ssIdNumber		    4
-    name		    "X_ref_yaw_unbounded"
-    linkNode		    [26 0 29]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-      }
-      complexity	      SF_COMPLEX_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    29
-    ssIdNumber		    18
-    name		    "X_ref_yaw"
-    linkNode		    [26 28 30]
-    scope		    OUTPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_NO
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    30
-    ssIdNumber		    25
-    name		    "yaw_meas"
-    linkNode		    [26 29 31]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  data {
-    id			    31
-    ssIdNumber		    26
-    name		    "idx"
-    linkNode		    [26 30 0]
-    scope		    INPUT_DATA
-    machine		    1
-    props {
-      array {
-	size			"-1"
-      }
-      type {
-	method			SF_INHERITED_TYPE
-	primitive		SF_DOUBLE_TYPE
-	isSigned		1
-	wordLength		"16"
-      }
-      complexity	      SF_COMPLEX_INHERITED
-      frame		      SF_FRAME_INHERITED
-    }
-    dataType		    "Inherit: Same as Simulink"
-  }
-  junction {
-    id			    32
-    position		    [23.5747 49.5747 7]
-    chart		    26
-    linkNode		    [26 0 0]
-    subviewer		    26
-    ssIdNumber		    3
-    type		    CONNECTIVE_JUNCTION
-  }
-  transition {
-    id			    33
-    labelString		    "{eML_blk_kernel();}"
-    labelPosition	    [32.125 19.875 102.544 14.964]
-    fontSize		    12
-    src {
-      intersection	      [0 0 1 0 23.5747 14.625 0 0]
-    }
-    dst {
-      id		      32
-      intersection	      [1 0 -1 0 23.5747 42.5747 0 0]
-    }
-    midPoint		    [23.5747 24.9468]
-    chart		    26
-    linkNode		    [26 0 0]
-    dataLimits		    [23.575 23.575 14.625 34.575]
-    subviewer		    26
-    drawStyle		    SMART
-    slide {
-      sticky		      BOTH_STICK
-    }
-    executionOrder	    1
-    ssIdNumber		    2
-  }
-  instance {
-    id			    34
-    name		    "create traj/generate_X_ref_yaw"
-    machine		    1
-    chart		    26
-  }
   target {
-    id			    35
+    id			    2
     name		    "sfun"
     description		    "Default Simulink S-Function Target."
     machine		    1
-    linkNode		    [1 0 36]
+    linkNode		    [1 0 3]
   }
   target {
-    id			    36
+    id			    3
     name		    "rtw"
     machine		    1
-    linkNode		    [1 35 0]
+    linkNode		    [1 2 0]
   }
 }

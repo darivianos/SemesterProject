@@ -23,7 +23,7 @@ static float mpt_getInput_Zdirection(float *X, float *U)
     tolerance = 1;
     sumViol = 0;
     minreg = 0;
-    
+
     /* initialize U to zero*/
     for (iu=0; iu<MPT_NU; iu++) {
         U[iu] = 0;

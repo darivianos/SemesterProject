@@ -2,10 +2,6 @@
 
 #include "Simulator_template_sfun.h"
 #include "Simulator_template_sfun_debug_macros.h"
-#include "c1_Simulator_template.h"
-#include "c2_Simulator_template.h"
-#include "c4_Simulator_template.h"
-#include "c6_Simulator_template.h"
 
 /* Type Definitions */
 
@@ -32,26 +28,6 @@ void Simulator_template_terminator(void)
 unsigned int sf_Simulator_template_method_dispatcher(SimStruct *simstructPtr,
   unsigned int chartFileNumber, const char* specsCksum, int_T method, void *data)
 {
-  if (chartFileNumber==1) {
-    c1_Simulator_template_method_dispatcher(simstructPtr, method, data);
-    return 1;
-  }
-
-  if (chartFileNumber==2) {
-    c2_Simulator_template_method_dispatcher(simstructPtr, method, data);
-    return 1;
-  }
-
-  if (chartFileNumber==4) {
-    c4_Simulator_template_method_dispatcher(simstructPtr, method, data);
-    return 1;
-  }
-
-  if (chartFileNumber==6) {
-    c6_Simulator_template_method_dispatcher(simstructPtr, method, data);
-    return 1;
-  }
-
   return 0;
 }
 
@@ -85,42 +61,14 @@ unsigned int sf_Simulator_template_process_check_sum_call( int nlhs, mxArray *
       ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(0U);
       ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(0U);
     } else if (!strcmp(commandName,"makefile")) {
-      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2991749020U);
-      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4250414832U);
-      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3013659878U);
-      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1407097655U);
+      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(169384627U);
+      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1212672220U);
+      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2571101390U);
+      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3288877455U);
     } else if (nrhs==3 && !strcmp(commandName,"chart")) {
       unsigned int chartFileNumber;
       chartFileNumber = (unsigned int)mxGetScalar(prhs[2]);
       switch (chartFileNumber) {
-       case 1:
-        {
-          extern void sf_c1_Simulator_template_get_check_sum(mxArray *plhs[]);
-          sf_c1_Simulator_template_get_check_sum(plhs);
-          break;
-        }
-
-       case 2:
-        {
-          extern void sf_c2_Simulator_template_get_check_sum(mxArray *plhs[]);
-          sf_c2_Simulator_template_get_check_sum(plhs);
-          break;
-        }
-
-       case 4:
-        {
-          extern void sf_c4_Simulator_template_get_check_sum(mxArray *plhs[]);
-          sf_c4_Simulator_template_get_check_sum(plhs);
-          break;
-        }
-
-       case 6:
-        {
-          extern void sf_c6_Simulator_template_get_check_sum(mxArray *plhs[]);
-          sf_c6_Simulator_template_get_check_sum(plhs);
-          break;
-        }
-
        default:
         ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(0.0);
         ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(0.0);
@@ -136,10 +84,10 @@ unsigned int sf_Simulator_template_process_check_sum_call( int nlhs, mxArray *
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2927053887U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2964509963U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2306643420U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2338744014U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(526759493U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1875967324U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3591196688U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2007900613U);
   }
 
   return 1;
@@ -175,54 +123,6 @@ unsigned int sf_Simulator_template_autoinheritance_info( int nlhs, mxArray *
     unsigned int chartFileNumber;
     chartFileNumber = (unsigned int)mxGetScalar(prhs[1]);
     switch (chartFileNumber) {
-     case 1:
-      {
-        if (strcmp(aiChksum, "xRYzwi3KUi0FFQtovNbcSH") == 0) {
-          extern mxArray *sf_c1_Simulator_template_get_autoinheritance_info(void);
-          plhs[0] = sf_c1_Simulator_template_get_autoinheritance_info();
-          break;
-        }
-
-        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
-        break;
-      }
-
-     case 2:
-      {
-        if (strcmp(aiChksum, "p9m4L9CLZSEYT5bSCmog3C") == 0) {
-          extern mxArray *sf_c2_Simulator_template_get_autoinheritance_info(void);
-          plhs[0] = sf_c2_Simulator_template_get_autoinheritance_info();
-          break;
-        }
-
-        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
-        break;
-      }
-
-     case 4:
-      {
-        if (strcmp(aiChksum, "WpNY7ItHTI4yFYDPbYbD3B") == 0) {
-          extern mxArray *sf_c4_Simulator_template_get_autoinheritance_info(void);
-          plhs[0] = sf_c4_Simulator_template_get_autoinheritance_info();
-          break;
-        }
-
-        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
-        break;
-      }
-
-     case 6:
-      {
-        if (strcmp(aiChksum, "PBXC6W3MDoWVj0OvY6ihZG") == 0) {
-          extern mxArray *sf_c6_Simulator_template_get_autoinheritance_info(void);
-          plhs[0] = sf_c6_Simulator_template_get_autoinheritance_info();
-          break;
-        }
-
-        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
-        break;
-      }
-
      default:
       plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
     }
@@ -258,50 +158,6 @@ unsigned int sf_Simulator_template_get_eml_resolved_functions_info( int nlhs,
     unsigned int chartFileNumber;
     chartFileNumber = (unsigned int)mxGetScalar(prhs[1]);
     switch (chartFileNumber) {
-     case 1:
-      {
-        extern const mxArray
-          *sf_c1_Simulator_template_get_eml_resolved_functions_info(void);
-        mxArray *persistentMxArray = (mxArray *)
-          sf_c1_Simulator_template_get_eml_resolved_functions_info();
-        plhs[0] = mxDuplicateArray(persistentMxArray);
-        mxDestroyArray(persistentMxArray);
-        break;
-      }
-
-     case 2:
-      {
-        extern const mxArray
-          *sf_c2_Simulator_template_get_eml_resolved_functions_info(void);
-        mxArray *persistentMxArray = (mxArray *)
-          sf_c2_Simulator_template_get_eml_resolved_functions_info();
-        plhs[0] = mxDuplicateArray(persistentMxArray);
-        mxDestroyArray(persistentMxArray);
-        break;
-      }
-
-     case 4:
-      {
-        extern const mxArray
-          *sf_c4_Simulator_template_get_eml_resolved_functions_info(void);
-        mxArray *persistentMxArray = (mxArray *)
-          sf_c4_Simulator_template_get_eml_resolved_functions_info();
-        plhs[0] = mxDuplicateArray(persistentMxArray);
-        mxDestroyArray(persistentMxArray);
-        break;
-      }
-
-     case 6:
-      {
-        extern const mxArray
-          *sf_c6_Simulator_template_get_eml_resolved_functions_info(void);
-        mxArray *persistentMxArray = (mxArray *)
-          sf_c6_Simulator_template_get_eml_resolved_functions_info();
-        plhs[0] = mxDuplicateArray(persistentMxArray);
-        mxDestroyArray(persistentMxArray);
-        break;
-      }
-
      default:
       plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
     }
@@ -337,42 +193,6 @@ unsigned int sf_Simulator_template_third_party_uses_info( int nlhs, mxArray *
     unsigned int chartFileNumber;
     chartFileNumber = (unsigned int)mxGetScalar(prhs[1]);
     switch (chartFileNumber) {
-     case 1:
-      {
-        if (strcmp(tpChksum, "CXbDiabk6ziYTWOHQBNqwE") == 0) {
-          extern mxArray *sf_c1_Simulator_template_third_party_uses_info(void);
-          plhs[0] = sf_c1_Simulator_template_third_party_uses_info();
-          break;
-        }
-      }
-
-     case 2:
-      {
-        if (strcmp(tpChksum, "yXVPiNpC6gip22piwgRZeH") == 0) {
-          extern mxArray *sf_c2_Simulator_template_third_party_uses_info(void);
-          plhs[0] = sf_c2_Simulator_template_third_party_uses_info();
-          break;
-        }
-      }
-
-     case 4:
-      {
-        if (strcmp(tpChksum, "MbWue7jPB8EnTKxkJiK80C") == 0) {
-          extern mxArray *sf_c4_Simulator_template_third_party_uses_info(void);
-          plhs[0] = sf_c4_Simulator_template_third_party_uses_info();
-          break;
-        }
-      }
-
-     case 6:
-      {
-        if (strcmp(tpChksum, "2vBE8rJ5QhGGBaKnTOjlpC") == 0) {
-          extern mxArray *sf_c6_Simulator_template_third_party_uses_info(void);
-          plhs[0] = sf_c6_Simulator_template_third_party_uses_info();
-          break;
-        }
-      }
-
      default:
       plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
     }
@@ -385,7 +205,7 @@ void Simulator_template_debug_initialize(struct SfDebugInstanceStruct*
   debugInstance)
 {
   _Simulator_templateMachineNumber_ = sf_debug_initialize_machine(debugInstance,
-    "Simulator_template","sfun",0,4,0,0,0);
+    "Simulator_template","sfun",0,0,0,0,0);
   sf_debug_set_machine_event_thresholds(debugInstance,
     _Simulator_templateMachineNumber_,0,0);
   sf_debug_set_machine_data_thresholds(debugInstance,
