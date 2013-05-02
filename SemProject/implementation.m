@@ -139,6 +139,86 @@ x0 = [0;0;-1;0];
 % subplot(6,1,6)
 % plot(time,ClosedData.U(:)); grid on;ylabel('Input')
 
+%% Xdirection Controller Free Flight
+Af = zeros(4,4);
+Bf = zeros(4,1);
+Df = zeros(4,1);
+% Free Flight
+Af(1,2) = 1; Af(2,1) = -a0_pitch; Af(2,2) = -a1_pitch; Af(3,4) = 1; 
+Af(4,1) = -g; Af(4,4) = DF_pitch;
+Bf(2,1) = c0_pitch;
+Cf = eye(4);
+
+sysfc = ss(Af,Bf,Cf,Df);
+
+% All controller must operate at the same frequency
+sysfd = c2d(sysfc,Ts,'zoh');
+modelXdirectionFF = LTISystem(sysfd);
+
+% Real models are generated at 50Hz frequency
+sysfd = c2d(sysfc,TsReal,'zoh');
+modelXdirectionRealFF = LTISystem(sysfd);
+
+% Set constraints on states and input
+modelXdirectionFF.x.min = [-0.2094;-2;-1;-1];
+modelXdirectionFF.x.max = [0.2094;2;1;1];
+modelXdirectionFF.u.min = -5;
+modelXdirectionFF.u.max = 5;
+
+% Set the penalty
+Qxff = zeros(4,4);
+Qxff(1,1) = 10;
+Qxff(3,3) = 100; % position control
+Qxff(4,4) = 10;
+Rff = 1;
+
+modelXdirectionFF.x.penalty = Penalty(Qxff,norm);
+modelXdirectionFF.u.penalty = Penalty(Rff,norm);
+
+ctrlXFF = MPCController(modelXdirectionFF,N);
+
+expmpcXdirectionFF = ctrlXFF.toExplicit;
+exportToC_MLD(expmpcXdirectionFF,Ts,'XdirectionCtrlFF','XdirectionFF');
+cd XdirectionFF
+mex mpt_getInput_sfunc_XdirectionFF.c;
+cd ..
+x0FF = [0;0;-1;0];
+
+
+% %Simulate the closed loop
+% N_sim = 50;
+% 
+% %Create the closed-loop system:
+% loop = ClosedLoop(expmpcXdirectionFF, modelXdirectionFF);
+% ClosedData = loop.simulate(x0FF, N_sim);
+% 
+% yref = [0;0;0;0];
+% N = size(ClosedData.Y(1,:),2);
+% time = zeros(N,1);
+% Fref = zeros(N,1);
+% thetaref = zeros(N,1);
+% k=1;
+% for i = 0:Ts:(N-1)*Ts
+%     time(k) =i;
+%     Fref(k) = yref(4);
+%     thetaref(k) = yref(1);
+%     k = k+1;
+% end
+% 
+% 
+% %plot the output
+% figure(3);
+% subplot(5,1,1)
+% plot(time,ClosedData.Y(1,:),time,thetaref,'-g'); grid on;ylabel('angle');
+% subplot(5,1,2)
+% plot(time,ClosedData.Y(2,:)); grid on;ylabel('omega');
+% subplot(5,1,3)
+% plot(time,ClosedData.Y(3,:)); grid on;ylabel('position')
+% subplot(5,1,4)
+% plot(time,ClosedData.Y(4,:)); grid on;ylabel('velocity')
+% subplot(5,1,5)
+% plot(time,ClosedData.U(:)); grid on;ylabel('Input')
+
 %% Ydirection Controller (No Hybrid Model) (Roll Controller)
 %DF = -0.9606;
 
