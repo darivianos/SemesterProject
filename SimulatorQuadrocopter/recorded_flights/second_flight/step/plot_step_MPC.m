@@ -6,8 +6,7 @@ close all
 %5: x_ref
 %6: pitch_cmd
 %7: y
-%8: y_dot
-%9: roll
+%8: y_dot%9: roll
 %10: y_ref
 %11: roll_cmd
 %12: z
@@ -21,6 +20,30 @@ close all
 
 load hquad_pos_FG.mat
 load simulation_pos_FG.mat
+
+%%
+clear RecordedData;
+RecordedData.time = hquad_pos_FG(1,3719:end);
+RecordedData.time = RecordedData.time - RecordedData.time(1);
+RecordedData.signals.values(:,1) = hquad_pos_FG(2,3719:end);
+RecordedData.signals.values(:,2) = hquad_pos_FG(3,3719:end);
+RecordedData.signals.values(:,3) = hquad_pos_FG(4,3719:end);
+RecordedData.signals.values(:,4) = 0*lsim(tf([12.28 0],[1 12.28]),hquad_pos_FG(4,3719:end),RecordedData.time,0);
+RecordedData.signals.values(:,5) = hquad_pos_FG(5,3719:end);
+%
+subplot(411)
+plot(RecordedData.signals.values(:,1));
+subplot(412)
+plot(RecordedData.signals.values(:,2));
+subplot(413)
+plot(RecordedData.signals.values(:,3));
+subplot(414)
+plot(RecordedData.signals.values(:,5));
+
+%%
+
+
+
 
 plot([hquad_pos_FG(2,:)',...
     hquad_pos_FG(3,:)',hquad_pos_FG(5,:)']);
