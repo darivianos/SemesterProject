@@ -35,7 +35,7 @@ Model {
       Name		      "cmd_out"
     }
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.384"
+    ComputedModelVersion    "1.385"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -57,9 +57,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "burrimi"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu May 02 20:02:21 2013"
-  RTWModifiedTimeStamp	  289423841
-  ModelVersionFormat	  "1.%<AutoIncrement:384>"
+  LastModifiedDate	  "Fri May 03 18:57:08 2013"
+  RTWModifiedTimeStamp	  289508156
+  ModelVersionFormat	  "1.%<AutoIncrement:385>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -1082,7 +1082,7 @@ Model {
   }
   System {
     Name		    "controller_template_vTST"
-    Location		    [36, 510, 1923, 1563]
+    Location		    [50, 79, 1937, 1132]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -1094,9 +1094,9 @@ Model {
     TiledPaperMargins	    [0.500000, 0.500000, 0.500000, 0.500000]
     TiledPageScale	    1
     ShowPageBoundaries	    off
-    ZoomFactor		    "124"
+    ZoomFactor		    "122"
     ReportName		    "simulink-default.rpt"
-    SIDHighWatermark	    "2284"
+    SIDHighWatermark	    "2285"
     Block {
       BlockType		      Inport
       Name		      "data_in"
@@ -1192,8 +1192,8 @@ Model {
       MaskHideContents	      off
       System {
 	Name			"AIR Parser"
-	Location		[580, 107, 1285, 977]
-	Open			off
+	Location		[431, 160, 1136, 1030]
+	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -1661,6 +1661,37 @@ Model {
 	}
 	Block {
 	  BlockType		  Scope
+	  Name			  "Scope"
+	  SID			  "2285"
+	  Ports			  [1]
+	  Position		  [510, 1009, 540, 1041]
+	  ZOrder		  -16
+	  Floating		  off
+	  Location		  [1193, 428, 1517, 667]
+	  Open			  off
+	  NumInputPorts		  "1"
+	  List {
+	    ListType		    AxesTitles
+	    axes1		    "%<SignalLabel>"
+	  }
+	  List {
+	    ListType		    ScopeGraphics
+	    FigureColor		    "[0.5 0.5 0.5]"
+	    AxesColor		    "[0 0 0]"
+	    AxesTickColor	    "[1 1 1]"
+	    LineColors		    "[1 1 0;1 0 1;0 1 1;1 0 0;0 1 0;0 0 1]"
+	    LineStyles		    "-|-|-|-|-|-"
+	    LineWidths		    "[0.5 0.5 0.5 0.5 0.5 0.5]"
+	    MarkerStyles	    "none|none|none|none|none|none"
+	  }
+	  YMin			  "-0.175"
+	  YMax			  "0.2"
+	  SaveName		  "ScopeData17"
+	  DataFormat		  "StructureWithTime"
+	  SampleTime		  "0"
+	}
+	Block {
+	  BlockType		  Scope
 	  Name			  "mode1"
 	  SID			  "2212"
 	  Ports			  [1]
@@ -2097,9 +2128,17 @@ Model {
 	  Labels		  [0, 0]
 	  SrcBlock		  "Demux1"
 	  SrcPort		  4
-	  Points		  [120, 0; 0, -705]
-	  DstBlock		  "Bus\nCreator4"
-	  DstPort		  2
+	  Points		  [120, 0]
+	  Branch {
+	    Points		    [0, -705]
+	    DstBlock		    "Bus\nCreator4"
+	    DstPort		    2
+	  }
+	  Branch {
+	    Points		    [0, -5]
+	    DstBlock		    "Scope"
+	    DstPort		    1
+	  }
 	}
 	Line {
 	  Name			  "x_ref"
@@ -2324,8 +2363,8 @@ Model {
       }
       System {
 	Name			"FreeFlight Pos Ctrl"
-	Location		[482, 350, 2369, 1403]
-	Open			on
+	Location		[50, 79, 1937, 1132]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -3304,8 +3343,8 @@ Model {
 		  MaskHideContents	  off
 		  System {
 		    Name		    "Explicit Ctrl1"
-		    Location		    [386, 516, 1560, 1226]
-		    Open		    on
+		    Location		    [386, 369, 1560, 1079]
+		    Open		    off
 		    ModelBrowserVisibility  off
 		    ModelBrowserWidth	    200
 		    ScreenColor		    "white"
@@ -4012,7 +4051,7 @@ Model {
 		  MaskHideContents	  off
 		  System {
 		    Name		    "Explicit Ctrl1"
-		    Location		    [49, 24, 1920, 1080]
+		    Location		    [50, 79, 1921, 1132]
 		    Open		    off
 		    ModelBrowserVisibility  off
 		    ModelBrowserWidth	    200
@@ -6895,7 +6934,7 @@ Model {
       Position		      [930, 24, 960, 56]
       ZOrder		      -27
       Floating		      off
-      Location		      [992, 82, 1458, 459]
+      Location		      [50, 53, 1921, 1079]
       Open		      on
       NumInputPorts	      "1"
       ZoomMode		      "yonly"
@@ -6913,8 +6952,8 @@ Model {
 	LineWidths		"[0.5 0.5 0.5 0.5 0.5 0.5]"
 	MarkerStyles		"none|none|none|none|none|none"
       }
-      YMin		      "0.26"
-      YMax		      "0.42"
+      YMin		      "-0.275"
+      YMax		      "0.275"
       SaveName		      "ScopeData13"
       DataFormat	      "StructureWithTime"
       SampleTime	      "0"
@@ -7714,8 +7753,8 @@ Model {
       }
       System {
 	Name			"pos controller"
-	Location		[-1870, 383, -638, 1079]
-	Open			on
+	Location		[344, 192, 1576, 888]
+	Open			off
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
 	ScreenColor		"white"
@@ -8261,8 +8300,8 @@ Model {
 	  MaskHideContents	  off
 	  System {
 	    Name		    "view & log signals"
-	    Location		    [907, 471, 1419, 1157]
-	    Open		    on
+	    Location		    [907, 393, 1419, 1079]
+	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -9579,7 +9618,7 @@ Stateflow {
       "tolerance = sumViol;\n        minreg = ireg;\n    end\n    % extract the right control law\n    if (isinside == "
       "1)\n        U = F*X + G;\n        return\n    end\nend\nF = Fi(minreg,:);\nG = Gi(minreg,:);\nU = F*X + G;\nflag"
       "_oob = 1;\n%U = U_prev;\nreturn\n    \n    \n "
-      editorLayout	      "100 M4x1[10 5 700 500]"
+      editorLayout	      "100 M4x1[49 24 700 500]"
     }
   }
   junction {

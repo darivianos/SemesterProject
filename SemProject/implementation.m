@@ -12,7 +12,7 @@ l = 0.30;
 gamma = 0;
 J = m*l*l/4; % Inertia, we use the approximation of Thin, solid disk of radius r and mass m
 
-Ts = 0.08;
+TsCtrl = 0.08;
 TsReal = 0.01;
 
 DF_roll = 0;
@@ -34,9 +34,9 @@ Theta = -deg2rad(3); % Docking angle
 N = 5;
 norm = 2;
 
-%% Xdirection Controller (Yaw Controller)
+%% Xdirection Controller (Pitch Controller)
 
-modelXdirection = GenerateModel('QuadXDirection',Theta,Ts,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
+modelXdirection = GenerateModel('QuadXDirection',Theta,TsCtrl,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
 % Simulation Model
 modelXdirectionReal = GenerateModel('QuadXDirectionSimulink',Theta,TsReal,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
 
@@ -97,10 +97,12 @@ ctrl.model.u.reference = uref;
 % ctrl.model.x.terminalSet = Polyhedron('Ae',Ae,'be',be);
 expmpcXdirection = ctrl.toExplicit();
 % Create Look Up Table, code in C
-exportToC_MLD(expmpcXdirection,Ts,'XdirectionCtrl','Xdirection');
+exportToC_MLD(expmpcXdirection,TsCtrl,'XdirectionCtrl','Xdirection');
 cd Xdirection
 mex mpt_getInput_sfunc_Xdirection.c;
 cd ..
+[Hn_Xdir,Kn_Xdir,Fi_Xdir,Gi_Xdir,Nc_Xdir] = GetMPCMatrices(expmpcXdirection);
+save('Xdirection','Hn_Xdir','Kn_Xdir','Fi_Xdir','Gi_Xdir','Nc_Xdir');
 x0 = [0;0;-1;0];
 
 
@@ -152,7 +154,7 @@ Cf = eye(4);
 sysfc = ss(Af,Bf,Cf,Df);
 
 % All controller must operate at the same frequency
-sysfd = c2d(sysfc,Ts,'zoh');
+sysfd = c2d(sysfc,TsCtrl,'zoh');
 modelXdirectionFF = LTISystem(sysfd);
 
 % Real models are generated at 50Hz frequency
@@ -162,15 +164,15 @@ modelXdirectionRealFF = LTISystem(sysfd);
 % Set constraints on states and input
 modelXdirectionFF.x.min = [-0.2094;-2;-1;-1];
 modelXdirectionFF.x.max = [0.2094;2;1;1];
-modelXdirectionFF.u.min = -5;
-modelXdirectionFF.u.max = 5;
+modelXdirectionFF.u.min = -0.27;
+modelXdirectionFF.u.max = 0.27;
 
 % Set the penalty
 Qxff = zeros(4,4);
 Qxff(1,1) = 10;
 Qxff(3,3) = 100; % position control
 Qxff(4,4) = 10;
-Rff = 1;
+Rff = 50;
 
 modelXdirectionFF.x.penalty = Penalty(Qxff,norm);
 modelXdirectionFF.u.penalty = Penalty(Rff,norm);
@@ -178,10 +180,12 @@ modelXdirectionFF.u.penalty = Penalty(Rff,norm);
 ctrlXFF = MPCController(modelXdirectionFF,N);
 
 expmpcXdirectionFF = ctrlXFF.toExplicit;
-exportToC_MLD(expmpcXdirectionFF,Ts,'XdirectionCtrlFF','XdirectionFF');
+exportToC_MLD(expmpcXdirectionFF,TsCtrl,'XdirectionCtrlFF','XdirectionFF');
 cd XdirectionFF
 mex mpt_getInput_sfunc_XdirectionFF.c;
 cd ..
+[Hn_XdirFF,Kn_XdirFF,Fi_XdirFF,Gi_XdirFF,Nc_XdirFF] = GetMPCMatrices(expmpcXdirectionFF);
+save('XdirectionFF','Hn_XdirFF','Kn_XdirFF','Fi_XdirFF','Gi_XdirFF','Nc_XdirFF');
 x0FF = [0;0;-1;0];
 
 
@@ -234,7 +238,7 @@ Cf = eye(4);
 sysfc = ss(Af,Bf,Cf,Df);
 
 % All controller must operate at the same frequency
-sysfd = c2d(sysfc,Ts,'zoh');
+sysfd = c2d(sysfc,TsCtrl,'zoh');
 modelYdirection = LTISystem(sysfd);
 
 % Real models are generated at 50Hz frequency
@@ -244,8 +248,8 @@ modelYdirectionReal = LTISystem(sysfd);
 % Set constraints on states and input
 modelYdirection.x.min = [-0.2094;-2;-1;-1];
 modelYdirection.x.max = [0.2094;2;1;1];
-modelYdirection.u.min = -5;
-modelYdirection.u.max = 5;
+modelYdirection.u.min = -0.27;
+modelYdirection.u.max = 0.27;
 
 % Set the penalty
 Qxy = zeros(4,4);
@@ -260,10 +264,12 @@ modelYdirection.u.penalty = Penalty(Ry,norm);
 ctrlY = MPCController(modelYdirection,N);
 
 expmpcYdirection = ctrlY.toExplicit;
-exportToC_MLD(expmpcYdirection,Ts,'YdirectionCtrl','Ydirection');
+exportToC_MLD(expmpcYdirection,TsCtrl,'YdirectionCtrl','Ydirection');
 cd Ydirection
 mex mpt_getInput_sfunc_Ydirection.c;
 cd ..
+[Hn_Ydir,Kn_Ydir,Fi_Ydir,Gi_Ydir,Nc_Ydir] = GetMPCMatrices(expmpcYdirection);
+save('Ydirection','Hn_Ydir','Kn_Ydir','Fi_Ydir','Gi_Ydir','Nc_Ydir');
 y0 = [0;0;-1;0];
 
 
@@ -310,7 +316,7 @@ Cz = eye(2); Dz = 0;
 syscz = ss(Az,Bz,Cz,Dz);
 
 % All controller must operate at the same frequency
-sysdz = c2d(syscz,Ts,'zoh');
+sysdz = c2d(syscz,TsCtrl,'zoh');
 modelZdirection = LTISystem(sysdz);
 
 % Real models are generated at 50Hz frequency
@@ -320,8 +326,8 @@ modelZdirectionReal = LTISystem(sysdz);
 % Set constraints on states and input
 modelZdirection.x.min = [-1;-1];
 modelZdirection.x.max = [1;1];
-modelZdirection.u.min = -2;
-modelZdirection.u.max = 2;
+modelZdirection.u.min = -1;
+modelZdirection.u.max = 1;
 
 % Set the penalty
 Qxz = zeros(2,2);
@@ -335,10 +341,12 @@ modelZdirection.u.penalty = Penalty(Rz,norm);
 ctrlZ = MPCController(modelZdirection,N);
 
 expmpcZdirection = ctrlZ.toExplicit;
-exportToC_MLD(expmpcZdirection,Ts,'ZdirectionCtrl','Zdirection');
+exportToC_MLD(expmpcZdirection,TsCtrl,'ZdirectionCtrl','Zdirection');
 cd Zdirection
 mex mpt_getInput_sfunc_Zdirection.c;
 cd ..
+[Hn_Zdir,Kn_Zdir,Fi_Zdir,Gi_Zdir,Nc_Zdir] = GetMPCMatrices(expmpcZdirection);
+save('Zdirection','Hn_Zdir','Kn_Zdir','Fi_Zdir','Gi_Zdir','Nc_Zdir');
 z0 = [-1;0];
 
 
@@ -371,7 +379,7 @@ Dy = 0;
 syscy = ss(Ay,By,Cy,Dy);
 
 % All controller must operate at the same frequency
-sysdy = c2d(syscy,Ts,'zoh');
+sysdy = c2d(syscy,TsCtrl,'zoh');
 modelYaw = LTISystem(sysdy);
 
 % Real models are generated at 50Hz frequency
@@ -381,8 +389,8 @@ modelYawReal = LTISystem(sysdy);
 % Set constraints on states and input
 modelYaw.x.min = -0.0873;
 modelYaw.x.max = 0.0873;
-modelYaw.u.min = -2;
-modelYaw.u.max = 2;
+modelYaw.u.min = -pi;
+modelYaw.u.max = pi;
 
 % Set the penalty
 Qxy= 1; % yaw angle control
@@ -394,10 +402,12 @@ modelYaw.u.penalty = Penalty(Ry,norm);
 ctrlYaw = MPCController(modelYaw,N);
 
 expmpcYaw = ctrlYaw.toExplicit;
-exportToC_MLD(expmpcYaw,Ts,'YawCtrl','YawControl');
+exportToC_MLD(expmpcYaw,TsCtrl,'YawCtrl','YawControl');
 cd YawControl
 mex mpt_getInput_sfunc_YawCtrl.c;
 cd ..
+[Hn_Yaw,Kn_Yaw,Fi_Yaw,Gi_Yaw,Nc_Yaw] = GetMPCMatrices(expmpcYaw);
+save('Yawdirection','Hn_Yaw','Kn_Yaw','Fi_Yaw','Gi_Yaw','Nc_Yaw');
 yaw0 = -0.0873;
 
 
@@ -417,5 +427,3 @@ yaw0 = -0.0873;
 % plot(time,ClosedData.Y(1,:)); grid on;ylabel('position')
 % subplot(2,1,2)
 % plot(time,ClosedData.U(:)); grid on;ylabel('Input')
-%%
-save;

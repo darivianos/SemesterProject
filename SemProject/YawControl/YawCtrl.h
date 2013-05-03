@@ -12,7 +12,7 @@
 #define MPT_ABSTOL 1.000000e-08
 
 static float MPT_H[] = {
-1.000000e+00,	-1.000000e+00 };
+-1.000000e+00,	1.000000e+00 };
 
 static float MPT_K[] = {
 8.730000e-02,	8.730000e-02 };

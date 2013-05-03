@@ -9,7 +9,7 @@ INTERFACE {
             REAL velx [-1,1];
             }
     
-    INPUT { REAL thetar[-5,5];
+    INPUT { REAL thetar[-0.27, 0.267];
             }
     
     OUTPUT{ REAL y1;
