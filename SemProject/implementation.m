@@ -256,7 +256,7 @@ Qxy = zeros(4,4);
 Qxy(1,1) = 10;
 Qxy(3,3) = 100; % position control
 Qxy(4,4) = 10;
-Ry = 1;
+Ry = 50;
 
 modelYdirection.x.penalty = Penalty(Qxy,norm);
 modelYdirection.u.penalty = Penalty(Ry,norm);

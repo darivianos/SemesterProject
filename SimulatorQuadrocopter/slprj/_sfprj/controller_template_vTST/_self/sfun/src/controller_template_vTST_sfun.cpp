@@ -207,10 +207,10 @@ unsigned int sf_controller_template_vTST_process_check_sum_call( int nlhs,
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2883275241U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3108864279U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(4288079142U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(25730023U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(291159160U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1832354058U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3276775390U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(900724931U);
   }
 
   return 1;
@@ -261,7 +261,7 @@ unsigned int sf_controller_template_vTST_autoinheritance_info( int nlhs, mxArray
 
      case 2:
       {
-        if (strcmp(aiChksum, "peQ4nwpJHIx9zrGWD0gARG") == 0) {
+        if (strcmp(aiChksum, "j0D6NvQE3BoZeXAp23BmOB") == 0) {
           extern mxArray
             *sf_c2_controller_template_vTST_get_autoinheritance_info(void);
           plhs[0] = sf_c2_controller_template_vTST_get_autoinheritance_info();

@@ -17,6 +17,10 @@ CHART_SRCS 	= \
      c9_Hquad_control_LIB_MPC.cpp\
      c11_Hquad_control_LIB_MPC.cpp\
      c16_Hquad_control_LIB_MPC.cpp\
+     c18_Hquad_control_LIB_MPC.cpp\
+     c19_Hquad_control_LIB_MPC.cpp\
+     c20_Hquad_control_LIB_MPC.cpp\
+     c21_Hquad_control_LIB_MPC.cpp\
      c26_Hquad_control_LIB_MPC.cpp
 MACHINE_SRC	= Hquad_control_LIB_MPC_sfun.cpp
 MACHINE_REG = 

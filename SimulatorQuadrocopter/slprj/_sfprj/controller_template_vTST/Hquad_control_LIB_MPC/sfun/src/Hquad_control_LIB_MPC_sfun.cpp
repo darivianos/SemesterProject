@@ -9,6 +9,10 @@
 #include "c9_Hquad_control_LIB_MPC.h"
 #include "c11_Hquad_control_LIB_MPC.h"
 #include "c16_Hquad_control_LIB_MPC.h"
+#include "c18_Hquad_control_LIB_MPC.h"
+#include "c19_Hquad_control_LIB_MPC.h"
+#include "c20_Hquad_control_LIB_MPC.h"
+#include "c21_Hquad_control_LIB_MPC.h"
 #include "c26_Hquad_control_LIB_MPC.h"
 
 /* Type Definitions */
@@ -72,6 +76,26 @@ unsigned int sf_Hquad_control_LIB_MPC_method_dispatcher(SimStruct *simstructPtr,
 
   if (chartFileNumber==16) {
     c16_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==18) {
+    c18_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==19) {
+    c19_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==20) {
+    c20_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==21) {
+    c21_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr, method, data);
     return 1;
   }
 
@@ -161,6 +185,34 @@ unsigned int sf_Hquad_control_LIB_MPC_process_testpoint_info_call( int nlhs,
         break;
       }
 
+     case 18:
+      {
+        extern mxArray *sf_c18_Hquad_control_LIB_MPC_get_testpoint_info(void);
+        plhs[0] = sf_c18_Hquad_control_LIB_MPC_get_testpoint_info();
+        break;
+      }
+
+     case 19:
+      {
+        extern mxArray *sf_c19_Hquad_control_LIB_MPC_get_testpoint_info(void);
+        plhs[0] = sf_c19_Hquad_control_LIB_MPC_get_testpoint_info();
+        break;
+      }
+
+     case 20:
+      {
+        extern mxArray *sf_c20_Hquad_control_LIB_MPC_get_testpoint_info(void);
+        plhs[0] = sf_c20_Hquad_control_LIB_MPC_get_testpoint_info();
+        break;
+      }
+
+     case 21:
+      {
+        extern mxArray *sf_c21_Hquad_control_LIB_MPC_get_testpoint_info(void);
+        plhs[0] = sf_c21_Hquad_control_LIB_MPC_get_testpoint_info();
+        break;
+      }
+
      case 26:
       {
         extern mxArray *sf_c26_Hquad_control_LIB_MPC_get_testpoint_info(void);
@@ -210,10 +262,10 @@ unsigned int sf_Hquad_control_LIB_MPC_process_check_sum_call( int nlhs, mxArray 
       machineName[(sizeof(machineName)/sizeof(char)-1)] = '\0';
       if (!strcmp(machineName,"Hquad_control_LIB_MPC")) {
         if (nrhs==3) {
-          ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2457965688U);
-          ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2943477490U);
-          ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1183174840U);
-          ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(4059809749U);
+          ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2965885466U);
+          ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3477801461U);
+          ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(192679816U);
+          ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2470841885U);
         } else if (nrhs==4) {
           unsigned int chartFileNumber;
           chartFileNumber = (unsigned int)mxGetScalar(prhs[3]);
@@ -279,6 +331,38 @@ unsigned int sf_Hquad_control_LIB_MPC_process_check_sum_call( int nlhs, mxArray 
               extern void sf_c16_Hquad_control_LIB_MPC_get_check_sum(mxArray
                 *plhs[]);
               sf_c16_Hquad_control_LIB_MPC_get_check_sum(plhs);
+              break;
+            }
+
+           case 18:
+            {
+              extern void sf_c18_Hquad_control_LIB_MPC_get_check_sum(mxArray
+                *plhs[]);
+              sf_c18_Hquad_control_LIB_MPC_get_check_sum(plhs);
+              break;
+            }
+
+           case 19:
+            {
+              extern void sf_c19_Hquad_control_LIB_MPC_get_check_sum(mxArray
+                *plhs[]);
+              sf_c19_Hquad_control_LIB_MPC_get_check_sum(plhs);
+              break;
+            }
+
+           case 20:
+            {
+              extern void sf_c20_Hquad_control_LIB_MPC_get_check_sum(mxArray
+                *plhs[]);
+              sf_c20_Hquad_control_LIB_MPC_get_check_sum(plhs);
+              break;
+            }
+
+           case 21:
+            {
+              extern void sf_c21_Hquad_control_LIB_MPC_get_check_sum(mxArray
+                *plhs[]);
+              sf_c21_Hquad_control_LIB_MPC_get_check_sum(plhs);
               break;
             }
 
@@ -446,6 +530,58 @@ unsigned int sf_Hquad_control_LIB_MPC_autoinheritance_info( int nlhs, mxArray *
         break;
       }
 
+     case 18:
+      {
+        if (strcmp(aiChksum, "l4sQCkTe9nJnzCwPkz6xlD") == 0) {
+          extern mxArray *sf_c18_Hquad_control_LIB_MPC_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c18_Hquad_control_LIB_MPC_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 19:
+      {
+        if (strcmp(aiChksum, "l4sQCkTe9nJnzCwPkz6xlD") == 0) {
+          extern mxArray *sf_c19_Hquad_control_LIB_MPC_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c19_Hquad_control_LIB_MPC_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 20:
+      {
+        if (strcmp(aiChksum, "pPkqHu9smolhiD92D1w8AB") == 0) {
+          extern mxArray *sf_c20_Hquad_control_LIB_MPC_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c20_Hquad_control_LIB_MPC_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 21:
+      {
+        if (strcmp(aiChksum, "pPkqHu9smolhiD92D1w8AB") == 0) {
+          extern mxArray *sf_c21_Hquad_control_LIB_MPC_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c21_Hquad_control_LIB_MPC_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
      case 26:
       {
         if (strcmp(aiChksum, "7RzKZXjuoXTy7F5GxUZfPG") == 0) {
@@ -582,6 +718,50 @@ unsigned int sf_Hquad_control_LIB_MPC_get_eml_resolved_functions_info( int nlhs,
         break;
       }
 
+     case 18:
+      {
+        extern const mxArray
+          *sf_c18_Hquad_control_LIB_MPC_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c18_Hquad_control_LIB_MPC_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 19:
+      {
+        extern const mxArray
+          *sf_c19_Hquad_control_LIB_MPC_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c19_Hquad_control_LIB_MPC_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 20:
+      {
+        extern const mxArray
+          *sf_c20_Hquad_control_LIB_MPC_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c20_Hquad_control_LIB_MPC_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 21:
+      {
+        extern const mxArray
+          *sf_c21_Hquad_control_LIB_MPC_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c21_Hquad_control_LIB_MPC_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
      case 26:
       {
         extern const mxArray
@@ -611,7 +791,7 @@ unsigned int sf_Hquad_control_LIB_MPC_get_eml_resolved_functions_info( int nlhs,
 void Hquad_control_LIB_MPC_debug_initialize(void)
 {
   _Hquad_control_LIB_MPCMachineNumber_ = sf_debug_initialize_machine(
-    "Hquad_control_LIB_MPC","sfun",1,9,0,0,0);
+    "Hquad_control_LIB_MPC","sfun",1,13,0,0,0);
   sf_debug_set_machine_event_thresholds(_Hquad_control_LIB_MPCMachineNumber_,0,0);
   sf_debug_set_machine_data_thresholds(_Hquad_control_LIB_MPCMachineNumber_,0);
 }

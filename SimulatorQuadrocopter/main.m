@@ -154,14 +154,7 @@ load Yawdirection.mat
 
 
 %% simulation step
-load hquad_pos_FG.mat
-
-%
-clear RecordedData;
-RecordedData.time = hquad_pos_FG(1,:);
-RecordedData.time = RecordedData.time - RecordedData.time(1);
-RecordedData.signals.values(:,1) = hquad_pos_FG(2,:);
-RecordedData.signals.values(:,2) = hquad_pos_FG(3,:);
-RecordedData.signals.values(:,3) = hquad_pos_FG(4,:);
-RecordedData.signals.values(:,4) = 1*lsim(tf([1 0],[1 1]),hquad_pos_FG(4,:),RecordedData.time,0);
-RecordedData.signals.values(:,5) = hquad_pos_FG(5,:);
+load hquad_pos_FG_circle.mat
+startIndex = 1;
+endIndex = 1800;
+[RecordedData,RefX,RefY,RefZ,RefYaw] = loadSimulationData(hquad_pos_FG,startIndex,endIndex);
