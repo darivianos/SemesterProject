@@ -207,10 +207,10 @@ unsigned int sf_controller_template_vTST_process_check_sum_call( int nlhs,
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(291159160U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1832354058U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3276775390U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(900724931U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1720018409U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3257610955U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1393052562U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1060310877U);
   }
 
   return 1;
@@ -248,7 +248,7 @@ unsigned int sf_controller_template_vTST_autoinheritance_info( int nlhs, mxArray
     switch (chartFileNumber) {
      case 1:
       {
-        if (strcmp(aiChksum, "LGZ4iMGM5zWQjS1DCBXhSE") == 0) {
+        if (strcmp(aiChksum, "nvlBvveo478N9BNztLMtV") == 0) {
           extern mxArray
             *sf_c1_controller_template_vTST_get_autoinheritance_info(void);
           plhs[0] = sf_c1_controller_template_vTST_get_autoinheritance_info();
@@ -261,7 +261,7 @@ unsigned int sf_controller_template_vTST_autoinheritance_info( int nlhs, mxArray
 
      case 2:
       {
-        if (strcmp(aiChksum, "j0D6NvQE3BoZeXAp23BmOB") == 0) {
+        if (strcmp(aiChksum, "c0jQDis8A2D4qkURysQ9uD") == 0) {
           extern mxArray
             *sf_c2_controller_template_vTST_get_autoinheritance_info(void);
           plhs[0] = sf_c2_controller_template_vTST_get_autoinheritance_info();
@@ -274,7 +274,7 @@ unsigned int sf_controller_template_vTST_autoinheritance_info( int nlhs, mxArray
 
      case 3:
       {
-        if (strcmp(aiChksum, "YnogJaQXI8p5UuphmhhyDB") == 0) {
+        if (strcmp(aiChksum, "nI0IW68EaHdbKCOVyon54C") == 0) {
           extern mxArray
             *sf_c3_controller_template_vTST_get_autoinheritance_info(void);
           plhs[0] = sf_c3_controller_template_vTST_get_autoinheritance_info();
@@ -287,7 +287,7 @@ unsigned int sf_controller_template_vTST_autoinheritance_info( int nlhs, mxArray
 
      case 4:
       {
-        if (strcmp(aiChksum, "ekZxSgXMhkGSTeJX8mCnKF") == 0) {
+        if (strcmp(aiChksum, "gAP4uN982wErpTxp6hgytC") == 0) {
           extern mxArray
             *sf_c4_controller_template_vTST_get_autoinheritance_info(void);
           plhs[0] = sf_c4_controller_template_vTST_get_autoinheritance_info();

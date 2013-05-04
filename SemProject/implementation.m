@@ -172,7 +172,7 @@ Qxff = zeros(4,4);
 Qxff(1,1) = 10;
 Qxff(3,3) = 100; % position control
 Qxff(4,4) = 10;
-Rff = 50;
+Rff = 40;
 
 modelXdirectionFF.x.penalty = Penalty(Qxff,norm);
 modelXdirectionFF.u.penalty = Penalty(Rff,norm);
@@ -256,7 +256,7 @@ Qxy = zeros(4,4);
 Qxy(1,1) = 10;
 Qxy(3,3) = 100; % position control
 Qxy(4,4) = 10;
-Ry = 50;
+Ry = 40;
 
 modelYdirection.x.penalty = Penalty(Qxy,norm);
 modelYdirection.u.penalty = Penalty(Ry,norm);
@@ -332,8 +332,8 @@ modelZdirection.u.max = 1;
 % Set the penalty
 Qxz = zeros(2,2);
 Qxz(1,1) = 100; % position control
-Qxz(2,2) = 50;
-Rz = 1;
+Qxz(2,2) = 15;
+Rz = 4;
 
 modelZdirection.x.penalty = Penalty(Qxz,norm);
 modelZdirection.u.penalty = Penalty(Rz,norm);
@@ -387,13 +387,13 @@ sysdy = c2d(syscy,TsReal,'zoh');
 modelYawReal = LTISystem(sysdy);
 
 % Set constraints on states and input
-modelYaw.x.min = -0.0873;
-modelYaw.x.max = 0.0873;
+modelYaw.x.min = -pi;
+modelYaw.x.max = pi;
 modelYaw.u.min = -pi;
 modelYaw.u.max = pi;
 
 % Set the penalty
-Qxy= 1; % yaw angle control
+Qxy= 100; % yaw angle control
 Ry = 1;
 
 modelYaw.x.penalty = Penalty(Qxy,norm);
