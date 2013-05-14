@@ -67,7 +67,7 @@ Qy = zeros(5,5);
 Qy(3,3) = 100; % when we have the switching this cost will be zero.
 Qy(4,4) = 10;
 Qy(5,5) = 1; % when in free flight this error doesn't affect optimization
-R = 1;
+R = 40;
 Q = zeros(4,4);
 % reference signals calculation Xss = A*Xss+B*Uref
 yref = [Theta;0;0;0;-m*g*Theta]; % ensure that the angle of arrival is not positive 
@@ -106,11 +106,11 @@ save('Xdirection','Hn_Xdir','Kn_Xdir','Fi_Xdir','Gi_Xdir','Nc_Xdir');
 x0 = [0;0;-1;0];
 
 
-% Simulate the closed loop
-% N_sim = 50;
+% %% Simulate the closed loop
+% N_sim = 150;
 % 
 % % Create the closed-loop system:
-% loop = ClosedLoop(expmpc, modelXdirection);
+% loop = ClosedLoop(expmpcXdirection, modelXdirection);
 % ClosedData = loop.simulate(x0, N_sim);
 % 
 % N = size(ClosedData.Y(1,:),2);
@@ -118,7 +118,7 @@ x0 = [0;0;-1;0];
 % Fref = zeros(N,1);
 % thetaref = zeros(N,1);
 % k=1;
-% for i = 0:Ts:(N-1)*Ts
+% for i = 0:TsCtrl:(N-1)*TsCtrl
 %     time(k) =i;
 %     Fref(k) = yref(5);
 %     thetaref(k) = yref(1);
@@ -394,7 +394,7 @@ modelYaw.u.max = pi;
 
 % Set the penalty
 Qxy= 100; % yaw angle control
-Ry = 1;
+Ry = .1;
 
 modelYaw.x.penalty = Penalty(Qxy,norm);
 modelYaw.u.penalty = Penalty(Ry,norm);

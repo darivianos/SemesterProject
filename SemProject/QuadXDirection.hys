@@ -9,7 +9,7 @@ INTERFACE {
             REAL velx [-1,1];
             }
     
-    INPUT { REAL thetar[-0.27, 0.267];
+    INPUT { REAL thetar[-0.267, 0.267];
             }
     
     OUTPUT{ REAL y1;
@@ -60,7 +60,7 @@ IMPLEMENTATION {
             BOOL docked;
             REAL Fwall;
         }
-    AD  {   docked = posx >= -0.005 -MLD_epsilon;
+    AD  {   docked = posx >= -0.01 -MLD_epsilon;
         }
     DA  {   
             z1 = {IF ~docked THEN (Af11*angle+Af12*omega+Af13*posx+Af14*velx+Bf11*thetar+Bf12*Fwall)

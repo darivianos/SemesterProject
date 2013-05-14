@@ -134,15 +134,43 @@ load Hquad_CTRL_OBSV_parameters/ctrl_lqr_yaw_v1.mat
 
 %% Darivianakis Controller Parameters load
 
-m = 0.65;
+%% Parameters Initialization
+DF = 0;
+m = 0.650;
 g = 9.8065;
 l = 0.30;
 gamma = 0;
-Theta = -deg2rad(3);
+J = m*l*l/4; % Inertia, we use the approximation of Thin, solid disk of radius r and mass m
+Theta = -deg2rad(3); % Docking angle
+TsCtrl = 0.08;
 
-% for the mass of inertia, we use the approximation of Thin, solid disk of radius r and mass m
-J = m*l*l/4; % Inertia
-la = l*sin(gamma+Theta)/J;
+DF_roll = 0;
+a1_roll = 54.9;
+a0_roll = 419.1;
+c0_roll = 419.1;
+Td_roll = Td_roll_2ndOrd;
+[Aff_roll,Bff_roll,Cff_roll,Dff_roll,~,~,~,~] = linearizSimple(Theta,Td_roll,m,l,gamma,J,a1_roll,a0_roll,c0_roll,DF);
+
+
+DF_pitch = 0;
+a1_pitch = 59.71;
+a0_pitch = 491;
+c0_pitch = 491;
+Td_pitch = Td_pitch_2ndOrd;
+[Aff_pitch,Bff_pitch,Cff_pitch,Dff_pitch,Add_pitch,Bdd_pitch,Cdd_pitch,Ddd_pitch] = linearizSimple(Theta,Td_pitch,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF);
+
+a0_yaw = 5.9;
+c0_yaw = 5.9;
+Td_yaw = Td_yaw_1stOrd;
+
+sysfd_yaw = c2d(dynamics_yaw_1stOrd,Td_yaw,'zoh');
+Aff_yaw = sysfd_yaw.a;
+Bff_yaw = sysfd_yaw.b;
+Cff_yaw = sysfd_yaw.c;
+Dff_yaw = sysfd_yaw.d;
+
+
+
 WallPos = 2.9;
 
 % Load Controllers parameters
@@ -154,7 +182,7 @@ load Yawdirection.mat
 
 
 %% simulation step
-load hquad_pos_FG_circle.mat
+load hquad_pos_FG_square.mat
 startIndex = 1;
-endIndex = 1800;
+endIndex = 1700;
 [RecordedData,RefX,RefY,RefZ,RefYaw] = loadSimulationData(hquad_pos_FG,startIndex,endIndex);

@@ -3,9 +3,9 @@
  *
  * Code generation for model "controller_template.mdl".
  *
- * Model version              : 1.383
+ * Model version              : 1.404
  * Simulink Coder version : 8.1 (R2011b) 08-Jul-2011
- * C++ source code generated on : Thu May  2 20:10:01 2013
+ * C++ source code generated on : Tue May 14 19:09:51 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -53,7 +53,7 @@ static const char_T * rtDataTypeNames[] = {
 
 /* data type transitions for block I/O structure */
 static DataTypeTransition rtBTransitions[] = {
-  { (char_T *)(&controller_template_B.DataTypeConversion[0]), 0, 0, 493 },
+  { (char_T *)(&controller_template_B.DataTypeConversion[0]), 0, 0, 509 },
 
   { (char_T *)(&controller_template_B.sf_EmbeddedMATLABFunction_o.roll_rot), 0,
     0, 4 },
@@ -75,17 +75,21 @@ static DataTypeTransition rtBTransitions[] = {
   { (char_T *)(&controller_template_B.sf_runFastGradient.u_opt), 0, 0, 35 },
 
   { (char_T *)(&controller_template_B.sf_EmbeddedMATLABFunction.roll_rot), 0, 0,
-    4 }
+    4 },
+
+  { (char_T *)(&controller_template_B.sf_MATLABFunction_k.y[0]), 0, 0, 4 },
+
+  { (char_T *)(&controller_template_B.sf_MATLABFunction_f.y[0]), 0, 0, 4 }
   ,
 
-  { (char_T *)(&controller_template_DWork.FixPtUnitDelay1_DSTATE[0]), 0, 0, 202
+  { (char_T *)(&controller_template_DWork.FixPtUnitDelay1_DSTATE[0]), 0, 0, 217
   },
 
-  { (char_T *)(&controller_template_DWork.bias_PWORK.LoggedData), 11, 0, 23 },
+  { (char_T *)(&controller_template_DWork.bias_PWORK.LoggedData), 11, 0, 29 },
 
-  { (char_T *)(&controller_template_DWork.sfEvent), 6, 0, 10 },
+  { (char_T *)(&controller_template_DWork.sfEvent), 6, 0, 12 },
 
-  { (char_T *)(&controller_template_DWork.ToFile_IWORK.Count), 10, 0, 2 },
+  { (char_T *)(&controller_template_DWork.ToFile_IWORK.Count), 10, 0, 4 },
 
   { (char_T *)(&controller_template_DWork.FixPtUnitDelay2_DSTATE), 3, 0, 5 },
 
@@ -93,9 +97,9 @@ static DataTypeTransition rtBTransitions[] = {
     2 },
 
   { (char_T *)(&controller_template_DWork.is_active_c4_Hquad_control_LIB_), 3, 0,
-    10 },
+    12 },
 
-  { (char_T *)(&controller_template_DWork.isStable), 8, 0, 22 },
+  { (char_T *)(&controller_template_DWork.isStable), 8, 0, 26 },
 
   { (char_T *)(&controller_template_DWork.sf_EmbeddedMATLABFunction_o.sfEvent),
     6, 0, 1 },
@@ -174,18 +178,38 @@ static DataTypeTransition rtBTransitions[] = {
     3, 0, 1 },
 
   { (char_T *)(&controller_template_DWork.sf_EmbeddedMATLABFunction.isStable), 8,
-    0, 2 }
+    0, 2 },
+
+  { (char_T *)(&controller_template_DWork.sf_MATLABFunction_k.sfEvent), 6, 0, 1
+  },
+
+  { (char_T *)
+    (&controller_template_DWork.sf_MATLABFunction_k.is_active_c7_controller_templat),
+    3, 0, 1 },
+
+  { (char_T *)(&controller_template_DWork.sf_MATLABFunction_k.isStable), 8, 0, 2
+  },
+
+  { (char_T *)(&controller_template_DWork.sf_MATLABFunction_f.sfEvent), 6, 0, 1
+  },
+
+  { (char_T *)
+    (&controller_template_DWork.sf_MATLABFunction_f.is_active_c7_controller_templat),
+    3, 0, 1 },
+
+  { (char_T *)(&controller_template_DWork.sf_MATLABFunction_f.isStable), 8, 0, 2
+  }
 };
 
 /* data type transition table for block I/O structure */
 static DataTypeTransitionTable rtBTransTable = {
-  41U,
+  49U,
   rtBTransitions
 };
 
 /* data type transitions for Parameters structure */
 static DataTypeTransition rtPTransitions[] = {
-  { (char_T *)(&controller_template_P.gravity_Value), 0, 0, 32009 },
+  { (char_T *)(&controller_template_P.gravity_Value), 0, 0, 46525 },
 
   { (char_T *)(&controller_template_P.IntegerDelay_DelayLength), 7, 0, 4 },
 

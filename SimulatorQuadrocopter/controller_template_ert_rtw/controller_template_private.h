@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'controller_template'.
  *
- * Model version                  : 1.383
+ * Model version                  : 1.404
  * Simulink Coder version         : 8.1 (R2011b) 08-Jul-2011
  * TLC version                    : 8.1 (Aug  6 2011)
- * C/C++ source code generated on : Thu May  2 20:10:01 2013
+ * C/C++ source code generated on : Tue May 14 19:09:51 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -46,6 +46,12 @@ int_T rt_WriteMat4FileHeader(FILE *fp,
   int32_T m,
   int32_T n,
   const char_T *name);
+extern void controller__MATLABFunction_Init(rtDW_MATLABFunction_controller_
+  *localDW);
+extern void controller_templ_MATLABFunction(const real_T rtu_x[4], const real_T
+  rtu_A[16], const real_T rtu_B[8], real_T rtu_u,
+  rtB_MATLABFunction_controller_t *localB, rtDW_MATLABFunction_controller_
+  *localDW);
 extern void con_EmbeddedMATLABFunction_Init(rtDW_EmbeddedMATLABFunction_con
   *localDW);
 extern void controll_EmbeddedMATLABFunction(real_T rtu_roll, real_T rtu_pitch,
