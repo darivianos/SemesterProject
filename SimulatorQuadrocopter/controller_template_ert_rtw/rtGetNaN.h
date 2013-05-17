@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'controller_template'.
  *
- * Model version                  : 1.404
+ * Model version                  : 1.492
  * Simulink Coder version         : 8.1 (R2011b) 08-Jul-2011
  * TLC version                    : 8.1 (Aug  6 2011)
- * C/C++ source code generated on : Tue May 14 19:09:51 2013
+ * C/C++ source code generated on : Fri May 17 21:42:55 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium

@@ -16,7 +16,9 @@ CHART_SRCS 	= \
      c5_controller_template.cpp\
      c6_controller_template.cpp\
      c7_controller_template.cpp\
-     c8_controller_template.cpp
+     c8_controller_template.cpp\
+     c9_controller_template.cpp\
+     c10_controller_template.cpp
 MACHINE_SRC	= controller_template_sfun.cpp
 MACHINE_REG = controller_template_sfun_registry.cpp
 MEX_WRAPPER =

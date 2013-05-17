@@ -15,7 +15,8 @@ CHART_SRCS 	= \
      c4_controller_template_vTST.cpp\
      c5_controller_template_vTST.cpp\
      c6_controller_template_vTST.cpp\
-     c7_controller_template_vTST.cpp
+     c7_controller_template_vTST.cpp\
+     c8_controller_template_vTST.cpp
 MACHINE_SRC	= controller_template_vTST_sfun.cpp
 MACHINE_REG = controller_template_vTST_sfun_registry.cpp
 MEX_WRAPPER =

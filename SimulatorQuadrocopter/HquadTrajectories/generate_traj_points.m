@@ -1,5 +1,5 @@
 N=30;
-Ts=0.018;
+Ts=0.02;
 
 delay_steps_max=11;
 

@@ -4,8 +4,10 @@
 close all
 clear all
 clear classes
+tbxmanager restorepath
+mpt_init
 clc
-%% Parameters Initialization
+% Parameters Initialization
 m = 0.650;
 g = 9.8065;
 l = 0.30;
@@ -13,7 +15,7 @@ gamma = 0;
 J = m*l*l/4; % Inertia, we use the approximation of Thin, solid disk of radius r and mass m
 
 TsCtrl = 0.08;
-TsReal = 0.01;
+TsReal = 0.02;
 
 DF_roll = 0;
 a1_roll = 54.9;
@@ -28,7 +30,7 @@ c0_pitch = 491;
 a0_yaw = 5.9;
 c0_yaw = 5.9;
 
-Theta = -deg2rad(3); % Docking angle
+Theta = -deg2rad(2); % Docking angle
 
 % Optimization Parameters
 N = 5;
@@ -38,9 +40,9 @@ norm = 2;
 
 modelXdirection = GenerateModel('QuadXDirection',Theta,TsCtrl,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
 % Simulation Model
-modelXdirectionReal = GenerateModel('QuadXDirectionSimulink',Theta,TsReal,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
+%modelXdirectionReal = GenerateModel('QuadXDirectionSimulink',Theta,TsReal,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
 
-%
+%%
 
 % %%  Simulate Open Loop
 % x0 = [0 0 -0.1 0 ]';
@@ -66,7 +68,7 @@ modelXdirectionReal = GenerateModel('QuadXDirectionSimulink',Theta,TsReal,m,l,ga
 Qy = zeros(5,5);
 Qy(3,3) = 100; % when we have the switching this cost will be zero.
 Qy(4,4) = 10;
-Qy(5,5) = 1; % when in free flight this error doesn't affect optimization
+Qy(5,5) = 10; % when in free flight this error doesn't affect optimization
 R = 40;
 Q = zeros(4,4);
 % reference signals calculation Xss = A*Xss+B*Uref
@@ -106,40 +108,40 @@ save('Xdirection','Hn_Xdir','Kn_Xdir','Fi_Xdir','Gi_Xdir','Nc_Xdir');
 x0 = [0;0;-1;0];
 
 
-% %% Simulate the closed loop
-% N_sim = 150;
-% 
-% % Create the closed-loop system:
-% loop = ClosedLoop(expmpcXdirection, modelXdirection);
-% ClosedData = loop.simulate(x0, N_sim);
-% 
-% N = size(ClosedData.Y(1,:),2);
-% time = zeros(N,1);
-% Fref = zeros(N,1);
-% thetaref = zeros(N,1);
-% k=1;
-% for i = 0:TsCtrl:(N-1)*TsCtrl
-%     time(k) =i;
-%     Fref(k) = yref(5);
-%     thetaref(k) = yref(1);
-%     k = k+1;
-% end
-% 
-% 
-% % plot the output
-% figure(2);
-% subplot(6,1,1)
-% plot(time,ClosedData.Y(1,:),time,thetaref,'-g'); grid on;ylabel('angle');
-% subplot(6,1,2)
-% plot(time,ClosedData.Y(2,:)); grid on;ylabel('omega');
-% subplot(6,1,3)
-% plot(time,ClosedData.Y(3,:)); grid on;ylabel('position')
-% subplot(6,1,4)
-% plot(time,ClosedData.Y(4,:)); grid on;ylabel('velocity')
-% subplot(6,1,5)
-% plot(time,ClosedData.Y(5,:),time,Fref,'-g'); grid on;ylabel('Force')
-% subplot(6,1,6)
-% plot(time,ClosedData.U(:)); grid on;ylabel('Input')
+%% Simulate the closed loop
+N_sim = 50;
+
+% Create the closed-loop system:
+loop = ClosedLoop(expmpcXdirection, modelXdirection);
+ClosedData = loop.simulate(x0, N_sim);
+
+N = size(ClosedData.Y(1,:),2);
+time = zeros(N,1);
+Fref = zeros(N,1);
+thetaref = zeros(N,1);
+k=1;
+for i = 0:TsCtrl:(N-1)*TsCtrl
+    time(k) =i;
+    Fref(k) = yref(5);
+    thetaref(k) = yref(1);
+    k = k+1;
+end
+
+
+% plot the output
+figure(2);
+subplot(6,1,1)
+plot(time,ClosedData.Y(1,:),time,thetaref,'-g'); grid on;ylabel('angle');
+subplot(6,1,2)
+plot(time,ClosedData.Y(2,:)); grid on;ylabel('omega');
+subplot(6,1,3)
+plot(time,ClosedData.Y(3,:)); grid on;ylabel('position')
+subplot(6,1,4)
+plot(time,ClosedData.Y(4,:)); grid on;ylabel('velocity')
+subplot(6,1,5)
+plot(time,ClosedData.Y(5,:),time,Fref,'-g'); grid on;ylabel('Force')
+subplot(6,1,6)
+plot(time,ClosedData.U(:)); grid on;ylabel('Input')
 
 %% Xdirection Controller Free Flight
 Af = zeros(4,4);
@@ -379,7 +381,7 @@ Dy = 0;
 syscy = ss(Ay,By,Cy,Dy);
 
 % All controller must operate at the same frequency
-sysdy = c2d(syscy,TsCtrl,'zoh');
+sysdy = c2d(syscy,TsReal,'zoh');
 modelYaw = LTISystem(sysdy);
 
 % Real models are generated at 50Hz frequency
@@ -394,7 +396,7 @@ modelYaw.u.max = pi;
 
 % Set the penalty
 Qxy= 100; % yaw angle control
-Ry = .1;
+Ry = 15;
 
 modelYaw.x.penalty = Penalty(Qxy,norm);
 modelYaw.u.penalty = Penalty(Ry,norm);
@@ -411,7 +413,7 @@ save('Yawdirection','Hn_Yaw','Kn_Yaw','Fi_Yaw','Gi_Yaw','Nc_Yaw');
 yaw0 = -0.0873;
 
 
-% %Simulate the closed loop
+% %% Simulate the closed loop
 % N_sim = 50;
 % 
 % % Create the closed-loop system:
@@ -419,7 +421,7 @@ yaw0 = -0.0873;
 % ClosedData = loop.simulate(yaw0, N_sim);
 % 
 % N = size(ClosedData.Y(1,:),2);
-% time = 0:Ts:(N-1)*Ts;
+% time = 0:TsReal:(N-1)*TsReal;
 % 
 % % plot the output
 % figure(4);

@@ -21,10 +21,10 @@ switch flag,
   % Update 
   case 2,
     states = model.update(u);
-    sys = round(1000*states)/1000;
+    sys = states;
   case 3,                                                
     output = model.output;
-    sys = round(1000*output)/1000;
+    sys = output;
   case 9,                                               
     sys = [];
 

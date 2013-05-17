@@ -47,6 +47,7 @@ Cd = [eye(4);
 sysdc = ss(Ad,Bd,Cd,Dd);
 sysdd = c2d(sysdc,Ts,'zoh');
 Add = sysdd.a;
+Add(3,3) = 0; Add(3,4) = 0; Add(4,4) = 0;
 Bdd = sysdd.b;
 Cdd = sysdd.c;
 Ddd = sysdd.d;

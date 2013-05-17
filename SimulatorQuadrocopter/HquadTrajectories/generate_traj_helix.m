@@ -1,10 +1,10 @@
 N=30;
-Ts=0.018;
+Ts=0.02;
 time_per_circle=3; %time in seconds for one circle
 num_of_circles=6;
 R=0.5; %radius
-x0=0.5;
-y0=-0.5;
+x0=1.3;
+y0=-1.2;
 z0=-1;
 z_diff=-0.8;
 time=0:Ts:(num_of_circles*time_per_circle+(N+1)*Ts);

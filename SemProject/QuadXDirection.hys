@@ -60,7 +60,7 @@ IMPLEMENTATION {
             BOOL docked;
             REAL Fwall;
         }
-    AD  {   docked = posx >= -0.01 -MLD_epsilon;
+    AD  {   docked = posx >= -0.005 -MLD_epsilon;
         }
     DA  {   
             z1 = {IF ~docked THEN (Af11*angle+Af12*omega+Af13*posx+Af14*velx+Bf11*thetar+Bf12*Fwall)
@@ -106,9 +106,6 @@ IMPLEMENTATION {
             }
     LINEAR {
             Fwall = k5;
-            }
-    MUST   {
-            Fwall >= 0;
             }
     }
 }

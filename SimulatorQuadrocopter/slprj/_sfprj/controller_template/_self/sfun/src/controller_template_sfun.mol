@@ -6,5 +6,7 @@ c5_controller_template.obj
 c6_controller_template.obj
 c7_controller_template.obj
 c8_controller_template.obj
+c9_controller_template.obj
+c10_controller_template.obj
 controller_template_sfun_registry.obj
 controller_template_sfun.obj

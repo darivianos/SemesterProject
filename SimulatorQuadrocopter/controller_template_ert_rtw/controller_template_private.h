@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'controller_template'.
  *
- * Model version                  : 1.404
+ * Model version                  : 1.492
  * Simulink Coder version         : 8.1 (R2011b) 08-Jul-2011
  * TLC version                    : 8.1 (Aug  6 2011)
- * C/C++ source code generated on : Tue May 14 19:09:51 2013
+ * C/C++ source code generated on : Fri May 17 21:42:55 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -46,12 +46,13 @@ int_T rt_WriteMat4FileHeader(FILE *fp,
   int32_T m,
   int32_T n,
   const char_T *name);
-extern void controller__MATLABFunction_Init(rtDW_MATLABFunction_controller_
+extern void contr_discretekalmanfilter_Init(rtDW_discretekalmanfilter_contr
   *localDW);
-extern void controller_templ_MATLABFunction(const real_T rtu_x[4], const real_T
-  rtu_A[16], const real_T rtu_B[8], real_T rtu_u,
-  rtB_MATLABFunction_controller_t *localB, rtDW_MATLABFunction_controller_
-  *localDW);
+extern void controller_discretekalmanfilter(real_T rtu_y, real_T rtu_y_e, const
+  real_T rtu_state[2], real_T rtu_state_g, const real_T rtu_A[9], const real_T
+  rtu_B[3], const real_T rtu_C[6], const real_T rtu_Q[9], const real_T rtu_R[4],
+  real_T rtu_u, const real_T rtu_P[9], rtB_discretekalmanfilter_contro *localB,
+  rtDW_discretekalmanfilter_contr *localDW);
 extern void con_EmbeddedMATLABFunction_Init(rtDW_EmbeddedMATLABFunction_con
   *localDW);
 extern void controll_EmbeddedMATLABFunction(real_T rtu_roll, real_T rtu_pitch,
@@ -68,21 +69,14 @@ extern void controller_temp_runFastGradient(const real_T rtu_TT_PP[900], const
   const real_T rtu_betas[7], real_T rtu_L, const real_T rtu_u_buff[3], const
   real_T rtu_V_init[30], rtB_runFastGradient_controller_ *localB,
   rtDW_runFastGradient_controller *localDW);
-extern void contr_discretekalmanfilter_Init(rtDW_discretekalmanfilter_contr
+extern void con_discretekalmanfilter_k_Init(rtDW_discretekalmanfilter_con_c
   *localDW);
-extern void controller_discretekalmanfilter(real_T rtu_y, real_T rtu_y_o, real_T
+extern void controll_discretekalmanfilter_b(real_T rtu_y, real_T rtu_y_o, real_T
   rtu_y_h, const real_T rtu_state[3], real_T rtu_state_m, const real_T rtu_A[16],
   const real_T rtu_B[4], const real_T rtu_C[12], const real_T rtu_Q[16], const
   real_T rtu_R[9], real_T rtu_u, const real_T rtu_P[16],
-  rtB_discretekalmanfilter_contro *localB, rtDW_discretekalmanfilter_contr
+  rtB_discretekalmanfilter_cont_h *localB, rtDW_discretekalmanfilter_con_c
   *localDW);
-extern void con_discretekalmanfilter_i_Init(rtDW_discretekalmanfilter_con_g
-  *localDW);
-extern void controll_discretekalmanfilter_n(real_T rtu_y, real_T rtu_y_e, const
-  real_T rtu_state[2], real_T rtu_state_b, const real_T rtu_A[9], const real_T
-  rtu_B[3], const real_T rtu_C[6], const real_T rtu_Q[9], const real_T rtu_R[4],
-  real_T rtu_u, const real_T rtu_P[9], rtB_discretekalmanfilter_cont_p *localB,
-  rtDW_discretekalmanfilter_con_g *localDW);
 
 #endif                                 /* RTW_HEADER_controller_template_private_h_ */
 

@@ -18,6 +18,9 @@
 %               26.04.2010  v0.2    arue    extended for all subsystems
 %               28.06.2011  v0.3    burrimi added output constraints
 %==========================================================================
+close all
+clear all
+clc
 
 addpath(fullfile(fileparts(mfilename('fullpath')),'HquadTrajectories'));
 addpath(fullfile(fileparts(mfilename('fullpath')),'MPC_FastGradient'));
@@ -181,8 +184,8 @@ load Zdirection.mat
 load Yawdirection.mat
 
 
-%% simulation step
-load hquad_pos_FG_square.mat
-startIndex = 1;
-endIndex = 1700;
-[RecordedData,RefX,RefY,RefZ,RefYaw] = loadSimulationData(hquad_pos_FG,startIndex,endIndex);
+% %% simulation step
+% load hquad_pos_FG_square.mat
+% startIndex = 1;
+% endIndex = 1700;
+% [RecordedData,RefX,RefY,RefZ,RefYaw] = loadSimulationData(hquad_pos_FG,startIndex,endIndex);
