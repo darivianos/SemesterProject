@@ -11,6 +11,20 @@
 #include "c8_controller_template.h"
 #include "c9_controller_template.h"
 #include "c10_controller_template.h"
+#include "c11_controller_template.h"
+#include "c12_controller_template.h"
+#include "c13_controller_template.h"
+#include "c14_controller_template.h"
+#include "c15_controller_template.h"
+#include "c16_controller_template.h"
+#include "c17_controller_template.h"
+#include "c18_controller_template.h"
+#include "c19_controller_template.h"
+#include "c20_controller_template.h"
+#include "c21_controller_template.h"
+#include "c22_controller_template.h"
+#include "c24_controller_template.h"
+#include "c26_controller_template.h"
 
 /* Type Definitions */
 
@@ -84,6 +98,76 @@ unsigned int sf_controller_template_method_dispatcher(SimStruct *simstructPtr,
 
   if (chartFileNumber==10) {
     c10_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==11) {
+    c11_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==12) {
+    c12_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==13) {
+    c13_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==14) {
+    c14_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==15) {
+    c15_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==16) {
+    c16_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==17) {
+    c17_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==18) {
+    c18_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==19) {
+    c19_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==20) {
+    c20_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==21) {
+    c21_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==22) {
+    c22_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==24) {
+    c24_controller_template_method_dispatcher(simstructPtr, method, data);
+    return 1;
+  }
+
+  if (chartFileNumber==26) {
+    c26_controller_template_method_dispatcher(simstructPtr, method, data);
     return 1;
   }
 
@@ -182,6 +266,104 @@ unsigned int sf_controller_template_process_testpoint_info_call( int nlhs,
         break;
       }
 
+     case 11:
+      {
+        extern mxArray *sf_c11_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c11_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 12:
+      {
+        extern mxArray *sf_c12_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c12_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 13:
+      {
+        extern mxArray *sf_c13_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c13_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 14:
+      {
+        extern mxArray *sf_c14_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c14_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 15:
+      {
+        extern mxArray *sf_c15_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c15_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 16:
+      {
+        extern mxArray *sf_c16_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c16_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 17:
+      {
+        extern mxArray *sf_c17_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c17_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 18:
+      {
+        extern mxArray *sf_c18_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c18_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 19:
+      {
+        extern mxArray *sf_c19_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c19_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 20:
+      {
+        extern mxArray *sf_c20_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c20_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 21:
+      {
+        extern mxArray *sf_c21_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c21_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 22:
+      {
+        extern mxArray *sf_c22_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c22_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 24:
+      {
+        extern mxArray *sf_c24_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c24_controller_template_get_testpoint_info();
+        break;
+      }
+
+     case 26:
+      {
+        extern mxArray *sf_c26_controller_template_get_testpoint_info(void);
+        plhs[0] = sf_c26_controller_template_get_testpoint_info();
+        break;
+      }
+
      default:
       plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
     }
@@ -229,10 +411,10 @@ unsigned int sf_controller_template_process_check_sum_call( int nlhs, mxArray *
       ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(0U);
       ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(0U);
     } else if (!strcmp(commandName,"makefile")) {
-      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2205793716U);
-      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4213969146U);
-      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3647028459U);
-      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(54234545U);
+      ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2162746087U);
+      ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3721398898U);
+      ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2651040275U);
+      ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(586628301U);
     } else if (nrhs==3 && !strcmp(commandName,"chart")) {
       unsigned int chartFileNumber;
       chartFileNumber = (unsigned int)mxGetScalar(prhs[2]);
@@ -307,6 +489,104 @@ unsigned int sf_controller_template_process_check_sum_call( int nlhs, mxArray *
           break;
         }
 
+       case 11:
+        {
+          extern void sf_c11_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c11_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 12:
+        {
+          extern void sf_c12_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c12_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 13:
+        {
+          extern void sf_c13_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c13_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 14:
+        {
+          extern void sf_c14_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c14_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 15:
+        {
+          extern void sf_c15_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c15_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 16:
+        {
+          extern void sf_c16_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c16_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 17:
+        {
+          extern void sf_c17_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c17_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 18:
+        {
+          extern void sf_c18_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c18_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 19:
+        {
+          extern void sf_c19_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c19_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 20:
+        {
+          extern void sf_c20_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c20_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 21:
+        {
+          extern void sf_c21_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c21_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 22:
+        {
+          extern void sf_c22_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c22_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 24:
+        {
+          extern void sf_c24_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c24_controller_template_get_check_sum(plhs);
+          break;
+        }
+
+       case 26:
+        {
+          extern void sf_c26_controller_template_get_check_sum(mxArray *plhs[]);
+          sf_c26_controller_template_get_check_sum(plhs);
+          break;
+        }
+
        default:
         ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(0.0);
         ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(0.0);
@@ -322,10 +602,10 @@ unsigned int sf_controller_template_process_check_sum_call( int nlhs, mxArray *
       return 0;
     }
   } else {
-    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1566426600U);
-    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3710104430U);
-    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2215029701U);
-    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3513160257U);
+    ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1541761981U);
+    ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4227349532U);
+    ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1418703806U);
+    ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(4274263867U);
   }
 
   return 1;
@@ -491,6 +771,188 @@ unsigned int sf_controller_template_autoinheritance_info( int nlhs, mxArray *
         break;
       }
 
+     case 11:
+      {
+        if (strcmp(aiChksum, "GvynfyiA0GVrHnUWSbnnv") == 0) {
+          extern mxArray *sf_c11_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c11_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 12:
+      {
+        if (strcmp(aiChksum, "omgCo2urFVW8aQ0mIsR7eG") == 0) {
+          extern mxArray *sf_c12_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c12_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 13:
+      {
+        if (strcmp(aiChksum, "CLmeNCShigZriBSSJ1JTT") == 0) {
+          extern mxArray *sf_c13_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c13_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 14:
+      {
+        if (strcmp(aiChksum, "CHvmD40TqYML3QsH7ZP8oE") == 0) {
+          extern mxArray *sf_c14_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c14_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 15:
+      {
+        if (strcmp(aiChksum, "9DYUK24kJhabEDbdJagsJB") == 0) {
+          extern mxArray *sf_c15_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c15_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 16:
+      {
+        if (strcmp(aiChksum, "HKDv73U9APn6aDtCToPMUD") == 0) {
+          extern mxArray *sf_c16_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c16_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 17:
+      {
+        if (strcmp(aiChksum, "ZH9sBIUXb60HDCcw8OKxpC") == 0) {
+          extern mxArray *sf_c17_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c17_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 18:
+      {
+        if (strcmp(aiChksum, "ZH9sBIUXb60HDCcw8OKxpC") == 0) {
+          extern mxArray *sf_c18_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c18_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 19:
+      {
+        if (strcmp(aiChksum, "GvynfyiA0GVrHnUWSbnnv") == 0) {
+          extern mxArray *sf_c19_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c19_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 20:
+      {
+        if (strcmp(aiChksum, "omgCo2urFVW8aQ0mIsR7eG") == 0) {
+          extern mxArray *sf_c20_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c20_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 21:
+      {
+        if (strcmp(aiChksum, "CLmeNCShigZriBSSJ1JTT") == 0) {
+          extern mxArray *sf_c21_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c21_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 22:
+      {
+        if (strcmp(aiChksum, "CHvmD40TqYML3QsH7ZP8oE") == 0) {
+          extern mxArray *sf_c22_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c22_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 24:
+      {
+        if (strcmp(aiChksum, "rajXO26HuymXe7HHy23FZB") == 0) {
+          extern mxArray *sf_c24_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c24_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
+     case 26:
+      {
+        if (strcmp(aiChksum, "eMVt90xgq6gkBUb0K3cYZ") == 0) {
+          extern mxArray *sf_c26_controller_template_get_autoinheritance_info
+            (void);
+          plhs[0] = sf_c26_controller_template_get_autoinheritance_info();
+          break;
+        }
+
+        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
+        break;
+      }
+
      default:
       plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
     }
@@ -636,6 +1098,160 @@ unsigned int sf_controller_template_get_eml_resolved_functions_info( int nlhs,
         break;
       }
 
+     case 11:
+      {
+        extern const mxArray
+          *sf_c11_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c11_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 12:
+      {
+        extern const mxArray
+          *sf_c12_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c12_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 13:
+      {
+        extern const mxArray
+          *sf_c13_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c13_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 14:
+      {
+        extern const mxArray
+          *sf_c14_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c14_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 15:
+      {
+        extern const mxArray
+          *sf_c15_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c15_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 16:
+      {
+        extern const mxArray
+          *sf_c16_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c16_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 17:
+      {
+        extern const mxArray
+          *sf_c17_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c17_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 18:
+      {
+        extern const mxArray
+          *sf_c18_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c18_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 19:
+      {
+        extern const mxArray
+          *sf_c19_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c19_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 20:
+      {
+        extern const mxArray
+          *sf_c20_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c20_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 21:
+      {
+        extern const mxArray
+          *sf_c21_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c21_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 22:
+      {
+        extern const mxArray
+          *sf_c22_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c22_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 24:
+      {
+        extern const mxArray
+          *sf_c24_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c24_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
+     case 26:
+      {
+        extern const mxArray
+          *sf_c26_controller_template_get_eml_resolved_functions_info(void);
+        mxArray *persistentMxArray = (mxArray *)
+          sf_c26_controller_template_get_eml_resolved_functions_info();
+        plhs[0] = mxDuplicateArray(persistentMxArray);
+        mxDestroyArray(persistentMxArray);
+        break;
+      }
+
      default:
       plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
     }
@@ -654,7 +1270,7 @@ unsigned int sf_controller_template_get_eml_resolved_functions_info( int nlhs,
 void controller_template_debug_initialize(void)
 {
   _controller_templateMachineNumber_ = sf_debug_initialize_machine(
-    "controller_template","sfun",0,10,0,0,0);
+    "controller_template","sfun",0,24,0,0,0);
   sf_debug_set_machine_event_thresholds(_controller_templateMachineNumber_,0,0);
   sf_debug_set_machine_data_thresholds(_controller_templateMachineNumber_,0);
 }

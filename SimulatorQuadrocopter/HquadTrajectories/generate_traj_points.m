@@ -3,32 +3,32 @@ Ts=0.02;
 
 delay_steps_max=11;
 
-speed=0.5;
-yaw=-2.35619449;
-%yaw=0;
+speed=0.01;
+yaw=0;
 
-waypoints = [2, -0.4, -1, yaw, speed;
-    2, -1.4, -1, yaw, speed;
-    1, -1.4, -1, yaw, speed;
-    1, -0.4, -1, yaw, speed;
-    2, -0.4, -1, yaw, speed;
-    2, -1.4, -1, yaw, speed;
-    1, -1.4, -1, yaw, speed;
-    1, -0.4, -1, yaw, speed;
-    2, -0.4, -1, yaw, speed;
-    ];
+
+% waypoints = [2, -0.4, -1, yaw, speed;
+%     2, -1.4, -1, yaw, speed;
+%     1, -1.4, -1, yaw, speed;
+%     1, -0.4, -1, yaw, speed;
+%     2, -0.4, -1, yaw, speed;
+%     2, -1.4, -1, yaw, speed;
+%     1, -1.4, -1, yaw, speed;
+%     1, -0.4, -1, yaw, speed;
+%     2, -0.4, -1, yaw, speed;
+%     ];
 
 % points square
-% waypoints = [0, 0, -1, yaw, speed;
-%     0, -1, -1, yaw, speed;
-%     1, -1, -1, yaw, speed;
-%     1, 0, -1, yaw, speed;
-%     0, 0, -1, yaw, speed;
-%     0, -1, -1, yaw, speed;
-%     1, -1, -1, yaw, speed;
-%     1, 0, -1, yaw, speed;
-%     0, 0, -1, yaw, speed;
-%     ];
+waypoints = [0, 0, -0.1, yaw, speed;
+    0, -0.1, -0.1, yaw, speed;
+    0.1, -0.1, -0.1, yaw, speed;
+    0.1, 0, -0.1, yaw, speed;
+    0, 0, -0.1, yaw, speed;
+    0, -0.1, -0.1, yaw, speed;
+    0.1, -0.1, -0.1, yaw, speed;
+    0.1, 0, -0.1, yaw, speed;
+    0, 0, -0.1, yaw, speed;
+    ];
 
 % 
 % waypoints = [0.8, -0.7, -1, yaw, speed;

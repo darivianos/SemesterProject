@@ -117,9 +117,11 @@ load Hquad_CTRL_OBSV_parameters/obsv_mpc_z_v1.mat
 load Hquad_CTRL_OBSV_parameters/obsv_mpc_yaw_v1.mat
 
 % load trajectory
-load HquadTrajectories/traj_circle.mat
-% load HquadTrajectories/traj_helix.mat
-% load HquadTrajectories/traj_points.mat
+%load HquadTrajectories/traj_wall_docking.mat
+load HquadTrajectories/traj_wall_square.mat
+%load HquadTrajectories/traj_circle.mat
+%load HquadTrajectories/traj_helix.mat
+
 
 load Hquad_CTRL_OBSV_parameters/ctrl_lqr_x_v1.mat
 load Hquad_CTRL_OBSV_parameters/ctrl_lqr_y_v1.mat
