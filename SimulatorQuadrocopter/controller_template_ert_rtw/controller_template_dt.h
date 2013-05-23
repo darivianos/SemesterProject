@@ -3,9 +3,9 @@
  *
  * Code generation for model "controller_template.mdl".
  *
- * Model version              : 1.546
+ * Model version              : 1.547
  * Simulink Coder version : 8.1 (R2011b) 08-Jul-2011
- * C++ source code generated on : Tue May 21 19:22:36 2013
+ * C++ source code generated on : Thu May 23 20:46:25 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -372,7 +372,7 @@ static DataTypeTransitionTable rtBTransTable = {
 
 /* data type transitions for Parameters structure */
 static DataTypeTransition rtPTransitions[] = {
-  { (char_T *)(&controller_template_P.Constant3_Value[0]), 0, 0, 52773 },
+  { (char_T *)(&controller_template_P.Constant3_Value[0]), 0, 0, 52593 },
 
   { (char_T *)(&controller_template_P.IntegerDelay3_DelayLength), 7, 0, 5 },
 

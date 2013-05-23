@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'controller_template'.
  *
- * Model version                  : 1.546
+ * Model version                  : 1.547
  * Simulink Coder version         : 8.1 (R2011b) 08-Jul-2011
  * TLC version                    : 8.1 (Aug  6 2011)
- * C/C++ source code generated on : Tue May 21 19:22:36 2013
+ * C/C++ source code generated on : Thu May 23 20:46:25 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -1040,7 +1040,7 @@ struct Parameters_controller_template_ {
   real_T Saturation3_LowerSat_i;       /* Expression: -1
                                         * Referenced by: '<S67>/Saturation3'
                                         */
-  real_T X_ref_x_Value[30];            /* Expression: traj_FG.X_ref_x
+  real_T X_ref_x_Value[3];             /* Expression: traj_FG.X_ref_x
                                         * Referenced by: '<S68>/X_ref_x'
                                         */
   real_T UnitDelay_2_X0;               /* Expression: 0
@@ -1082,7 +1082,7 @@ struct Parameters_controller_template_ {
   real_T Constant1_Value_i;            /* Expression: 1
                                         * Referenced by: '<S68>/Constant1'
                                         */
-  real_T X_ref_x_Value_k[30];          /* Expression: traj_FG.X_ref_x
+  real_T X_ref_x_Value_k[3];           /* Expression: traj_FG.X_ref_x
                                         * Referenced by: '<S17>/X_ref_x'
                                         */
   real_T Constant_Value_kh;            /* Expression: 1
@@ -1097,22 +1097,22 @@ struct Parameters_controller_template_ {
   real_T Constant1_Value_h;            /* Expression: 1
                                         * Referenced by: '<S17>/Constant1'
                                         */
-  real_T X_ref_y_Value[30];            /* Expression: traj_FG.X_ref_y
+  real_T X_ref_y_Value[3];             /* Expression: traj_FG.X_ref_y
                                         * Referenced by: '<S68>/X_ref_y'
                                         */
-  real_T X_ref_y_Value_e[30];          /* Expression: traj_FG.X_ref_y
+  real_T X_ref_y_Value_e[3];           /* Expression: traj_FG.X_ref_y
                                         * Referenced by: '<S17>/X_ref_y'
                                         */
-  real_T X_ref_z_Value[20];            /* Expression: traj_FG.X_ref_z
+  real_T X_ref_z_Value[2];             /* Expression: traj_FG.X_ref_z
                                         * Referenced by: '<S68>/X_ref_z'
                                         */
-  real_T X_ref_z_Value_a[20];          /* Expression: traj_FG.X_ref_z
+  real_T X_ref_z_Value_a[2];           /* Expression: traj_FG.X_ref_z
                                         * Referenced by: '<S17>/X_ref_z'
                                         */
-  real_T X_ref_yaw_Value[20];          /* Expression: traj_FG.X_ref_yaw
+  real_T X_ref_yaw_Value[2];           /* Expression: traj_FG.X_ref_yaw
                                         * Referenced by: '<S68>/X_ref_yaw'
                                         */
-  real_T X_ref_yaw_Value_f[20];        /* Expression: traj_FG.X_ref_yaw
+  real_T X_ref_yaw_Value_f[2];         /* Expression: traj_FG.X_ref_yaw
                                         * Referenced by: '<S17>/X_ref_yaw'
                                         */
   real_T Gain_Gain_a;                  /* Expression: 1

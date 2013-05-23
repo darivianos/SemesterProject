@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'controller_template'.
  *
- * Model version                  : 1.546
+ * Model version                  : 1.547
  * Simulink Coder version         : 8.1 (R2011b) 08-Jul-2011
  * TLC version                    : 8.1 (Aug  6 2011)
- * C/C++ source code generated on : Tue May 21 19:22:36 2013
+ * C/C++ source code generated on : Thu May 23 20:46:25 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -103,7 +103,7 @@ void controlle_generate_X_ref_x_Init(rtDW_generate_X_ref_x_controlle *localDW)
  *    '<S17>/generate_X_ref_x'
  *    '<S68>/generate_X_ref_x'
  */
-void controller_tem_generate_X_ref_x(const real_T rtu_traj_x[30], real_T rtu_idx,
+void controller_tem_generate_X_ref_x(const real_T rtu_traj_x[3], real_T rtu_idx,
   rtB_generate_X_ref_x_controller *localB, rtDW_generate_X_ref_x_controlle
   *localDW)
 {
@@ -113,11 +113,9 @@ void controller_tem_generate_X_ref_x(const real_T rtu_traj_x[30], real_T rtu_idx
   /* MATLAB Function 'FreeFlight Pos Ctrl/Free Flight Reference/create traj/generate_X_ref_x': '<S19>:1' */
   /* '<S19>:1:5' */
   for (i = 0; i < 31; i++) {
-    localB->X_ref_x[3 * i] = rtu_traj_x[((int32_T)(rtu_idx + (real_T)i) - 1) * 3];
-    localB->X_ref_x[1 + 3 * i] = rtu_traj_x[((int32_T)(rtu_idx + (real_T)i) - 1)
-      * 3 + 1];
-    localB->X_ref_x[2 + 3 * i] = rtu_traj_x[((int32_T)(rtu_idx + (real_T)i) - 1)
-      * 3 + 2];
+    localB->X_ref_x[3 * i] = rtu_traj_x[(int32_T)(rtu_idx + (real_T)i) - 1];
+    localB->X_ref_x[1 + 3 * i] = rtu_traj_x[(int32_T)(rtu_idx + (real_T)i)];
+    localB->X_ref_x[2 + 3 * i] = rtu_traj_x[(int32_T)(rtu_idx + (real_T)i) + 1];
   }
 }
 
@@ -137,7 +135,7 @@ void controlle_generate_X_ref_y_Init(rtDW_generate_X_ref_y_controlle *localDW)
  *    '<S17>/generate_X_ref_y'
  *    '<S68>/generate_X_ref_y'
  */
-void controller_tem_generate_X_ref_y(const real_T rtu_traj_y[30], real_T rtu_idx,
+void controller_tem_generate_X_ref_y(const real_T rtu_traj_y[3], real_T rtu_idx,
   rtB_generate_X_ref_y_controller *localB, rtDW_generate_X_ref_y_controlle
   *localDW)
 {
@@ -147,11 +145,9 @@ void controller_tem_generate_X_ref_y(const real_T rtu_traj_y[30], real_T rtu_idx
   /* MATLAB Function 'FreeFlight Pos Ctrl/Free Flight Reference/create traj/generate_X_ref_y': '<S20>:1' */
   /* '<S20>:1:5' */
   for (i = 0; i < 31; i++) {
-    localB->X_ref_y[3 * i] = rtu_traj_y[((int32_T)(rtu_idx + (real_T)i) - 1) * 3];
-    localB->X_ref_y[1 + 3 * i] = rtu_traj_y[((int32_T)(rtu_idx + (real_T)i) - 1)
-      * 3 + 1];
-    localB->X_ref_y[2 + 3 * i] = rtu_traj_y[((int32_T)(rtu_idx + (real_T)i) - 1)
-      * 3 + 2];
+    localB->X_ref_y[3 * i] = rtu_traj_y[(int32_T)(rtu_idx + (real_T)i) - 1];
+    localB->X_ref_y[1 + 3 * i] = rtu_traj_y[(int32_T)(rtu_idx + (real_T)i)];
+    localB->X_ref_y[2 + 3 * i] = rtu_traj_y[(int32_T)(rtu_idx + (real_T)i) + 1];
   }
 }
 
@@ -171,7 +167,7 @@ void control_generate_X_ref_yaw_Init(rtDW_generate_X_ref_yaw_control *localDW)
  *    '<S17>/generate_X_ref_yaw'
  *    '<S68>/generate_X_ref_yaw'
  */
-void controller_t_generate_X_ref_yaw(const real_T rtu_X_ref_yaw_unbounded[20],
+void controller_t_generate_X_ref_yaw(const real_T rtu_X_ref_yaw_unbounded[2],
   real_T rtu_yaw_meas, real_T rtu_idx, rtB_generate_X_ref_yaw_controll *localB,
   rtDW_generate_X_ref_yaw_control *localDW)
 {
@@ -183,8 +179,8 @@ void controller_t_generate_X_ref_yaw(const real_T rtu_X_ref_yaw_unbounded[20],
   /* '<S21>:1:5' */
   /* '<S21>:1:6' */
   /* '<S21>:1:9' */
-  yaw_offset = (rtu_yaw_meas - rtu_X_ref_yaw_unbounded[((int32_T)rtu_idx - 1) <<
-                1]) / 6.2831853071795862;
+  yaw_offset = (rtu_yaw_meas - rtu_X_ref_yaw_unbounded[(int32_T)rtu_idx - 1]) /
+    6.2831853071795862;
   if (!(fabs(yaw_offset) > 4.503599627370496E+15)) {
     if (yaw_offset >= 0.5) {
       yaw_offset = floor(yaw_offset + 0.5);
@@ -199,13 +195,13 @@ void controller_t_generate_X_ref_yaw(const real_T rtu_X_ref_yaw_unbounded[20],
 
   /* '<S21>:1:11' */
   for (i = 0; i < 31; i++) {
-    localB->X_ref_yaw[(i << 1)] = rtu_X_ref_yaw_unbounded[((int32_T)(rtu_idx +
-      (real_T)i) - 1) << 1] + yaw_offset;
+    localB->X_ref_yaw[(i << 1)] = rtu_X_ref_yaw_unbounded[(int32_T)(rtu_idx +
+      (real_T)i) - 1] + yaw_offset;
   }
 
   for (i = 0; i < 31; i++) {
-    localB->X_ref_yaw[1 + (i << 1)] = rtu_X_ref_yaw_unbounded[(((int32_T)
-      (rtu_idx + (real_T)i) - 1) << 1) + 1];
+    localB->X_ref_yaw[1 + (i << 1)] = rtu_X_ref_yaw_unbounded[(int32_T)(rtu_idx
+      + (real_T)i)];
   }
 }
 
@@ -225,7 +221,7 @@ void controlle_generate_X_ref_z_Init(rtDW_generate_X_ref_z_controlle *localDW)
  *    '<S17>/generate_X_ref_z'
  *    '<S68>/generate_X_ref_z'
  */
-void controller_tem_generate_X_ref_z(const real_T rtu_traj_z[20], real_T rtu_idx,
+void controller_tem_generate_X_ref_z(const real_T rtu_traj_z[2], real_T rtu_idx,
   rtB_generate_X_ref_z_controller *localB, rtDW_generate_X_ref_z_controlle
   *localDW)
 {
@@ -235,10 +231,8 @@ void controller_tem_generate_X_ref_z(const real_T rtu_traj_z[20], real_T rtu_idx
   /* MATLAB Function 'FreeFlight Pos Ctrl/Free Flight Reference/create traj/generate_X_ref_z': '<S22>:1' */
   /* '<S22>:1:5' */
   for (i = 0; i < 31; i++) {
-    localB->X_ref_z[(i << 1)] = rtu_traj_z[((int32_T)(rtu_idx + (real_T)i) - 1) <<
-      1];
-    localB->X_ref_z[1 + (i << 1)] = rtu_traj_z[(((int32_T)(rtu_idx + (real_T)i)
-      - 1) << 1) + 1];
+    localB->X_ref_z[(i << 1)] = rtu_traj_z[(int32_T)(rtu_idx + (real_T)i) - 1];
+    localB->X_ref_z[1 + (i << 1)] = rtu_traj_z[(int32_T)(rtu_idx + (real_T)i)];
   }
 }
 
@@ -5291,10 +5285,10 @@ void FG_traj_initialize(void)
   controller_template_M->Timing.stepSize0 = 0.02;
 
   /* external mode info */
-  controller_template_M->Sizes.checksums[0] = (1182462670U);
-  controller_template_M->Sizes.checksums[1] = (1530233651U);
-  controller_template_M->Sizes.checksums[2] = (2970472482U);
-  controller_template_M->Sizes.checksums[3] = (1375946645U);
+  controller_template_M->Sizes.checksums[0] = (2182331085U);
+  controller_template_M->Sizes.checksums[1] = (3568932295U);
+  controller_template_M->Sizes.checksums[2] = (1777871341U);
+  controller_template_M->Sizes.checksums[3] = (2693952389U);
 
   {
     static const sysRanDType rtAlwaysEnabled = SUBSYS_RAN_BC_ENABLE;

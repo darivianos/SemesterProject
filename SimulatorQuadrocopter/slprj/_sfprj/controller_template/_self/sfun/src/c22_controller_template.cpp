@@ -193,7 +193,7 @@ static void sf_c22_controller_template(SFc22_controller_templateInstanceStruct
   int32_T c22_i3;
   real_T c22_hoistedGlobal;
   int32_T c22_i4;
-  real_T c22_traj_z[20];
+  real_T c22_traj_z[2];
   real_T c22_idx;
   uint32_T c22_debug_family_var_map[6];
   real_T c22_pred_horizon_z;
@@ -206,14 +206,14 @@ static void sf_c22_controller_template(SFc22_controller_templateInstanceStruct
   int32_T *c22_sfEvent;
   real_T *c22_b_idx;
   real_T (*c22_b_X_ref_z)[62];
-  real_T (*c22_b_traj_z)[20];
+  real_T (*c22_b_traj_z)[2];
   c22_b_idx = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
   c22_b_X_ref_z = (real_T (*)[62])ssGetOutputPortSignal(chartInstance->S, 1);
-  c22_b_traj_z = (real_T (*)[20])ssGetInputPortSignal(chartInstance->S, 0);
+  c22_b_traj_z = (real_T (*)[2])ssGetInputPortSignal(chartInstance->S, 0);
   c22_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
   _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 21U, *c22_sfEvent);
-  for (c22_i2 = 0; c22_i2 < 20; c22_i2++) {
+  for (c22_i2 = 0; c22_i2 < 2; c22_i2++) {
     _SFD_DATA_RANGE_CHECK((*c22_b_traj_z)[c22_i2], 0U);
   }
 
@@ -225,7 +225,7 @@ static void sf_c22_controller_template(SFc22_controller_templateInstanceStruct
   *c22_sfEvent = CALL_EVENT;
   _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 21U, *c22_sfEvent);
   c22_hoistedGlobal = *c22_b_idx;
-  for (c22_i4 = 0; c22_i4 < 20; c22_i4++) {
+  for (c22_i4 = 0; c22_i4 < 2; c22_i4++) {
     c22_traj_z[c22_i4] = (*c22_b_traj_z)[c22_i4];
   }
 
@@ -247,10 +247,9 @@ static void sf_c22_controller_template(SFc22_controller_templateInstanceStruct
   _SFD_EML_CALL(0U, *c22_sfEvent, 5);
   for (c22_i5 = 0; c22_i5 < 31; c22_i5++) {
     for (c22_i6 = 0; c22_i6 < 2; c22_i6++) {
-      c22_X_ref_z[c22_i6 + (c22_i5 << 1)] = c22_traj_z[c22_i6 +
-        ((_SFD_EML_ARRAY_BOUNDS_CHECK("traj_z", (int32_T)_SFD_INTEGER_CHECK(
-            "idx:idx+pred_horizon_z", c22_idx + (real_T)c22_i5), 1, 10, 2, 0) -
-          1) << 1)];
+      c22_X_ref_z[c22_i6 + (c22_i5 << 1)] = c22_traj_z[(c22_i6 +
+        _SFD_EML_ARRAY_BOUNDS_CHECK("traj_z", (int32_T)_SFD_INTEGER_CHECK(
+        "idx:idx+pred_horizon_z", c22_idx + (real_T)c22_i5), 1, 1, 2, 0)) - 1];
     }
   }
 
@@ -397,39 +396,23 @@ static const mxArray *c22_c_sf_marshallOut(void *chartInstanceVoid, void
 {
   const mxArray *c22_mxArrayOutData = NULL;
   int32_T c22_i18;
+  real_T c22_b_inData[2];
   int32_T c22_i19;
-  int32_T c22_i20;
-  real_T c22_b_inData[20];
-  int32_T c22_i21;
-  int32_T c22_i22;
-  int32_T c22_i23;
-  real_T c22_u[20];
+  real_T c22_u[2];
   const mxArray *c22_y = NULL;
   SFc22_controller_templateInstanceStruct *chartInstance;
   chartInstance = (SFc22_controller_templateInstanceStruct *)chartInstanceVoid;
   c22_mxArrayOutData = NULL;
-  c22_i18 = 0;
-  for (c22_i19 = 0; c22_i19 < 10; c22_i19++) {
-    for (c22_i20 = 0; c22_i20 < 2; c22_i20++) {
-      c22_b_inData[c22_i20 + c22_i18] = (*(real_T (*)[20])c22_inData)[c22_i20 +
-        c22_i18];
-    }
-
-    c22_i18 += 2;
+  for (c22_i18 = 0; c22_i18 < 2; c22_i18++) {
+    c22_b_inData[c22_i18] = (*(real_T (*)[2])c22_inData)[c22_i18];
   }
 
-  c22_i21 = 0;
-  for (c22_i22 = 0; c22_i22 < 10; c22_i22++) {
-    for (c22_i23 = 0; c22_i23 < 2; c22_i23++) {
-      c22_u[c22_i23 + c22_i21] = c22_b_inData[c22_i23 + c22_i21];
-    }
-
-    c22_i21 += 2;
+  for (c22_i19 = 0; c22_i19 < 2; c22_i19++) {
+    c22_u[c22_i19] = c22_b_inData[c22_i19];
   }
 
   c22_y = NULL;
-  sf_mex_assign(&c22_y, sf_mex_create("y", c22_u, 0, 0U, 1U, 0U, 2, 2, 10),
-                FALSE);
+  sf_mex_assign(&c22_y, sf_mex_create("y", c22_u, 0, 0U, 1U, 0U, 1, 2), FALSE);
   sf_mex_assign(&c22_mxArrayOutData, c22_y, FALSE);
   return c22_mxArrayOutData;
 }
@@ -494,9 +477,9 @@ static int32_T c22_d_emlrt_marshallIn(SFc22_controller_templateInstanceStruct
   *chartInstance, const mxArray *c22_u, const emlrtMsgIdentifier *c22_parentId)
 {
   int32_T c22_y;
-  int32_T c22_i24;
-  sf_mex_import(c22_parentId, sf_mex_dup(c22_u), &c22_i24, 1, 6, 0U, 0, 0U, 0);
-  c22_y = c22_i24;
+  int32_T c22_i20;
+  sf_mex_import(c22_parentId, sf_mex_dup(c22_u), &c22_i20, 1, 6, 0U, 0, 0U, 0);
+  c22_y = c22_i20;
   sf_mex_destroy(&c22_u);
   return c22_y;
 }
@@ -555,10 +538,10 @@ static void init_dsm_address_info(SFc22_controller_templateInstanceStruct
 static uint32_T* sf_get_sfun_dwork_checksum();
 void sf_c22_controller_template_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1136491682U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2168506347U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3750312626U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(795826974U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(167859071U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1248791041U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1135583667U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(181611511U);
 }
 
 mxArray *sf_c22_controller_template_get_autoinheritance_info(void)
@@ -570,7 +553,7 @@ mxArray *sf_c22_controller_template_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("CHvmD40TqYML3QsH7ZP8oE");
+    mxArray *mxChecksum = mxCreateString("buKIihel2RP0wy1g9qG4BD");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -583,7 +566,7 @@ mxArray *sf_c22_controller_template_get_autoinheritance_info(void)
       mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
       double *pr = mxGetPr(mxSize);
       pr[0] = (double)(2);
-      pr[1] = (double)(10);
+      pr[1] = (double)(1);
       mxSetField(mxData,0,"size",mxSize);
     }
 
@@ -740,10 +723,9 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         }
 
         {
-          unsigned int dimVector[2];
+          unsigned int dimVector[1];
           dimVector[0]= 2;
-          dimVector[1]= 10;
-          _SFD_SET_DATA_COMPILED_PROPS(0,SF_DOUBLE,2,&(dimVector[0]),0,0,0,0.0,
+          _SFD_SET_DATA_COMPILED_PROPS(0,SF_DOUBLE,1,&(dimVector[0]),0,0,0,0.0,
             1.0,0,0,(MexFcnForType)c22_c_sf_marshallOut,(MexInFcnForType)NULL);
         }
 
@@ -761,12 +743,12 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         {
           real_T *c22_idx;
-          real_T (*c22_traj_z)[20];
+          real_T (*c22_traj_z)[2];
           real_T (*c22_X_ref_z)[62];
           c22_idx = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
           c22_X_ref_z = (real_T (*)[62])ssGetOutputPortSignal(chartInstance->S,
             1);
-          c22_traj_z = (real_T (*)[20])ssGetInputPortSignal(chartInstance->S, 0);
+          c22_traj_z = (real_T (*)[2])ssGetInputPortSignal(chartInstance->S, 0);
           _SFD_SET_DATA_VALUE_PTR(0U, *c22_traj_z);
           _SFD_SET_DATA_VALUE_PTR(1U, *c22_X_ref_z);
           _SFD_SET_DATA_VALUE_PTR(2U, c22_idx);
@@ -999,10 +981,10 @@ static void mdlSetWorkWidths_c22_controller_template(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(2465424586U));
-  ssSetChecksum1(S,(1448334504U));
-  ssSetChecksum2(S,(1823935344U));
-  ssSetChecksum3(S,(176011850U));
+  ssSetChecksum0(S,(784080359U));
+  ssSetChecksum1(S,(3074494405U));
+  ssSetChecksum2(S,(3285030433U));
+  ssSetChecksum3(S,(1650623267U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
 }

@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'controller_template'.
  *
- * Model version                  : 1.546
+ * Model version                  : 1.547
  * Simulink Coder version         : 8.1 (R2011b) 08-Jul-2011
  * TLC version                    : 8.1 (Aug  6 2011)
- * C/C++ source code generated on : Tue May 21 19:22:36 2013
+ * C/C++ source code generated on : Thu May 23 20:46:25 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -52,23 +52,23 @@ int_T rt_WriteMat4FileHeader(FILE *fp,
   const char_T *name);
 extern void controlle_generate_X_ref_x_Init(rtDW_generate_X_ref_x_controlle
   *localDW);
-extern void controller_tem_generate_X_ref_x(const real_T rtu_traj_x[30], real_T
+extern void controller_tem_generate_X_ref_x(const real_T rtu_traj_x[3], real_T
   rtu_idx, rtB_generate_X_ref_x_controller *localB,
   rtDW_generate_X_ref_x_controlle *localDW);
 extern void controlle_generate_X_ref_y_Init(rtDW_generate_X_ref_y_controlle
   *localDW);
-extern void controller_tem_generate_X_ref_y(const real_T rtu_traj_y[30], real_T
+extern void controller_tem_generate_X_ref_y(const real_T rtu_traj_y[3], real_T
   rtu_idx, rtB_generate_X_ref_y_controller *localB,
   rtDW_generate_X_ref_y_controlle *localDW);
 extern void control_generate_X_ref_yaw_Init(rtDW_generate_X_ref_yaw_control
   *localDW);
 extern void controller_t_generate_X_ref_yaw(const real_T
-  rtu_X_ref_yaw_unbounded[20], real_T rtu_yaw_meas, real_T rtu_idx,
+  rtu_X_ref_yaw_unbounded[2], real_T rtu_yaw_meas, real_T rtu_idx,
   rtB_generate_X_ref_yaw_controll *localB, rtDW_generate_X_ref_yaw_control
   *localDW);
 extern void controlle_generate_X_ref_z_Init(rtDW_generate_X_ref_z_controlle
   *localDW);
-extern void controller_tem_generate_X_ref_z(const real_T rtu_traj_z[20], real_T
+extern void controller_tem_generate_X_ref_z(const real_T rtu_traj_z[2], real_T
   rtu_idx, rtB_generate_X_ref_z_controller *localB,
   rtDW_generate_X_ref_z_controlle *localDW);
 extern void controller__MATLABFunction_Init(rtDW_MATLABFunction_controller_

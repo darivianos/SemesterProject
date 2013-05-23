@@ -35,7 +35,7 @@ Model {
       Name		      "cmd_out"
     }
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.546"
+    ComputedModelVersion    "1.547"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -57,9 +57,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "burrimi"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Tue May 21 18:49:05 2013"
-  RTWModifiedTimeStamp	  291062924
-  ModelVersionFormat	  "1.%<AutoIncrement:546>"
+  LastModifiedDate	  "Thu May 23 20:45:52 2013"
+  RTWModifiedTimeStamp	  291242747
+  ModelVersionFormat	  "1.%<AutoIncrement:547>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -213,7 +213,7 @@ Model {
   ExtModeTrigMode	  "normal"
   ExtModeTrigPort	  "1"
   ExtModeTrigElement	  "any"
-  ExtModeTrigDuration	  1000
+  ExtModeTrigDuration	  30000
   ExtModeTrigDurationFloating "auto"
   ExtModeTrigHoldOff	  0
   ExtModeTrigDelay	  0
