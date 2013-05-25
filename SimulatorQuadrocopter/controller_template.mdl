@@ -35,7 +35,7 @@ Model {
       Name		      "cmd_out"
     }
     ParameterArgumentNames  ""
-    ComputedModelVersion    "1.547"
+    ComputedModelVersion    "1.549"
     NumModelReferences	    0
     NumTestPointedSignals   0
   }
@@ -57,9 +57,9 @@ Model {
   ModifiedByFormat	  "%<Auto>"
   LastModifiedBy	  "burrimi"
   ModifiedDateFormat	  "%<Auto>"
-  LastModifiedDate	  "Thu May 23 20:45:52 2013"
-  RTWModifiedTimeStamp	  291242747
-  ModelVersionFormat	  "1.%<AutoIncrement:547>"
+  LastModifiedDate	  "Sat May 25 19:08:11 2013"
+  RTWModifiedTimeStamp	  291408190
+  ModelVersionFormat	  "1.%<AutoIncrement:549>"
   ConfigurationManager	  "None"
   SampleTimeColors	  off
   SampleTimeAnnotations	  off
@@ -1136,7 +1136,7 @@ Model {
   }
   System {
     Name		    "controller_template"
-    Location		    [50, 79, 1921, 1108]
+    Location		    [49, 51, 1920, 1080]
     Open		    on
     ModelBrowserVisibility  off
     ModelBrowserWidth	    200
@@ -2290,7 +2290,7 @@ Model {
       }
       System {
 	Name			"FreeFlight Pos Ctrl"
-	Location		[50, 79, 1921, 1108]
+	Location		[49, 51, 1920, 1080]
 	Open			on
 	ModelBrowserVisibility	off
 	ModelBrowserWidth	200
@@ -3420,7 +3420,7 @@ Model {
 	  System {
 	    Name		    "MAIN CONTROL LOOP1"
 	    Location		    [50, 79, 1921, 1108]
-	    Open		    off
+	    Open		    on
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
@@ -4249,7 +4249,7 @@ Model {
 	      System {
 		Name			"x controller MPC FG\n "
 		Location		[50, 79, 1937, 1132]
-		Open			off
+		Open			on
 		ModelBrowserVisibility	off
 		ModelBrowserWidth	200
 		ScreenColor		"white"
@@ -14568,7 +14568,7 @@ Model {
 	  System {
 	    Name		    "view & log signals"
 	    Location		    [691, 159, 1203, 845]
-	    Open		    on
+	    Open		    off
 	    ModelBrowserVisibility  off
 	    ModelBrowserWidth	    200
 	    ScreenColor		    "white"
