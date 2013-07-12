@@ -12,7 +12,6 @@ CHART_SRCS 	= \
      c1_Hquad_control_LIB_MPC.cpp\
      c3_Hquad_control_LIB_MPC.cpp\
      c4_Hquad_control_LIB_MPC.cpp\
-     c5_Hquad_control_LIB_MPC.cpp\
      c6_Hquad_control_LIB_MPC.cpp\
      c7_Hquad_control_LIB_MPC.cpp\
      c8_Hquad_control_LIB_MPC.cpp\

@@ -187,12 +187,12 @@ static void sf_c15_controller_template(SFc15_controller_templateInstanceStruct
   c15_b_u = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
   c15_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 13U, *c15_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 10U, *c15_sfEvent);
   _SFD_DATA_RANGE_CHECK(*c15_b_u, 0U);
   _SFD_DATA_RANGE_CHECK(*c15_b_y, 1U);
   _SFD_DATA_RANGE_CHECK(*c15_b_thres, 2U);
   *c15_sfEvent = CALL_EVENT;
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 13U, *c15_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 10U, *c15_sfEvent);
   c15_hoistedGlobal = *c15_b_u;
   c15_b_hoistedGlobal = *c15_b_thres;
   c15_u = c15_hoistedGlobal;
@@ -220,7 +220,7 @@ static void sf_c15_controller_template(SFc15_controller_templateInstanceStruct
   _SFD_EML_CALL(0U, *c15_sfEvent, -6);
   sf_debug_symbol_scope_pop();
   *c15_b_y = c15_y;
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 13U, *c15_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 10U, *c15_sfEvent);
   sf_debug_check_for_state_inconsistency(_controller_templateMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);
 }

@@ -254,7 +254,7 @@ static void sf_c24_controller_template(SFc24_controller_templateInstanceStruct
   c24_X = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
   c24_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 22U, *c24_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 16U, *c24_sfEvent);
   for (c24_i0 = 0; c24_i0 < 4; c24_i0++) {
     _SFD_DATA_RANGE_CHECK((*c24_X)[c24_i0], 0U);
   }
@@ -385,7 +385,7 @@ static void c24_chartstep_c24_controller_template
   c24_b_U = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
   c24_b_X = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
   c24_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 22U, *c24_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 16U, *c24_sfEvent);
   for (c24_i6 = 0; c24_i6 < 4; c24_i6++) {
     c24_X[c24_i6] = (*c24_b_X)[c24_i6];
   }
@@ -694,7 +694,7 @@ static void c24_chartstep_c24_controller_template
   sf_debug_symbol_scope_pop();
   *c24_b_U = c24_U;
   *c24_b_flag_oob = c24_flag_oob;
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 22U, *c24_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 16U, *c24_sfEvent);
 }
 
 static void initSimStructsc24_controller_template

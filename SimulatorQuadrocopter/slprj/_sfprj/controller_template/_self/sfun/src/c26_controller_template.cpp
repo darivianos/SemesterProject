@@ -213,7 +213,7 @@ static void sf_c26_controller_template(SFc26_controller_templateInstanceStruct
   c26_x = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
   c26_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 23U, *c26_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 18U, *c26_sfEvent);
   for (c26_i2 = 0; c26_i2 < 4; c26_i2++) {
     _SFD_DATA_RANGE_CHECK((*c26_x)[c26_i2], 0U);
   }
@@ -280,7 +280,7 @@ static void c26_chartstep_c26_controller_template
   c26_c_y = (real_T (*)[4])ssGetOutputPortSignal(chartInstance->S, 1);
   c26_b_x = (real_T (*)[4])ssGetInputPortSignal(chartInstance->S, 0);
   c26_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 23U, *c26_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 18U, *c26_sfEvent);
   c26_hoistedGlobal = *c26_b_u;
   for (c26_i6 = 0; c26_i6 < 4; c26_i6++) {
     c26_x[c26_i6] = (*c26_b_x)[c26_i6];
@@ -355,7 +355,7 @@ static void c26_chartstep_c26_controller_template
     (*c26_c_y)[c26_i19] = c26_y[c26_i19];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 23U, *c26_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 18U, *c26_sfEvent);
 }
 
 static void initSimStructsc26_controller_template

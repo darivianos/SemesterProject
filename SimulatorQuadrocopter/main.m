@@ -117,11 +117,14 @@ load Hquad_CTRL_OBSV_parameters/obsv_mpc_z_v1.mat
 load Hquad_CTRL_OBSV_parameters/obsv_mpc_yaw_v1.mat
 
 % load trajectory
-load HquadTrajectories/traj_wall_docking.mat
+%load HquadTrajectories/traj_wall_docking.mat
 %load HquadTrajectories/traj_wall_square.mat
 %load HquadTrajectories/traj_circle.mat
 %load HquadTrajectories/traj_helix.mat
-
+maxdisty = 0.2;
+maxdistz = 0.2;
+interm = 0.1;
+traj_FG = ReferenceCreator(maxdisty,maxdistz,interm);
 
 load Hquad_CTRL_OBSV_parameters/ctrl_lqr_x_v1.mat
 load Hquad_CTRL_OBSV_parameters/ctrl_lqr_y_v1.mat
@@ -140,14 +143,16 @@ load Hquad_CTRL_OBSV_parameters/ctrl_lqr_yaw_v1.mat
 %% Darivianakis Controller Parameters load
 
 %% Parameters Initialization
+addpath(genpath('/home/burrimi/git/darivianakis/SemProject/'));
 DF = 0;
-m = 0.650;
+m = 0.66;
 g = 9.8065;
 l = 0.30;
 gamma = 0;
 J = m*l*l/4; % Inertia, we use the approximation of Thin, solid disk of radius r and mass m
 Theta = -deg2rad(3); % Docking angle
 TsCtrl = 0.08;
+Tsz = 0.04;
 
 DF_roll = 0;
 a1_roll = 54.9;
@@ -185,9 +190,11 @@ load Ydirection.mat
 load Zdirection.mat
 load Yawdirection.mat
 
-
+mass = 0.66;
 % %% simulation step
 % load hquad_pos_FG_square.mat
 % startIndex = 1;
 % endIndex = 1700;
 % [RecordedData,RefX,RefY,RefZ,RefYaw] = loadSimulationData(hquad_pos_FG,startIndex,endIndex);
+
+disp('### MAIN FILE LOADED!');

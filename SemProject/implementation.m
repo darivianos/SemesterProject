@@ -8,7 +8,7 @@ tbxmanager restorepath
 mpt_init
 clc
 % Parameters Initialization
-m = 0.650;
+m = 0.66;
 g = 9.8065;
 l = 0.30;
 gamma = 0;
@@ -18,14 +18,14 @@ TsCtrl = 0.08;
 TsReal = 0.02;
 
 DF_roll = 0;
-a1_roll = 54.9;
-a0_roll = 419.1;
-c0_roll = 419.1;
+a1_roll = 27.07;
+a0_roll = 171.66;
+c0_roll = 169.16;
 
 DF_pitch = 0;
-a1_pitch = 59.71;
-a0_pitch = 491;
-c0_pitch = 491;
+a1_pitch = 27.07;
+a0_pitch = 171.66;
+c0_pitch = 169.16;
 
 a0_yaw = 5.9;
 c0_yaw = 5.9;
@@ -38,7 +38,7 @@ norm = 2;
 
 %% Xdirection Controller (Pitch Controller)
 
-modelXdirection = GenerateModel('QuadXDirection',Theta,TsCtrl,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
+modelXdirection = GenerateModel('QuadXDirectionNC',Theta,TsCtrl,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
 % Simulation Model
 %modelXdirectionReal = GenerateModel('QuadXDirectionSimulink',Theta,TsReal,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
 
@@ -47,10 +47,10 @@ modelXdirection = GenerateModel('QuadXDirection',Theta,TsCtrl,m,l,gamma,J,a1_pit
 % %%  Simulate Open Loop
 % x0 = [0 0 -0.1 0 ]';
 % modelXdirection.initialize(x0);
-% 
+%
 % U = -deg2rad(5)*ones(1,50);
 % data = modelXdirection.simulate(U);
-% 
+%
 % time = [0:Ts:49*Ts];
 % figure(1);
 % subplot(5,1,1)
@@ -68,11 +68,16 @@ modelXdirection = GenerateModel('QuadXDirection',Theta,TsCtrl,m,l,gamma,J,a1_pit
 Qy = zeros(5,5);
 Qy(3,3) = 100; % when we have the switching this cost will be zero.
 Qy(4,4) = 10;
-Qy(5,5) = 10; % when in free flight this error doesn't affect optimization
+Qy(5,5) = 50; % when in free flight this error doesn't affect optimization
+
+%   - hoping I understand correctly George code...
+Qy(3,3) = 55;
+Qy(4,4) = 8;
+
 R = 40;
 Q = zeros(4,4);
 % reference signals calculation Xss = A*Xss+B*Uref
-yref = [Theta;0;0;0;-m*g*Theta]; % ensure that the angle of arrival is not positive 
+yref = [Theta;0;0;0;-m*g*Theta]; % ensure that the angle of arrival is not positive
 xref = [Theta;0;0;0];
 B = modelXdirection.B{1};
 A = modelXdirection.A{1};
@@ -94,10 +99,27 @@ ctrl.model.y.reference = yref;
 ctrl.model.u.with('reference');
 ctrl.model.u.reference = uref;
 
-% Define Terminal Set
-% ctrl.model.x.with('terminalSet');
-% ctrl.model.x.terminalSet = Polyhedron('Ae',Ae,'be',be);
+%%
+% Define Custom logic constraint
+
+custom = ctrl.toYALMIP;
+CON = custom.constraints;
+
+for k = 1:length(VARS.u)
+    CON = CON + set(implies(VARS.x(3,1) == 0, VARS.u(1) <= deg2rad(6)));
+    CON = CON + set(implies(VARS.x(3,1) == 0, VARS.u(1) >= -deg2rad(6)));
+end
+
+custom.constraints = CON;
+
+ctrl.fromYALMIP(custom);
+%%
+
+
 expmpcXdirection = ctrl.toExplicit();
+
+
+%%
 % Create Look Up Table, code in C
 exportToC_MLD(expmpcXdirection,TsCtrl,'XdirectionCtrl','Xdirection');
 cd Xdirection
@@ -108,122 +130,122 @@ save('Xdirection','Hn_Xdir','Kn_Xdir','Fi_Xdir','Gi_Xdir','Nc_Xdir');
 x0 = [0;0;-1;0];
 
 
-%% Simulate the closed loop
-N_sim = 50;
-
-% Create the closed-loop system:
-loop = ClosedLoop(expmpcXdirection, modelXdirection);
-ClosedData = loop.simulate(x0, N_sim);
-
-N = size(ClosedData.Y(1,:),2);
-time = zeros(N,1);
-Fref = zeros(N,1);
-thetaref = zeros(N,1);
-k=1;
-for i = 0:TsCtrl:(N-1)*TsCtrl
-    time(k) =i;
-    Fref(k) = yref(5);
-    thetaref(k) = yref(1);
-    k = k+1;
-end
-
-
-% plot the output
-figure(2);
-subplot(6,1,1)
-plot(time,ClosedData.Y(1,:),time,thetaref,'-g'); grid on;ylabel('angle');
-subplot(6,1,2)
-plot(time,ClosedData.Y(2,:)); grid on;ylabel('omega');
-subplot(6,1,3)
-plot(time,ClosedData.Y(3,:)); grid on;ylabel('position')
-subplot(6,1,4)
-plot(time,ClosedData.Y(4,:)); grid on;ylabel('velocity')
-subplot(6,1,5)
-plot(time,ClosedData.Y(5,:),time,Fref,'-g'); grid on;ylabel('Force')
-subplot(6,1,6)
-plot(time,ClosedData.U(:)); grid on;ylabel('Input')
-
-%% Xdirection Controller Free Flight
-Af = zeros(4,4);
-Bf = zeros(4,1);
-Df = zeros(4,1);
-% Free Flight
-Af(1,2) = 1; Af(2,1) = -a0_pitch; Af(2,2) = -a1_pitch; Af(3,4) = 1; 
-Af(4,1) = -g; Af(4,4) = DF_pitch;
-Bf(2,1) = c0_pitch;
-Cf = eye(4);
-
-sysfc = ss(Af,Bf,Cf,Df);
-
-% All controller must operate at the same frequency
-sysfd = c2d(sysfc,TsCtrl,'zoh');
-modelXdirectionFF = LTISystem(sysfd);
-
-% Real models are generated at 50Hz frequency
-sysfd = c2d(sysfc,TsReal,'zoh');
-modelXdirectionRealFF = LTISystem(sysfd);
-
-% Set constraints on states and input
-modelXdirectionFF.x.min = [-0.2094;-2;-1;-1];
-modelXdirectionFF.x.max = [0.2094;2;1;1];
-modelXdirectionFF.u.min = -0.27;
-modelXdirectionFF.u.max = 0.27;
-
-% Set the penalty
-Qxff = zeros(4,4);
-Qxff(1,1) = 10;
-Qxff(3,3) = 100; % position control
-Qxff(4,4) = 10;
-Rff = 40;
-
-modelXdirectionFF.x.penalty = Penalty(Qxff,norm);
-modelXdirectionFF.u.penalty = Penalty(Rff,norm);
-
-ctrlXFF = MPCController(modelXdirectionFF,N);
-
-expmpcXdirectionFF = ctrlXFF.toExplicit;
-exportToC_MLD(expmpcXdirectionFF,TsCtrl,'XdirectionCtrlFF','XdirectionFF');
-cd XdirectionFF
-mex mpt_getInput_sfunc_XdirectionFF.c;
-cd ..
-[Hn_XdirFF,Kn_XdirFF,Fi_XdirFF,Gi_XdirFF,Nc_XdirFF] = GetMPCMatrices(expmpcXdirectionFF);
-save('XdirectionFF','Hn_XdirFF','Kn_XdirFF','Fi_XdirFF','Gi_XdirFF','Nc_XdirFF');
-x0FF = [0;0;-1;0];
-
-
-% %Simulate the closed loop
+% %% Simulate the closed loop
 % N_sim = 50;
-% 
-% %Create the closed-loop system:
-% loop = ClosedLoop(expmpcXdirectionFF, modelXdirectionFF);
-% ClosedData = loop.simulate(x0FF, N_sim);
-% 
-% yref = [0;0;0;0];
+%
+% % Create the closed-loop system:
+% loop = ClosedLoop(expmpcXdirection, modelXdirection);
+% ClosedData = loop.simulate(x0, N_sim);
+%
 % N = size(ClosedData.Y(1,:),2);
 % time = zeros(N,1);
 % Fref = zeros(N,1);
 % thetaref = zeros(N,1);
 % k=1;
-% for i = 0:Ts:(N-1)*Ts
+% for i = 0:TsCtrl:(N-1)*TsCtrl
 %     time(k) =i;
-%     Fref(k) = yref(4);
+%     Fref(k) = yref(5);
 %     thetaref(k) = yref(1);
 %     k = k+1;
 % end
-% 
-% 
-% %plot the output
-% figure(3);
-% subplot(5,1,1)
+%
+%
+% % plot the output
+% figure(2);
+% subplot(6,1,1)
 % plot(time,ClosedData.Y(1,:),time,thetaref,'-g'); grid on;ylabel('angle');
-% subplot(5,1,2)
+% subplot(6,1,2)
 % plot(time,ClosedData.Y(2,:)); grid on;ylabel('omega');
-% subplot(5,1,3)
+% subplot(6,1,3)
 % plot(time,ClosedData.Y(3,:)); grid on;ylabel('position')
-% subplot(5,1,4)
+% subplot(6,1,4)
 % plot(time,ClosedData.Y(4,:)); grid on;ylabel('velocity')
-% subplot(5,1,5)
+% subplot(6,1,5)
+% plot(time,ClosedData.Y(5,:),time,Fref,'-g'); grid on;ylabel('Force')
+% subplot(6,1,6)
 % plot(time,ClosedData.U(:)); grid on;ylabel('Input')
+
+% %% Xdirection Controller Free Flight
+% Af = zeros(4,4);
+% Bf = zeros(4,1);
+% Df = zeros(4,1);
+% % Free Flight
+% Af(1,2) = 1; Af(2,1) = -a0_pitch; Af(2,2) = -a1_pitch; Af(3,4) = 1;
+% Af(4,1) = -g; Af(4,4) = DF_pitch;
+% Bf(2,1) = c0_pitch;
+% Cf = eye(4);
+%
+% sysfc = ss(Af,Bf,Cf,Df);
+%
+% % All controller must operate at the same frequency
+% sysfd = c2d(sysfc,TsCtrl,'zoh');
+% modelXdirectionFF = LTISystem(sysfd);
+%
+% % Real models are generated at 50Hz frequency
+% sysfd = c2d(sysfc,TsReal,'zoh');
+% modelXdirectionRealFF = LTISystem(sysfd);
+%
+% % Set constraints on states and input
+% modelXdirectionFF.x.min = [-0.2094;-2;-1;-1];
+% modelXdirectionFF.x.max = [0.2094;2;1;1];
+% modelXdirectionFF.u.min = -0.27;
+% modelXdirectionFF.u.max = 0.27;
+%
+% % Set the penalty
+% Qxff = zeros(4,4);
+% Qxff(1,1) = 10;
+% Qxff(3,3) = 100; % position control
+% Qxff(4,4) = 10;
+% Rff = 40;
+%
+% modelXdirectionFF.x.penalty = Penalty(Qxff,norm);
+% modelXdirectionFF.u.penalty = Penalty(Rff,norm);
+%
+% ctrlXFF = MPCController(modelXdirectionFF,N);
+%
+% expmpcXdirectionFF = ctrlXFF.toExplicit;
+% exportToC_MLD(expmpcXdirectionFF,TsCtrl,'XdirectionCtrlFF','XdirectionFF');
+% cd XdirectionFF
+% mex mpt_getInput_sfunc_XdirectionFF.c;
+% cd ..
+% [Hn_XdirFF,Kn_XdirFF,Fi_XdirFF,Gi_XdirFF,Nc_XdirFF] = GetMPCMatrices(expmpcXdirectionFF);
+% save('XdirectionFF','Hn_XdirFF','Kn_XdirFF','Fi_XdirFF','Gi_XdirFF','Nc_XdirFF');
+% x0FF = [0;0;-1;0];
+%
+%
+% % %Simulate the closed loop
+% % N_sim = 50;
+% %
+% % %Create the closed-loop system:
+% % loop = ClosedLoop(expmpcXdirectionFF, modelXdirectionFF);
+% % ClosedData = loop.simulate(x0FF, N_sim);
+% %
+% % yref = [0;0;0;0];
+% % N = size(ClosedData.Y(1,:),2);
+% % time = zeros(N,1);
+% % Fref = zeros(N,1);
+% % thetaref = zeros(N,1);
+% % k=1;
+% % for i = 0:Ts:(N-1)*Ts
+% %     time(k) =i;
+% %     Fref(k) = yref(4);
+% %     thetaref(k) = yref(1);
+% %     k = k+1;
+% % end
+% %
+% %
+% % %plot the output
+% % figure(3);
+% % subplot(5,1,1)
+% % plot(time,ClosedData.Y(1,:),time,thetaref,'-g'); grid on;ylabel('angle');
+% % subplot(5,1,2)
+% % plot(time,ClosedData.Y(2,:)); grid on;ylabel('omega');
+% % subplot(5,1,3)
+% % plot(time,ClosedData.Y(3,:)); grid on;ylabel('position')
+% % subplot(5,1,4)
+% % plot(time,ClosedData.Y(4,:)); grid on;ylabel('velocity')
+% % subplot(5,1,5)
+% % plot(time,ClosedData.U(:)); grid on;ylabel('Input')
 
 %% Ydirection Controller (No Hybrid Model) (Roll Controller)
 %DF = -0.9606;
@@ -232,7 +254,7 @@ Af = zeros(4,4);
 Bf = zeros(4,1);
 Df = zeros(4,1);
 % Free Flight
-Af(1,2) = 1; Af(2,1) = -a0_roll; Af(2,2) = -a1_roll; Af(3,4) = 1; 
+Af(1,2) = 1; Af(2,1) = -a0_roll; Af(2,2) = -a1_roll; Af(3,4) = 1;
 Af(4,1) = g; Af(4,4) = DF_roll;
 Bf(2,1) = c0_roll;
 Cf = eye(4);
@@ -277,11 +299,11 @@ y0 = [0;0;-1;0];
 
 % %Simulate the closed loop
 % N_sim = 50;
-% 
+%
 % %Create the closed-loop system:
 % loop = ClosedLoop(expmpcYdirection, modelYdirection);
 % ClosedData = loop.simulate(y0, N_sim);
-% 
+%
 % yref = [0;0;0;0];
 % N = size(ClosedData.Y(1,:),2);
 % time = zeros(N,1);
@@ -294,8 +316,8 @@ y0 = [0;0;-1;0];
 %     thetaref(k) = yref(1);
 %     k = k+1;
 % end
-% 
-% 
+%
+%
 % %plot the output
 % figure(3);
 % subplot(5,1,1)
@@ -314,11 +336,15 @@ y0 = [0;0;-1;0];
 Az = zeros(2,2); Az(1,2) = 1;
 Bz = zeros(2,1); Bz(2,1) = -1/m;
 Cz = eye(2); Dz = 0;
+%    - from ID - possibly wrong
+Az = [0 1; 0 -3.4586];
+Bz = [0 -5.6961]';
 
 syscz = ss(Az,Bz,Cz,Dz);
-
+%
 % All controller must operate at the same frequency
-sysdz = c2d(syscz,TsCtrl,'zoh');
+Tsz = 0.04;
+sysdz = c2d(syscz,Tsz,'zoh');
 modelZdirection = LTISystem(sysdz);
 
 % Real models are generated at 50Hz frequency
@@ -333,14 +359,14 @@ modelZdirection.u.max = 1;
 
 % Set the penalty
 Qxz = zeros(2,2);
-Qxz(1,1) = 100; % position control
-Qxz(2,2) = 15;
+Qxz(1,1) = 150; % position control
+Qxz(2,2) = 25;
 Rz = 4;
 
 modelZdirection.x.penalty = Penalty(Qxz,norm);
 modelZdirection.u.penalty = Penalty(Rz,norm);
 
-ctrlZ = MPCController(modelZdirection,N);
+ctrlZ = MPCController(modelZdirection,3*N);
 
 expmpcZdirection = ctrlZ.toExplicit;
 exportToC_MLD(expmpcZdirection,TsCtrl,'ZdirectionCtrl','Zdirection');
@@ -354,14 +380,14 @@ z0 = [-1;0];
 
 % %Simulate the closed loop
 % N_sim = 50;
-% 
+%
 % % Create the closed-loop system:
 % loop = ClosedLoop(expmpcZdirection, modelZdirection);
 % ClosedData = loop.simulate(z0, N_sim);
-% 
+%
 % N = size(ClosedData.Y(1,:),2);
 % time = 0:Ts:(N-1)*Ts;
-% 
+%
 % % plot the output
 % figure(4);
 % subplot(3,1,1)
@@ -396,6 +422,10 @@ modelYaw.u.max = pi;
 
 % Set the penalty
 Qxy= 100; % yaw angle control
+
+%   Modifying George Penalization
+Qxy = 80;
+
 Ry = 15;
 
 modelYaw.x.penalty = Penalty(Qxy,norm);
@@ -415,14 +445,14 @@ yaw0 = -0.0873;
 
 % %% Simulate the closed loop
 % N_sim = 50;
-% 
+%
 % % Create the closed-loop system:
 % loop = ClosedLoop(expmpcYaw, modelYaw);
 % ClosedData = loop.simulate(yaw0, N_sim);
-% 
+%
 % N = size(ClosedData.Y(1,:),2);
 % time = 0:TsReal:(N-1)*TsReal;
-% 
+%
 % % plot the output
 % figure(4);
 % subplot(2,1,1)

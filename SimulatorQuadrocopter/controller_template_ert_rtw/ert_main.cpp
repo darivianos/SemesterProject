@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'controller_template'.
  *
- * Model version                  : 1.549
+ * Model version                  : 1.613
  * Simulink Coder version         : 8.1 (R2011b) 08-Jul-2011
  * TLC version                    : 8.1 (Aug  6 2011)
- * C/C++ source code generated on : Sat May 25 19:08:47 2013
+ * C/C++ source code generated on : Wed Jul 10 21:38:37 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -132,7 +132,7 @@ int_T main(int_T argc, const char_T *argv[])
   }
 
   /* External mode */
-  rtExtModeShutdown(2);
+  rtExtModeShutdown(3);
 
   /* Disable rt_OneStep() here */
 

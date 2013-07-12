@@ -15,9 +15,9 @@
 /* Variable Declarations */
 
 /* Variable Definitions */
-static const char * c9_debug_family_names[13] = { "maxangle", "nargin",
+static const char * c9_debug_family_names[14] = { "maxangle", "nargin",
   "nargout", "pitch_meas", "roll_meas", "pitch_cmd", "roll_cmd", "thrust", "m",
-  "g", "pitch_cmd_comp", "roll_cmd_comp", "thrust_comp" };
+  "g", "posx", "pitch_cmd_comp", "roll_cmd_comp", "thrust_comp" };
 
 /* Function Declarations */
 static void initialize_c9_controller_template
@@ -40,6 +40,8 @@ static void finalize_c9_controller_template
   (SFc9_controller_templateInstanceStruct *chartInstance);
 static void sf_c9_controller_template(SFc9_controller_templateInstanceStruct
   *chartInstance);
+static void c9_chartstep_c9_controller_template
+  (SFc9_controller_templateInstanceStruct *chartInstance);
 static void initSimStructsc9_controller_template
   (SFc9_controller_templateInstanceStruct *chartInstance);
 static void init_script_number_translation(uint32_T c9_machineNumber, uint32_T
@@ -199,6 +201,52 @@ static void finalize_c9_controller_template
 static void sf_c9_controller_template(SFc9_controller_templateInstanceStruct
   *chartInstance)
 {
+  int32_T *c9_sfEvent;
+  real_T *c9_pitch_cmd_comp;
+  real_T *c9_roll_cmd_comp;
+  real_T *c9_pitch_meas;
+  real_T *c9_thrust_comp;
+  real_T *c9_roll_meas;
+  real_T *c9_pitch_cmd;
+  real_T *c9_roll_cmd;
+  real_T *c9_thrust;
+  real_T *c9_m;
+  real_T *c9_g;
+  real_T *c9_posx;
+  c9_posx = (real_T *)ssGetInputPortSignal(chartInstance->S, 7);
+  c9_g = (real_T *)ssGetInputPortSignal(chartInstance->S, 6);
+  c9_m = (real_T *)ssGetInputPortSignal(chartInstance->S, 5);
+  c9_thrust = (real_T *)ssGetInputPortSignal(chartInstance->S, 4);
+  c9_roll_cmd = (real_T *)ssGetInputPortSignal(chartInstance->S, 3);
+  c9_pitch_cmd = (real_T *)ssGetInputPortSignal(chartInstance->S, 2);
+  c9_roll_meas = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
+  c9_thrust_comp = (real_T *)ssGetOutputPortSignal(chartInstance->S, 3);
+  c9_pitch_meas = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
+  c9_roll_cmd_comp = (real_T *)ssGetOutputPortSignal(chartInstance->S, 2);
+  c9_pitch_cmd_comp = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  c9_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
+  _sfTime_ = (real_T)ssGetT(chartInstance->S);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 8U, *c9_sfEvent);
+  _SFD_DATA_RANGE_CHECK(*c9_pitch_cmd_comp, 0U);
+  _SFD_DATA_RANGE_CHECK(*c9_roll_cmd_comp, 1U);
+  _SFD_DATA_RANGE_CHECK(*c9_pitch_meas, 2U);
+  _SFD_DATA_RANGE_CHECK(*c9_thrust_comp, 3U);
+  _SFD_DATA_RANGE_CHECK(*c9_roll_meas, 4U);
+  _SFD_DATA_RANGE_CHECK(*c9_pitch_cmd, 5U);
+  _SFD_DATA_RANGE_CHECK(*c9_roll_cmd, 6U);
+  _SFD_DATA_RANGE_CHECK(*c9_thrust, 7U);
+  _SFD_DATA_RANGE_CHECK(*c9_m, 8U);
+  _SFD_DATA_RANGE_CHECK(*c9_g, 9U);
+  _SFD_DATA_RANGE_CHECK(*c9_posx, 10U);
+  *c9_sfEvent = CALL_EVENT;
+  c9_chartstep_c9_controller_template(chartInstance);
+  sf_debug_check_for_state_inconsistency(_controller_templateMachineNumber_,
+    chartInstance->chartNumber, chartInstance->instanceNumber);
+}
+
+static void c9_chartstep_c9_controller_template
+  (SFc9_controller_templateInstanceStruct *chartInstance)
+{
   real_T c9_hoistedGlobal;
   real_T c9_b_hoistedGlobal;
   real_T c9_c_hoistedGlobal;
@@ -206,6 +254,7 @@ static void sf_c9_controller_template(SFc9_controller_templateInstanceStruct
   real_T c9_e_hoistedGlobal;
   real_T c9_f_hoistedGlobal;
   real_T c9_g_hoistedGlobal;
+  real_T c9_h_hoistedGlobal;
   real_T c9_pitch_meas;
   real_T c9_roll_meas;
   real_T c9_pitch_cmd;
@@ -213,59 +262,103 @@ static void sf_c9_controller_template(SFc9_controller_templateInstanceStruct
   real_T c9_thrust;
   real_T c9_m;
   real_T c9_g;
-  uint32_T c9_debug_family_var_map[13];
+  real_T c9_posx;
+  uint32_T c9_debug_family_var_map[14];
   real_T c9_maxangle;
-  real_T c9_nargin = 7.0;
+  real_T c9_nargin = 8.0;
   real_T c9_nargout = 3.0;
   real_T c9_pitch_cmd_comp;
   real_T c9_roll_cmd_comp;
   real_T c9_thrust_comp;
   real_T c9_x;
   real_T c9_b_x;
-  real_T c9_y;
   real_T c9_c_x;
   real_T c9_d_x;
-  real_T c9_b_y;
-  real_T c9_e_x;
-  real_T c9_f_x;
-  real_T c9_g_x;
-  real_T c9_h_x;
   real_T c9_a;
   real_T c9_b;
-  real_T c9_c_y;
+  real_T c9_y;
   real_T c9_A;
   real_T c9_B;
-  real_T c9_i_x;
+  real_T c9_e_x;
+  real_T c9_b_y;
+  real_T c9_f_x;
+  real_T c9_c_y;
+  real_T c9_g_x;
+  real_T c9_h_x;
   real_T c9_d_y;
+  real_T c9_i_x;
   real_T c9_j_x;
   real_T c9_e_y;
-  real_T c9_b_a;
-  real_T c9_b_b;
-  real_T c9_f_y;
   real_T c9_b_A;
-  real_T c9_b_B;
   real_T c9_k_x;
-  real_T c9_g_y;
   real_T c9_l_x;
+  real_T c9_m_x;
+  real_T c9_n_x;
+  real_T c9_f_y;
+  real_T c9_o_x;
+  real_T c9_p_x;
+  real_T c9_b_b;
+  real_T c9_g_y;
+  real_T c9_c_A;
+  real_T c9_b_B;
+  real_T c9_q_x;
   real_T c9_h_y;
+  real_T c9_r_x;
   real_T c9_i_y;
+  real_T c9_s_x;
+  real_T c9_t_x;
+  real_T c9_j_y;
+  real_T c9_u_x;
+  real_T c9_v_x;
+  real_T c9_b_a;
+  real_T c9_k_y;
+  real_T c9_d_A;
+  real_T c9_c_B;
+  real_T c9_w_x;
+  real_T c9_l_y;
+  real_T c9_x_x;
+  real_T c9_m_y;
+  real_T c9_y_x;
+  real_T c9_ab_x;
+  real_T c9_bb_x;
+  real_T c9_cb_x;
   real_T c9_c_a;
   real_T c9_c_b;
+  real_T c9_n_y;
+  real_T c9_e_A;
+  real_T c9_d_B;
+  real_T c9_db_x;
+  real_T c9_o_y;
+  real_T c9_eb_x;
+  real_T c9_p_y;
   real_T c9_d_a;
   real_T c9_d_b;
-  real_T c9_j_y;
-  real_T c9_c_A;
-  real_T c9_c_B;
-  real_T c9_m_x;
-  real_T c9_k_y;
-  real_T c9_n_x;
-  real_T c9_l_y;
-  real_T c9_m_y;
+  real_T c9_q_y;
+  real_T c9_f_A;
+  real_T c9_e_B;
+  real_T c9_fb_x;
+  real_T c9_r_y;
+  real_T c9_gb_x;
+  real_T c9_s_y;
+  real_T c9_t_y;
   real_T c9_e_a;
   real_T c9_e_b;
+  real_T c9_f_a;
+  real_T c9_f_b;
+  real_T c9_u_y;
+  real_T c9_g_A;
+  real_T c9_f_B;
+  real_T c9_hb_x;
+  real_T c9_v_y;
+  real_T c9_ib_x;
+  real_T c9_w_y;
+  real_T c9_x_y;
+  real_T c9_g_a;
+  real_T c9_g_b;
   real_T *c9_b_thrust_comp;
   real_T *c9_b_roll_cmd_comp;
   real_T *c9_b_pitch_cmd_comp;
+  real_T *c9_b_posx;
   real_T *c9_b_g;
   real_T *c9_b_m;
   real_T *c9_b_thrust;
@@ -275,6 +368,7 @@ static void sf_c9_controller_template(SFc9_controller_templateInstanceStruct
   real_T *c9_b_pitch_meas;
   int32_T *c9_sfEvent;
   boolean_T guard1 = FALSE;
+  c9_b_posx = (real_T *)ssGetInputPortSignal(chartInstance->S, 7);
   c9_b_g = (real_T *)ssGetInputPortSignal(chartInstance->S, 6);
   c9_b_m = (real_T *)ssGetInputPortSignal(chartInstance->S, 5);
   c9_b_thrust = (real_T *)ssGetInputPortSignal(chartInstance->S, 4);
@@ -286,19 +380,6 @@ static void sf_c9_controller_template(SFc9_controller_templateInstanceStruct
   c9_b_roll_cmd_comp = (real_T *)ssGetOutputPortSignal(chartInstance->S, 2);
   c9_b_pitch_cmd_comp = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
   c9_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
-  _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 8U, *c9_sfEvent);
-  _SFD_DATA_RANGE_CHECK(*c9_b_pitch_cmd_comp, 0U);
-  _SFD_DATA_RANGE_CHECK(*c9_b_roll_cmd_comp, 1U);
-  _SFD_DATA_RANGE_CHECK(*c9_b_pitch_meas, 2U);
-  _SFD_DATA_RANGE_CHECK(*c9_b_thrust_comp, 3U);
-  _SFD_DATA_RANGE_CHECK(*c9_b_roll_meas, 4U);
-  _SFD_DATA_RANGE_CHECK(*c9_b_pitch_cmd, 5U);
-  _SFD_DATA_RANGE_CHECK(*c9_b_roll_cmd, 6U);
-  _SFD_DATA_RANGE_CHECK(*c9_b_thrust, 7U);
-  _SFD_DATA_RANGE_CHECK(*c9_b_m, 8U);
-  _SFD_DATA_RANGE_CHECK(*c9_b_g, 9U);
-  *c9_sfEvent = CALL_EVENT;
   _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 8U, *c9_sfEvent);
   c9_hoistedGlobal = *c9_b_pitch_meas;
   c9_b_hoistedGlobal = *c9_b_roll_meas;
@@ -307,6 +388,7 @@ static void sf_c9_controller_template(SFc9_controller_templateInstanceStruct
   c9_e_hoistedGlobal = *c9_b_thrust;
   c9_f_hoistedGlobal = *c9_b_m;
   c9_g_hoistedGlobal = *c9_b_g;
+  c9_h_hoistedGlobal = *c9_b_posx;
   c9_pitch_meas = c9_hoistedGlobal;
   c9_roll_meas = c9_b_hoistedGlobal;
   c9_pitch_cmd = c9_c_hoistedGlobal;
@@ -314,10 +396,10 @@ static void sf_c9_controller_template(SFc9_controller_templateInstanceStruct
   c9_thrust = c9_e_hoistedGlobal;
   c9_m = c9_f_hoistedGlobal;
   c9_g = c9_g_hoistedGlobal;
-  sf_debug_symbol_scope_push_eml(0U, 13U, 13U, c9_debug_family_names,
+  c9_posx = c9_h_hoistedGlobal;
+  sf_debug_symbol_scope_push_eml(0U, 14U, 14U, c9_debug_family_names,
     c9_debug_family_var_map);
-  sf_debug_symbol_scope_add_eml_importable(&c9_maxangle, 0U, c9_sf_marshallOut,
-    c9_sf_marshallIn);
+  sf_debug_symbol_scope_add_eml(&c9_maxangle, 0U, c9_sf_marshallOut);
   sf_debug_symbol_scope_add_eml_importable(&c9_nargin, 1U, c9_sf_marshallOut,
     c9_sf_marshallIn);
   sf_debug_symbol_scope_add_eml_importable(&c9_nargout, 2U, c9_sf_marshallOut,
@@ -329,94 +411,158 @@ static void sf_c9_controller_template(SFc9_controller_templateInstanceStruct
   sf_debug_symbol_scope_add_eml(&c9_thrust, 7U, c9_sf_marshallOut);
   sf_debug_symbol_scope_add_eml(&c9_m, 8U, c9_sf_marshallOut);
   sf_debug_symbol_scope_add_eml(&c9_g, 9U, c9_sf_marshallOut);
-  sf_debug_symbol_scope_add_eml_importable(&c9_pitch_cmd_comp, 10U,
+  sf_debug_symbol_scope_add_eml(&c9_posx, 10U, c9_sf_marshallOut);
+  sf_debug_symbol_scope_add_eml_importable(&c9_pitch_cmd_comp, 11U,
     c9_sf_marshallOut, c9_sf_marshallIn);
-  sf_debug_symbol_scope_add_eml_importable(&c9_roll_cmd_comp, 11U,
+  sf_debug_symbol_scope_add_eml_importable(&c9_roll_cmd_comp, 12U,
     c9_sf_marshallOut, c9_sf_marshallIn);
-  sf_debug_symbol_scope_add_eml_importable(&c9_thrust_comp, 12U,
+  sf_debug_symbol_scope_add_eml_importable(&c9_thrust_comp, 13U,
     c9_sf_marshallOut, c9_sf_marshallIn);
   CV_EML_FCN(0, 0);
   _SFD_EML_CALL(0U, *c9_sfEvent, 3);
   c9_maxangle = 0.069813170079773182;
   _SFD_EML_CALL(0U, *c9_sfEvent, 4);
-  c9_x = c9_pitch_meas;
-  c9_b_x = c9_x;
-  c9_y = muDoubleScalarAbs(c9_b_x);
-  guard1 = FALSE;
-  if (CV_EML_COND(0, 1, 0, c9_y <= c9_maxangle)) {
+  c9_thrust_comp = c9_thrust;
+  _SFD_EML_CALL(0U, *c9_sfEvent, 5);
+  if (CV_EML_IF(0, 1, 0, c9_posx == 0.0)) {
+    _SFD_EML_CALL(0U, *c9_sfEvent, 6);
+    c9_x = c9_pitch_meas;
+    c9_b_x = c9_x;
+    c9_b_x = muDoubleScalarCos(c9_b_x);
     c9_c_x = c9_roll_meas;
     c9_d_x = c9_c_x;
-    c9_b_y = muDoubleScalarAbs(c9_d_x);
-    if (CV_EML_COND(0, 1, 1, c9_b_y <= c9_maxangle)) {
-      CV_EML_MCDC(0, 1, 0, TRUE);
-      CV_EML_IF(0, 1, 0, TRUE);
-      _SFD_EML_CALL(0U, *c9_sfEvent, 5);
-      c9_e_x = c9_pitch_meas;
-      c9_f_x = c9_e_x;
-      c9_f_x = muDoubleScalarCos(c9_f_x);
-      c9_g_x = c9_roll_meas;
-      c9_h_x = c9_g_x;
-      c9_h_x = muDoubleScalarCos(c9_h_x);
-      c9_a = c9_f_x;
-      c9_b = c9_h_x;
-      c9_c_y = c9_a * c9_b;
-      c9_A = c9_thrust;
-      c9_B = c9_c_y;
-      c9_i_x = c9_A;
-      c9_d_y = c9_B;
+    c9_d_x = muDoubleScalarCos(c9_d_x);
+    c9_a = c9_b_x;
+    c9_b = c9_d_x;
+    c9_y = c9_a * c9_b;
+    c9_A = c9_thrust;
+    c9_B = c9_y;
+    c9_e_x = c9_A;
+    c9_b_y = c9_B;
+    c9_f_x = c9_e_x;
+    c9_c_y = c9_b_y;
+    c9_thrust_comp = c9_f_x / c9_c_y;
+    _SFD_EML_CALL(0U, *c9_sfEvent, 8);
+    c9_g_x = c9_pitch_meas;
+    c9_h_x = c9_g_x;
+    c9_d_y = muDoubleScalarAbs(c9_h_x);
+    guard1 = FALSE;
+    if (CV_EML_COND(0, 1, 0, c9_d_y >= c9_maxangle)) {
+      c9_i_x = c9_roll_meas;
       c9_j_x = c9_i_x;
-      c9_e_y = c9_d_y;
-      c9_thrust_comp = c9_j_x / c9_e_y;
+      c9_e_y = muDoubleScalarAbs(c9_j_x);
+      if (CV_EML_COND(0, 1, 1, c9_e_y >= c9_maxangle)) {
+        CV_EML_MCDC(0, 1, 0, TRUE);
+        CV_EML_IF(0, 1, 1, TRUE);
+        _SFD_EML_CALL(0U, *c9_sfEvent, 9);
+        c9_b_A = c9_thrust;
+        c9_k_x = c9_b_A;
+        c9_l_x = c9_k_x;
+        c9_thrust_comp = c9_l_x / 0.99513403437078507;
+      } else {
+        guard1 = TRUE;
+      }
     } else {
       guard1 = TRUE;
     }
+
+    if (guard1 == TRUE) {
+      CV_EML_MCDC(0, 1, 0, FALSE);
+      CV_EML_IF(0, 1, 1, FALSE);
+      _SFD_EML_CALL(0U, *c9_sfEvent, 10);
+      c9_m_x = c9_pitch_meas;
+      c9_n_x = c9_m_x;
+      c9_f_y = muDoubleScalarAbs(c9_n_x);
+      if (CV_EML_IF(0, 1, 2, c9_f_y >= c9_maxangle)) {
+        _SFD_EML_CALL(0U, *c9_sfEvent, 11);
+        c9_o_x = c9_roll_meas;
+        c9_p_x = c9_o_x;
+        c9_p_x = muDoubleScalarCos(c9_p_x);
+        c9_b_b = c9_p_x;
+        c9_g_y = 0.9975640502598242 * c9_b_b;
+        c9_c_A = c9_thrust;
+        c9_b_B = c9_g_y;
+        c9_q_x = c9_c_A;
+        c9_h_y = c9_b_B;
+        c9_r_x = c9_q_x;
+        c9_i_y = c9_h_y;
+        c9_thrust_comp = c9_r_x / c9_i_y;
+      } else {
+        _SFD_EML_CALL(0U, *c9_sfEvent, 12);
+        c9_s_x = c9_roll_meas;
+        c9_t_x = c9_s_x;
+        c9_j_y = muDoubleScalarAbs(c9_t_x);
+        if (CV_EML_IF(0, 1, 3, c9_j_y >= c9_maxangle)) {
+          _SFD_EML_CALL(0U, *c9_sfEvent, 13);
+          c9_u_x = c9_pitch_meas;
+          c9_v_x = c9_u_x;
+          c9_v_x = muDoubleScalarCos(c9_v_x);
+          c9_b_a = c9_v_x;
+          c9_k_y = c9_b_a * 0.9975640502598242;
+          c9_d_A = c9_thrust;
+          c9_c_B = c9_k_y;
+          c9_w_x = c9_d_A;
+          c9_l_y = c9_c_B;
+          c9_x_x = c9_w_x;
+          c9_m_y = c9_l_y;
+          c9_thrust_comp = c9_x_x / c9_m_y;
+        }
+      }
+    }
   } else {
-    guard1 = TRUE;
+    _SFD_EML_CALL(0U, *c9_sfEvent, 16);
+    c9_y_x = c9_pitch_meas;
+    c9_ab_x = c9_y_x;
+    c9_ab_x = muDoubleScalarCos(c9_ab_x);
+    c9_bb_x = c9_roll_meas;
+    c9_cb_x = c9_bb_x;
+    c9_cb_x = muDoubleScalarCos(c9_cb_x);
+    c9_c_a = c9_ab_x;
+    c9_c_b = c9_cb_x;
+    c9_n_y = c9_c_a * c9_c_b;
+    c9_e_A = c9_thrust;
+    c9_d_B = c9_n_y;
+    c9_db_x = c9_e_A;
+    c9_o_y = c9_d_B;
+    c9_eb_x = c9_db_x;
+    c9_p_y = c9_o_y;
+    c9_thrust_comp = c9_eb_x / c9_p_y;
   }
 
-  if (guard1 == TRUE) {
-    CV_EML_MCDC(0, 1, 0, FALSE);
-    CV_EML_IF(0, 1, 0, FALSE);
-    _SFD_EML_CALL(0U, *c9_sfEvent, 7);
-    c9_thrust_comp = c9_thrust;
-  }
-
-  _SFD_EML_CALL(0U, *c9_sfEvent, 9);
-  c9_b_a = c9_m;
-  c9_b_b = c9_g;
-  c9_f_y = c9_b_a * c9_b_b;
-  c9_b_A = c9_f_y;
-  c9_b_B = c9_thrust_comp;
-  c9_k_x = c9_b_A;
-  c9_g_y = c9_b_B;
-  c9_l_x = c9_k_x;
-  c9_h_y = c9_g_y;
-  c9_i_y = c9_l_x / c9_h_y;
-  c9_c_a = c9_i_y;
-  c9_c_b = c9_pitch_cmd;
-  c9_pitch_cmd_comp = c9_c_a * c9_c_b;
-  _SFD_EML_CALL(0U, *c9_sfEvent, 10);
+  _SFD_EML_CALL(0U, *c9_sfEvent, 18);
   c9_d_a = c9_m;
   c9_d_b = c9_g;
-  c9_j_y = c9_d_a * c9_d_b;
-  c9_c_A = c9_j_y;
-  c9_c_B = c9_thrust_comp;
-  c9_m_x = c9_c_A;
-  c9_k_y = c9_c_B;
-  c9_n_x = c9_m_x;
-  c9_l_y = c9_k_y;
-  c9_m_y = c9_n_x / c9_l_y;
-  c9_e_a = c9_m_y;
-  c9_e_b = c9_roll_cmd;
-  c9_roll_cmd_comp = c9_e_a * c9_e_b;
-  _SFD_EML_CALL(0U, *c9_sfEvent, -10);
+  c9_q_y = c9_d_a * c9_d_b;
+  c9_f_A = c9_q_y;
+  c9_e_B = c9_thrust_comp;
+  c9_fb_x = c9_f_A;
+  c9_r_y = c9_e_B;
+  c9_gb_x = c9_fb_x;
+  c9_s_y = c9_r_y;
+  c9_t_y = c9_gb_x / c9_s_y;
+  c9_e_a = c9_t_y;
+  c9_e_b = c9_pitch_cmd;
+  c9_pitch_cmd_comp = c9_e_a * c9_e_b;
+  _SFD_EML_CALL(0U, *c9_sfEvent, 19);
+  c9_f_a = c9_m;
+  c9_f_b = c9_g;
+  c9_u_y = c9_f_a * c9_f_b;
+  c9_g_A = c9_u_y;
+  c9_f_B = c9_thrust_comp;
+  c9_hb_x = c9_g_A;
+  c9_v_y = c9_f_B;
+  c9_ib_x = c9_hb_x;
+  c9_w_y = c9_v_y;
+  c9_x_y = c9_ib_x / c9_w_y;
+  c9_g_a = c9_x_y;
+  c9_g_b = c9_roll_cmd;
+  c9_roll_cmd_comp = c9_g_a * c9_g_b;
+  _SFD_EML_CALL(0U, *c9_sfEvent, -19);
   sf_debug_symbol_scope_pop();
   *c9_b_pitch_cmd_comp = c9_pitch_cmd_comp;
   *c9_b_roll_cmd_comp = c9_roll_cmd_comp;
   *c9_b_thrust_comp = c9_thrust_comp;
   _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 8U, *c9_sfEvent);
-  sf_debug_check_for_state_inconsistency(_controller_templateMachineNumber_,
-    chartInstance->chartNumber, chartInstance->instanceNumber);
 }
 
 static void initSimStructsc9_controller_template
@@ -538,40 +684,40 @@ const mxArray *sf_c9_controller_template_get_eml_resolved_functions_info(void)
   (*c9_b_info)[3].mFileTimeLo = 0U;
   (*c9_b_info)[3].mFileTimeHi = 0U;
   (*c9_b_info)[4].context = "";
-  (*c9_b_info)[4].name = "abs";
+  (*c9_b_info)[4].name = "cos";
   (*c9_b_info)[4].dominantType = "double";
   (*c9_b_info)[4].resolved =
-    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/abs.m";
-  (*c9_b_info)[4].fileTimeLo = 1286818694U;
+    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/cos.m";
+  (*c9_b_info)[4].fileTimeLo = 1286818706U;
   (*c9_b_info)[4].fileTimeHi = 0U;
   (*c9_b_info)[4].mFileTimeLo = 0U;
   (*c9_b_info)[4].mFileTimeHi = 0U;
   (*c9_b_info)[5].context =
-    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/abs.m";
-  (*c9_b_info)[5].name = "eml_scalar_abs";
+    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/cos.m";
+  (*c9_b_info)[5].name = "eml_scalar_cos";
   (*c9_b_info)[5].dominantType = "double";
   (*c9_b_info)[5].resolved =
-    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/eml_scalar_abs.m";
-  (*c9_b_info)[5].fileTimeLo = 1286818712U;
+    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/eml_scalar_cos.m";
+  (*c9_b_info)[5].fileTimeLo = 1286818722U;
   (*c9_b_info)[5].fileTimeHi = 0U;
   (*c9_b_info)[5].mFileTimeLo = 0U;
   (*c9_b_info)[5].mFileTimeHi = 0U;
   (*c9_b_info)[6].context = "";
-  (*c9_b_info)[6].name = "cos";
+  (*c9_b_info)[6].name = "abs";
   (*c9_b_info)[6].dominantType = "double";
   (*c9_b_info)[6].resolved =
-    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/cos.m";
-  (*c9_b_info)[6].fileTimeLo = 1286818706U;
+    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/abs.m";
+  (*c9_b_info)[6].fileTimeLo = 1286818694U;
   (*c9_b_info)[6].fileTimeHi = 0U;
   (*c9_b_info)[6].mFileTimeLo = 0U;
   (*c9_b_info)[6].mFileTimeHi = 0U;
   (*c9_b_info)[7].context =
-    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/cos.m";
-  (*c9_b_info)[7].name = "eml_scalar_cos";
+    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/abs.m";
+  (*c9_b_info)[7].name = "eml_scalar_abs";
   (*c9_b_info)[7].dominantType = "double";
   (*c9_b_info)[7].resolved =
-    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/eml_scalar_cos.m";
-  (*c9_b_info)[7].fileTimeLo = 1286818722U;
+    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/eml_scalar_abs.m";
+  (*c9_b_info)[7].fileTimeLo = 1286818712U;
   (*c9_b_info)[7].fileTimeHi = 0U;
   (*c9_b_info)[7].mFileTimeLo = 0U;
   (*c9_b_info)[7].mFileTimeHi = 0U;
@@ -683,10 +829,10 @@ static void init_dsm_address_info(SFc9_controller_templateInstanceStruct
 static uint32_T* sf_get_sfun_dwork_checksum();
 void sf_c9_controller_template_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(4204181179U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4164892740U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1950135001U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(4060225975U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2889531782U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1490827646U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3179922261U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2797212561U);
 }
 
 mxArray *sf_c9_controller_template_get_autoinheritance_info(void)
@@ -698,14 +844,14 @@ mxArray *sf_c9_controller_template_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("YRkARMLyYekixjHI65WvdH");
+    mxArray *mxChecksum = mxCreateString("F6KDRgUcz5s5BIG3b8agH");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
   {
     const char *dataFields[] = { "size", "type", "complexity" };
 
-    mxArray *mxData = mxCreateStructMatrix(1,7,3,dataFields);
+    mxArray *mxData = mxCreateStructMatrix(1,8,3,dataFields);
 
     {
       mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
@@ -839,6 +985,25 @@ mxArray *sf_c9_controller_template_get_autoinheritance_info(void)
     }
 
     mxSetField(mxData,6,"complexity",mxCreateDoubleScalar(0));
+
+    {
+      mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
+      double *pr = mxGetPr(mxSize);
+      pr[0] = (double)(1);
+      pr[1] = (double)(1);
+      mxSetField(mxData,7,"size",mxSize);
+    }
+
+    {
+      const char *typeFields[] = { "base", "fixpt" };
+
+      mxArray *mxType = mxCreateStructMatrix(1,1,2,typeFields);
+      mxSetField(mxType,0,"base",mxCreateDoubleScalar(10));
+      mxSetField(mxType,0,"fixpt",mxCreateDoubleMatrix(0,0,mxREAL));
+      mxSetField(mxData,7,"type",mxType);
+    }
+
+    mxSetField(mxData,7,"complexity",mxCreateDoubleScalar(0));
     mxSetField(mxAutoinheritanceInfo,0,"inputs",mxData);
   }
 
@@ -951,7 +1116,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
            9,
            1,
            1,
-           10,
+           11,
            0,
            0,
            0,
@@ -982,6 +1147,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           _SFD_SET_DATA_PROPS(7,1,1,0,"thrust");
           _SFD_SET_DATA_PROPS(8,1,1,0,"m");
           _SFD_SET_DATA_PROPS(9,1,1,0,"g");
+          _SFD_SET_DATA_PROPS(10,1,1,0,"posx");
           _SFD_STATE_INFO(0,0,2);
           _SFD_CH_SUBSTATE_COUNT(0);
           _SFD_CH_SUBSTATE_DECOMP(0);
@@ -996,18 +1162,21 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         _SFD_CV_INIT_TRANS(0,0,NULL,NULL,0,NULL);
 
         /* Initialization of MATLAB Function Model Coverage */
-        _SFD_CV_INIT_EML(0,1,1,1,0,0,0,0,2,1);
-        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,639);
-        _SFD_CV_INIT_EML_IF(0,1,0,144,204,262,294);
+        _SFD_CV_INIT_EML(0,1,1,4,0,0,0,0,2,1);
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,983);
+        _SFD_CV_INIT_EML_IF(0,1,0,169,183,573,638);
+        _SFD_CV_INIT_EML_IF(0,1,1,250,310,373,407);
+        _SFD_CV_INIT_EML_IF(0,1,2,373,407,471,572);
+        _SFD_CV_INIT_EML_IF(0,1,3,471,504,-1,504);
 
         {
-          static int condStart[] = { 147, 178 };
+          static int condStart[] = { 253, 284 };
 
-          static int condEnd[] = { 174, 204 };
+          static int condEnd[] = { 280, 310 };
 
           static int pfixExpr[] = { 0, 1, -3 };
 
-          _SFD_CV_INIT_EML_MCDC(0,1,0,147,204,2,0,&(condStart[0]),&(condEnd[0]),
+          _SFD_CV_INIT_EML_MCDC(0,1,0,253,310,2,0,&(condStart[0]),&(condEnd[0]),
                                 3,&(pfixExpr[0]));
         }
 
@@ -1040,6 +1209,8 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (MexFcnForType)c9_sf_marshallOut,(MexInFcnForType)NULL);
         _SFD_SET_DATA_COMPILED_PROPS(9,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c9_sf_marshallOut,(MexInFcnForType)NULL);
+        _SFD_SET_DATA_COMPILED_PROPS(10,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c9_sf_marshallOut,(MexInFcnForType)NULL);
 
         {
           real_T *c9_pitch_cmd_comp;
@@ -1052,6 +1223,8 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           real_T *c9_thrust;
           real_T *c9_m;
           real_T *c9_g;
+          real_T *c9_posx;
+          c9_posx = (real_T *)ssGetInputPortSignal(chartInstance->S, 7);
           c9_g = (real_T *)ssGetInputPortSignal(chartInstance->S, 6);
           c9_m = (real_T *)ssGetInputPortSignal(chartInstance->S, 5);
           c9_thrust = (real_T *)ssGetInputPortSignal(chartInstance->S, 4);
@@ -1073,6 +1246,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           _SFD_SET_DATA_VALUE_PTR(7U, c9_thrust);
           _SFD_SET_DATA_VALUE_PTR(8U, c9_m);
           _SFD_SET_DATA_VALUE_PTR(9U, c9_g);
+          _SFD_SET_DATA_VALUE_PTR(10U, c9_posx);
         }
       }
     } else {
@@ -1296,7 +1470,8 @@ static void mdlSetWorkWidths_c9_controller_template(SimStruct *S)
       ssSetInputPortOptimOpts(S, 4, SS_REUSABLE_AND_LOCAL);
       ssSetInputPortOptimOpts(S, 5, SS_REUSABLE_AND_LOCAL);
       ssSetInputPortOptimOpts(S, 6, SS_REUSABLE_AND_LOCAL);
-      sf_mark_chart_expressionable_inputs(S,infoStruct,9,7);
+      ssSetInputPortOptimOpts(S, 7, SS_REUSABLE_AND_LOCAL);
+      sf_mark_chart_expressionable_inputs(S,infoStruct,9,8);
       sf_mark_chart_reusable_outputs(S,infoStruct,9,3);
     }
 
@@ -1307,10 +1482,10 @@ static void mdlSetWorkWidths_c9_controller_template(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(2600061697U));
-  ssSetChecksum1(S,(770450991U));
-  ssSetChecksum2(S,(2479495796U));
-  ssSetChecksum3(S,(3040573729U));
+  ssSetChecksum0(S,(3629847525U));
+  ssSetChecksum1(S,(2511840122U));
+  ssSetChecksum2(S,(1225367027U));
+  ssSetChecksum3(S,(2205780891U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
 }

@@ -1,5 +1,5 @@
 MODEL=controller_template
-NUMST=2
+NUMST=3
 NCSTATES=0
 HAVESTDIO
 UNIX

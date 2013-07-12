@@ -4,7 +4,6 @@
 #include "c1_Hquad_control_LIB_MPC.h"
 #include "c3_Hquad_control_LIB_MPC.h"
 #include "c4_Hquad_control_LIB_MPC.h"
-#include "c5_Hquad_control_LIB_MPC.h"
 #include "c6_Hquad_control_LIB_MPC.h"
 #include "c7_Hquad_control_LIB_MPC.h"
 #include "c8_Hquad_control_LIB_MPC.h"
@@ -49,11 +48,6 @@ unsigned int sf_Hquad_control_LIB_MPC_method_dispatcher(SimStruct *simstructPtr,
 
   if (chartFileNumber==4) {
     c4_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr, method, data);
-    return 1;
-  }
-
-  if (chartFileNumber==5) {
-    c5_Hquad_control_LIB_MPC_method_dispatcher(simstructPtr, method, data);
     return 1;
   }
 
@@ -135,13 +129,6 @@ unsigned int sf_Hquad_control_LIB_MPC_process_testpoint_info_call( int nlhs,
       {
         extern mxArray *sf_c4_Hquad_control_LIB_MPC_get_testpoint_info(void);
         plhs[0] = sf_c4_Hquad_control_LIB_MPC_get_testpoint_info();
-        break;
-      }
-
-     case 5:
-      {
-        extern mxArray *sf_c5_Hquad_control_LIB_MPC_get_testpoint_info(void);
-        plhs[0] = sf_c5_Hquad_control_LIB_MPC_get_testpoint_info();
         break;
       }
 
@@ -236,10 +223,10 @@ unsigned int sf_Hquad_control_LIB_MPC_process_check_sum_call( int nlhs, mxArray 
       machineName[(sizeof(machineName)/sizeof(char)-1)] = '\0';
       if (!strcmp(machineName,"Hquad_control_LIB_MPC")) {
         if (nrhs==3) {
-          ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2497531055U);
-          ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(879275111U);
-          ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3375475070U);
-          ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(788700690U);
+          ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1838447239U);
+          ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(742759028U);
+          ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2839892911U);
+          ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(179331729U);
         } else if (nrhs==4) {
           unsigned int chartFileNumber;
           chartFileNumber = (unsigned int)mxGetScalar(prhs[3]);
@@ -265,14 +252,6 @@ unsigned int sf_Hquad_control_LIB_MPC_process_check_sum_call( int nlhs, mxArray 
               extern void sf_c4_Hquad_control_LIB_MPC_get_check_sum(mxArray
                 *plhs[]);
               sf_c4_Hquad_control_LIB_MPC_get_check_sum(plhs);
-              break;
-            }
-
-           case 5:
-            {
-              extern void sf_c5_Hquad_control_LIB_MPC_get_check_sum(mxArray
-                *plhs[]);
-              sf_c5_Hquad_control_LIB_MPC_get_check_sum(plhs);
               break;
             }
 
@@ -416,19 +395,6 @@ unsigned int sf_Hquad_control_LIB_MPC_autoinheritance_info( int nlhs, mxArray *
           extern mxArray *sf_c4_Hquad_control_LIB_MPC_get_autoinheritance_info
             (void);
           plhs[0] = sf_c4_Hquad_control_LIB_MPC_get_autoinheritance_info();
-          break;
-        }
-
-        plhs[0] = mxCreateDoubleMatrix(0,0,mxREAL);
-        break;
-      }
-
-     case 5:
-      {
-        if (strcmp(aiChksum, "moLetQsTYcT2odqt4LCxPB") == 0) {
-          extern mxArray *sf_c5_Hquad_control_LIB_MPC_get_autoinheritance_info
-            (void);
-          plhs[0] = sf_c5_Hquad_control_LIB_MPC_get_autoinheritance_info();
           break;
         }
 
@@ -595,17 +561,6 @@ unsigned int sf_Hquad_control_LIB_MPC_get_eml_resolved_functions_info( int nlhs,
         break;
       }
 
-     case 5:
-      {
-        extern const mxArray
-          *sf_c5_Hquad_control_LIB_MPC_get_eml_resolved_functions_info(void);
-        mxArray *persistentMxArray = (mxArray *)
-          sf_c5_Hquad_control_LIB_MPC_get_eml_resolved_functions_info();
-        plhs[0] = mxDuplicateArray(persistentMxArray);
-        mxDestroyArray(persistentMxArray);
-        break;
-      }
-
      case 6:
       {
         extern const mxArray
@@ -701,7 +656,7 @@ unsigned int sf_Hquad_control_LIB_MPC_get_eml_resolved_functions_info( int nlhs,
 void Hquad_control_LIB_MPC_debug_initialize(void)
 {
   _Hquad_control_LIB_MPCMachineNumber_ = sf_debug_initialize_machine(
-    "Hquad_control_LIB_MPC","sfun",1,11,0,0,0);
+    "Hquad_control_LIB_MPC","sfun",1,10,0,0,0);
   sf_debug_set_machine_event_thresholds(_Hquad_control_LIB_MPCMachineNumber_,0,0);
   sf_debug_set_machine_data_thresholds(_Hquad_control_LIB_MPCMachineNumber_,0);
 }

@@ -93,7 +93,7 @@ MASTER_ANCHOR_DIR       =
 START_DIR               = /home/burrimi/git/darivianakis/SimulatorQuadrocopter
 S_FUNCTIONS             = 
 S_FUNCTIONS_LIB         = 
-NUMST                   = 2
+NUMST                   = 3
 NCSTATES                = 0
 COMPUTER                = GLNXA64
 BUILDARGS               =  GENERATE_REPORT=0 GENERATE_ASAP2=0
