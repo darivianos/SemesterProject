@@ -14,8 +14,8 @@
 /* Variable Declarations */
 
 /* Variable Definitions */
-static const char * c16_debug_family_names[6] = { "nargin", "nargout", "dx",
-  "dy", "dz", "y" };
+static const char * c16_debug_family_names[7] = { "nargin", "nargout",
+  "u_thrust", "dx", "dz", "K_g_up", "u_thrust_out" };
 
 /* Function Declarations */
 static void initialize_c16_controller_template
@@ -45,7 +45,7 @@ static void init_script_number_translation(uint32_T c16_machineNumber, uint32_T
 static const mxArray *c16_sf_marshallOut(void *chartInstanceVoid, void
   *c16_inData);
 static real_T c16_emlrt_marshallIn(SFc16_controller_templateInstanceStruct
-  *chartInstance, const mxArray *c16_y, const char_T *c16_identifier);
+  *chartInstance, const mxArray *c16_u_thrust_out, const char_T *c16_identifier);
 static real_T c16_b_emlrt_marshallIn(SFc16_controller_templateInstanceStruct
   *chartInstance, const mxArray *c16_u, const emlrtMsgIdentifier *c16_parentId);
 static void c16_sf_marshallIn(void *chartInstanceVoid, const mxArray
@@ -117,16 +117,16 @@ static const mxArray *get_sim_state_c16_controller_template
   uint8_T c16_b_hoistedGlobal;
   uint8_T c16_b_u;
   const mxArray *c16_c_y = NULL;
-  real_T *c16_d_y;
+  real_T *c16_u_thrust_out;
   uint8_T *c16_is_active_c16_controller_template;
-  c16_d_y = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  c16_u_thrust_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
   c16_is_active_c16_controller_template = (uint8_T *)ssGetDWork(chartInstance->S,
     3);
   c16_st = NULL;
   c16_st = NULL;
   c16_y = NULL;
   sf_mex_assign(&c16_y, sf_mex_createcellarray(2), FALSE);
-  c16_hoistedGlobal = *c16_d_y;
+  c16_hoistedGlobal = *c16_u_thrust_out;
   c16_u = c16_hoistedGlobal;
   c16_b_y = NULL;
   sf_mex_assign(&c16_b_y, sf_mex_create("y", &c16_u, 0, 0U, 0U, 0U, 0), FALSE);
@@ -145,16 +145,16 @@ static void set_sim_state_c16_controller_template
 {
   const mxArray *c16_u;
   boolean_T *c16_doneDoubleBufferReInit;
-  real_T *c16_y;
+  real_T *c16_u_thrust_out;
   uint8_T *c16_is_active_c16_controller_template;
-  c16_y = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  c16_u_thrust_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
   c16_is_active_c16_controller_template = (uint8_T *)ssGetDWork(chartInstance->S,
     3);
   c16_doneDoubleBufferReInit = (boolean_T *)ssGetDWork(chartInstance->S, 2);
   *c16_doneDoubleBufferReInit = TRUE;
   c16_u = sf_mex_dup(c16_st);
-  *c16_y = c16_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c16_u,
-    0)), "y");
+  *c16_u_thrust_out = c16_emlrt_marshallIn(chartInstance, sf_mex_dup
+    (sf_mex_getcell(c16_u, 0)), "u_thrust_out");
   *c16_is_active_c16_controller_template = c16_d_emlrt_marshallIn(chartInstance,
     sf_mex_dup(sf_mex_getcell(c16_u, 1)), "is_active_c16_controller_template");
   sf_mex_destroy(&c16_u);
@@ -173,81 +173,87 @@ static void sf_c16_controller_template(SFc16_controller_templateInstanceStruct
   real_T c16_hoistedGlobal;
   real_T c16_b_hoistedGlobal;
   real_T c16_c_hoistedGlobal;
+  real_T c16_d_hoistedGlobal;
+  real_T c16_u_thrust;
   real_T c16_dx;
-  real_T c16_dy;
   real_T c16_dz;
-  uint32_T c16_debug_family_var_map[6];
-  real_T c16_nargin = 3.0;
+  real_T c16_K_g_up;
+  uint32_T c16_debug_family_var_map[7];
+  real_T c16_nargin = 4.0;
   real_T c16_nargout = 1.0;
-  real_T c16_y;
+  real_T c16_u_thrust_out;
+  real_T c16_a;
+  real_T c16_b;
   int32_T *c16_sfEvent;
+  real_T *c16_b_u_thrust;
+  real_T *c16_b_u_thrust_out;
   real_T *c16_b_dx;
-  real_T *c16_b_y;
-  real_T *c16_b_dy;
   real_T *c16_b_dz;
+  real_T *c16_b_K_g_up;
   boolean_T guard1 = FALSE;
-  boolean_T guard2 = FALSE;
+  c16_b_K_g_up = (real_T *)ssGetInputPortSignal(chartInstance->S, 3);
   c16_b_dz = (real_T *)ssGetInputPortSignal(chartInstance->S, 2);
-  c16_b_dy = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
-  c16_b_y = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
-  c16_b_dx = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
+  c16_b_dx = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
+  c16_b_u_thrust_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  c16_b_u_thrust = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
   c16_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
   _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 15U, *c16_sfEvent);
-  _SFD_DATA_RANGE_CHECK(*c16_b_dx, 0U);
-  _SFD_DATA_RANGE_CHECK(*c16_b_y, 1U);
-  _SFD_DATA_RANGE_CHECK(*c16_b_dy, 2U);
+  _SFD_DATA_RANGE_CHECK(*c16_b_u_thrust, 0U);
+  _SFD_DATA_RANGE_CHECK(*c16_b_u_thrust_out, 1U);
+  _SFD_DATA_RANGE_CHECK(*c16_b_dx, 2U);
   _SFD_DATA_RANGE_CHECK(*c16_b_dz, 3U);
+  _SFD_DATA_RANGE_CHECK(*c16_b_K_g_up, 4U);
   *c16_sfEvent = CALL_EVENT;
   _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 15U, *c16_sfEvent);
-  c16_hoistedGlobal = *c16_b_dx;
-  c16_b_hoistedGlobal = *c16_b_dy;
+  c16_hoistedGlobal = *c16_b_u_thrust;
+  c16_b_hoistedGlobal = *c16_b_dx;
   c16_c_hoistedGlobal = *c16_b_dz;
-  c16_dx = c16_hoistedGlobal;
-  c16_dy = c16_b_hoistedGlobal;
+  c16_d_hoistedGlobal = *c16_b_K_g_up;
+  c16_u_thrust = c16_hoistedGlobal;
+  c16_dx = c16_b_hoistedGlobal;
   c16_dz = c16_c_hoistedGlobal;
-  sf_debug_symbol_scope_push_eml(0U, 6U, 6U, c16_debug_family_names,
+  c16_K_g_up = c16_d_hoistedGlobal;
+  sf_debug_symbol_scope_push_eml(0U, 7U, 7U, c16_debug_family_names,
     c16_debug_family_var_map);
   sf_debug_symbol_scope_add_eml_importable(&c16_nargin, 0U, c16_sf_marshallOut,
     c16_sf_marshallIn);
   sf_debug_symbol_scope_add_eml_importable(&c16_nargout, 1U, c16_sf_marshallOut,
     c16_sf_marshallIn);
-  sf_debug_symbol_scope_add_eml(&c16_dx, 2U, c16_sf_marshallOut);
-  sf_debug_symbol_scope_add_eml(&c16_dy, 3U, c16_sf_marshallOut);
+  sf_debug_symbol_scope_add_eml(&c16_u_thrust, 2U, c16_sf_marshallOut);
+  sf_debug_symbol_scope_add_eml(&c16_dx, 3U, c16_sf_marshallOut);
   sf_debug_symbol_scope_add_eml(&c16_dz, 4U, c16_sf_marshallOut);
-  sf_debug_symbol_scope_add_eml_importable(&c16_y, 5U, c16_sf_marshallOut,
-    c16_sf_marshallIn);
+  sf_debug_symbol_scope_add_eml(&c16_K_g_up, 5U, c16_sf_marshallOut);
+  sf_debug_symbol_scope_add_eml_importable(&c16_u_thrust_out, 6U,
+    c16_sf_marshallOut, c16_sf_marshallIn);
   CV_EML_FCN(0, 0);
-  _SFD_EML_CALL(0U, *c16_sfEvent, 3);
+  _SFD_EML_CALL(0U, *c16_sfEvent, 4);
+  c16_u_thrust_out = c16_u_thrust;
+  _SFD_EML_CALL(0U, *c16_sfEvent, 6);
   guard1 = FALSE;
-  guard2 = FALSE;
-  if (CV_EML_COND(0, 1, 0, c16_dx != 0.0)) {
-    guard2 = TRUE;
-  } else if (CV_EML_COND(0, 1, 1, c16_dy != 0.0)) {
-    guard2 = TRUE;
-  } else if (CV_EML_COND(0, 1, 2, c16_dz != 0.0)) {
-    guard1 = TRUE;
+  if (CV_EML_COND(0, 1, 0, c16_dx > 0.0)) {
+    if (CV_EML_COND(0, 1, 1, c16_dz < 0.0)) {
+      CV_EML_MCDC(0, 1, 0, TRUE);
+      CV_EML_IF(0, 1, 0, TRUE);
+      _SFD_EML_CALL(0U, *c16_sfEvent, 7);
+      c16_a = c16_K_g_up;
+      c16_b = c16_u_thrust;
+      c16_u_thrust_out = c16_a * c16_b;
+    } else {
+      guard1 = TRUE;
+    }
   } else {
-    CV_EML_MCDC(0, 1, 0, FALSE);
-    CV_EML_IF(0, 1, 0, FALSE);
-    _SFD_EML_CALL(0U, *c16_sfEvent, 6);
-    c16_y = 1.0;
-  }
-
-  if (guard2 == TRUE) {
     guard1 = TRUE;
   }
 
   if (guard1 == TRUE) {
-    CV_EML_MCDC(0, 1, 0, TRUE);
-    CV_EML_IF(0, 1, 0, TRUE);
-    _SFD_EML_CALL(0U, *c16_sfEvent, 4);
-    c16_y = 0.0;
+    CV_EML_MCDC(0, 1, 0, FALSE);
+    CV_EML_IF(0, 1, 0, FALSE);
   }
 
-  _SFD_EML_CALL(0U, *c16_sfEvent, -6);
+  _SFD_EML_CALL(0U, *c16_sfEvent, -7);
   sf_debug_symbol_scope_pop();
-  *c16_b_y = c16_y;
+  *c16_b_u_thrust_out = c16_u_thrust_out;
   _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 15U, *c16_sfEvent);
   sf_debug_check_for_state_inconsistency(_controller_templateMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);
@@ -280,15 +286,16 @@ static const mxArray *c16_sf_marshallOut(void *chartInstanceVoid, void
 }
 
 static real_T c16_emlrt_marshallIn(SFc16_controller_templateInstanceStruct
-  *chartInstance, const mxArray *c16_y, const char_T *c16_identifier)
+  *chartInstance, const mxArray *c16_u_thrust_out, const char_T *c16_identifier)
 {
-  real_T c16_b_y;
+  real_T c16_y;
   emlrtMsgIdentifier c16_thisId;
   c16_thisId.fIdentifier = c16_identifier;
   c16_thisId.fParent = NULL;
-  c16_b_y = c16_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c16_y), &c16_thisId);
-  sf_mex_destroy(&c16_y);
-  return c16_b_y;
+  c16_y = c16_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c16_u_thrust_out),
+    &c16_thisId);
+  sf_mex_destroy(&c16_u_thrust_out);
+  return c16_y;
 }
 
 static real_T c16_b_emlrt_marshallIn(SFc16_controller_templateInstanceStruct
@@ -305,28 +312,70 @@ static real_T c16_b_emlrt_marshallIn(SFc16_controller_templateInstanceStruct
 static void c16_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c16_mxArrayInData, const char_T *c16_varName, void *c16_outData)
 {
-  const mxArray *c16_y;
+  const mxArray *c16_u_thrust_out;
   const char_T *c16_identifier;
   emlrtMsgIdentifier c16_thisId;
-  real_T c16_b_y;
+  real_T c16_y;
   SFc16_controller_templateInstanceStruct *chartInstance;
   chartInstance = (SFc16_controller_templateInstanceStruct *)chartInstanceVoid;
-  c16_y = sf_mex_dup(c16_mxArrayInData);
+  c16_u_thrust_out = sf_mex_dup(c16_mxArrayInData);
   c16_identifier = c16_varName;
   c16_thisId.fIdentifier = c16_identifier;
   c16_thisId.fParent = NULL;
-  c16_b_y = c16_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c16_y), &c16_thisId);
-  sf_mex_destroy(&c16_y);
-  *(real_T *)c16_outData = c16_b_y;
+  c16_y = c16_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c16_u_thrust_out),
+    &c16_thisId);
+  sf_mex_destroy(&c16_u_thrust_out);
+  *(real_T *)c16_outData = c16_y;
   sf_mex_destroy(&c16_mxArrayInData);
 }
 
 const mxArray *sf_c16_controller_template_get_eml_resolved_functions_info(void)
 {
-  const mxArray *c16_nameCaptureInfo = NULL;
+  const mxArray *c16_nameCaptureInfo;
+  c16_ResolvedFunctionInfo c16_info[1];
+  c16_ResolvedFunctionInfo (*c16_b_info)[1];
+  const mxArray *c16_m0 = NULL;
+  int32_T c16_i0;
+  c16_ResolvedFunctionInfo *c16_r0;
   c16_nameCaptureInfo = NULL;
-  sf_mex_assign(&c16_nameCaptureInfo, sf_mex_create("nameCaptureInfo", NULL, 0,
-    0U, 1U, 0U, 2, 0, 1), FALSE);
+  c16_nameCaptureInfo = NULL;
+  c16_b_info = (c16_ResolvedFunctionInfo (*)[1])c16_info;
+  (*c16_b_info)[0].context = "";
+  (*c16_b_info)[0].name = "mtimes";
+  (*c16_b_info)[0].dominantType = "double";
+  (*c16_b_info)[0].resolved =
+    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/ops/mtimes.m";
+  (*c16_b_info)[0].fileTimeLo = 1289519692U;
+  (*c16_b_info)[0].fileTimeHi = 0U;
+  (*c16_b_info)[0].mFileTimeLo = 0U;
+  (*c16_b_info)[0].mFileTimeHi = 0U;
+  sf_mex_assign(&c16_m0, sf_mex_createstruct("nameCaptureInfo", 1, 1), FALSE);
+  for (c16_i0 = 0; c16_i0 < 1; c16_i0++) {
+    c16_r0 = &c16_info[c16_i0];
+    sf_mex_addfield(c16_m0, sf_mex_create("nameCaptureInfo", c16_r0->context, 15,
+      0U, 0U, 0U, 2, 1, strlen(c16_r0->context)), "context", "nameCaptureInfo",
+                    c16_i0);
+    sf_mex_addfield(c16_m0, sf_mex_create("nameCaptureInfo", c16_r0->name, 15,
+      0U, 0U, 0U, 2, 1, strlen(c16_r0->name)), "name", "nameCaptureInfo", c16_i0);
+    sf_mex_addfield(c16_m0, sf_mex_create("nameCaptureInfo",
+      c16_r0->dominantType, 15, 0U, 0U, 0U, 2, 1, strlen(c16_r0->dominantType)),
+                    "dominantType", "nameCaptureInfo", c16_i0);
+    sf_mex_addfield(c16_m0, sf_mex_create("nameCaptureInfo", c16_r0->resolved,
+      15, 0U, 0U, 0U, 2, 1, strlen(c16_r0->resolved)), "resolved",
+                    "nameCaptureInfo", c16_i0);
+    sf_mex_addfield(c16_m0, sf_mex_create("nameCaptureInfo", &c16_r0->fileTimeLo,
+      7, 0U, 0U, 0U, 0), "fileTimeLo", "nameCaptureInfo", c16_i0);
+    sf_mex_addfield(c16_m0, sf_mex_create("nameCaptureInfo", &c16_r0->fileTimeHi,
+      7, 0U, 0U, 0U, 0), "fileTimeHi", "nameCaptureInfo", c16_i0);
+    sf_mex_addfield(c16_m0, sf_mex_create("nameCaptureInfo",
+      &c16_r0->mFileTimeLo, 7, 0U, 0U, 0U, 0), "mFileTimeLo", "nameCaptureInfo",
+                    c16_i0);
+    sf_mex_addfield(c16_m0, sf_mex_create("nameCaptureInfo",
+      &c16_r0->mFileTimeHi, 7, 0U, 0U, 0U, 0), "mFileTimeHi", "nameCaptureInfo",
+                    c16_i0);
+  }
+
+  sf_mex_assign(&c16_nameCaptureInfo, c16_m0, FALSE);
   return c16_nameCaptureInfo;
 }
 
@@ -350,9 +399,9 @@ static int32_T c16_c_emlrt_marshallIn(SFc16_controller_templateInstanceStruct
   *chartInstance, const mxArray *c16_u, const emlrtMsgIdentifier *c16_parentId)
 {
   int32_T c16_y;
-  int32_T c16_i0;
-  sf_mex_import(c16_parentId, sf_mex_dup(c16_u), &c16_i0, 1, 6, 0U, 0, 0U, 0);
-  c16_y = c16_i0;
+  int32_T c16_i1;
+  sf_mex_import(c16_parentId, sf_mex_dup(c16_u), &c16_i1, 1, 6, 0U, 0, 0U, 0);
+  c16_y = c16_i1;
   sf_mex_destroy(&c16_u);
   return c16_y;
 }
@@ -411,10 +460,10 @@ static void init_dsm_address_info(SFc16_controller_templateInstanceStruct
 static uint32_T* sf_get_sfun_dwork_checksum();
 void sf_c16_controller_template_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(422405231U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(833431256U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(1003551871U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(3751243491U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(224345237U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4036365307U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3267858545U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(4189058142U);
 }
 
 mxArray *sf_c16_controller_template_get_autoinheritance_info(void)
@@ -426,14 +475,14 @@ mxArray *sf_c16_controller_template_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("HKDv73U9APn6aDtCToPMUD");
+    mxArray *mxChecksum = mxCreateString("rFIXXfYceawyNbQKXrrx0B");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
   {
     const char *dataFields[] = { "size", "type", "complexity" };
 
-    mxArray *mxData = mxCreateStructMatrix(1,3,3,dataFields);
+    mxArray *mxData = mxCreateStructMatrix(1,4,3,dataFields);
 
     {
       mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
@@ -491,6 +540,25 @@ mxArray *sf_c16_controller_template_get_autoinheritance_info(void)
     }
 
     mxSetField(mxData,2,"complexity",mxCreateDoubleScalar(0));
+
+    {
+      mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
+      double *pr = mxGetPr(mxSize);
+      pr[0] = (double)(1);
+      pr[1] = (double)(1);
+      mxSetField(mxData,3,"size",mxSize);
+    }
+
+    {
+      const char *typeFields[] = { "base", "fixpt" };
+
+      mxArray *mxType = mxCreateStructMatrix(1,1,2,typeFields);
+      mxSetField(mxType,0,"base",mxCreateDoubleScalar(10));
+      mxSetField(mxType,0,"fixpt",mxCreateDoubleMatrix(0,0,mxREAL));
+      mxSetField(mxData,3,"type",mxType);
+    }
+
+    mxSetField(mxData,3,"complexity",mxCreateDoubleScalar(0));
     mxSetField(mxAutoinheritanceInfo,0,"inputs",mxData);
   }
 
@@ -538,7 +606,7 @@ static const mxArray *sf_get_sim_state_info_c16_controller_template(void)
 
   mxArray *mxInfo = mxCreateStructMatrix(1, 1, 2, infoFields);
   const char *infoEncStr[] = {
-    "100 S1x2'type','srcId','name','auxInfo'{{M[1],M[5],T\"y\",},{M[8],M[0],T\"is_active_c16_controller_template\",}}"
+    "100 S1x2'type','srcId','name','auxInfo'{{M[1],M[5],T\"u_thrust_out\",},{M[8],M[0],T\"is_active_c16_controller_template\",}}"
   };
 
   mxArray *mxVarInfo = sf_mex_decode_encoded_mx_struct_array(infoEncStr, 2, 10);
@@ -565,7 +633,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
            16,
            1,
            1,
-           4,
+           5,
            0,
            0,
            0,
@@ -586,10 +654,11 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
             0,
             0,
             0);
-          _SFD_SET_DATA_PROPS(0,1,1,0,"dx");
-          _SFD_SET_DATA_PROPS(1,2,0,1,"y");
-          _SFD_SET_DATA_PROPS(2,1,1,0,"dy");
+          _SFD_SET_DATA_PROPS(0,1,1,0,"u_thrust");
+          _SFD_SET_DATA_PROPS(1,2,0,1,"u_thrust_out");
+          _SFD_SET_DATA_PROPS(2,1,1,0,"dx");
           _SFD_SET_DATA_PROPS(3,1,1,0,"dz");
+          _SFD_SET_DATA_PROPS(4,1,1,0,"K_g_up");
           _SFD_STATE_INFO(0,0,2);
           _SFD_CH_SUBSTATE_COUNT(0);
           _SFD_CH_SUBSTATE_DECOMP(0);
@@ -604,18 +673,18 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         _SFD_CV_INIT_TRANS(0,0,NULL,NULL,0,NULL);
 
         /* Initialization of MATLAB Function Model Coverage */
-        _SFD_CV_INIT_EML(0,1,1,1,0,0,0,0,3,1);
-        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,90);
-        _SFD_CV_INIT_EML_IF(0,1,0,28,58,70,89);
+        _SFD_CV_INIT_EML(0,1,1,1,0,0,0,0,2,1);
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,151);
+        _SFD_CV_INIT_EML_IF(0,1,0,88,104,-1,146);
 
         {
-          static int condStart[] = { 31, 42, 53 };
+          static int condStart[] = { 92, 100 };
 
-          static int condEnd[] = { 38, 49, 58 };
+          static int condEnd[] = { 96, 104 };
 
-          static int pfixExpr[] = { 0, 1, -2, 2, -2 };
+          static int pfixExpr[] = { 0, 1, -3 };
 
-          _SFD_CV_INIT_EML_MCDC(0,1,0,31,58,3,0,&(condStart[0]),&(condEnd[0]),5,
+          _SFD_CV_INIT_EML_MCDC(0,1,0,92,104,2,0,&(condStart[0]),&(condEnd[0]),3,
                                 &(pfixExpr[0]));
         }
 
@@ -636,20 +705,25 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (MexFcnForType)c16_sf_marshallOut,(MexInFcnForType)NULL);
         _SFD_SET_DATA_COMPILED_PROPS(3,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c16_sf_marshallOut,(MexInFcnForType)NULL);
+        _SFD_SET_DATA_COMPILED_PROPS(4,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c16_sf_marshallOut,(MexInFcnForType)NULL);
 
         {
+          real_T *c16_u_thrust;
+          real_T *c16_u_thrust_out;
           real_T *c16_dx;
-          real_T *c16_y;
-          real_T *c16_dy;
           real_T *c16_dz;
+          real_T *c16_K_g_up;
+          c16_K_g_up = (real_T *)ssGetInputPortSignal(chartInstance->S, 3);
           c16_dz = (real_T *)ssGetInputPortSignal(chartInstance->S, 2);
-          c16_dy = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
-          c16_y = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
-          c16_dx = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
-          _SFD_SET_DATA_VALUE_PTR(0U, c16_dx);
-          _SFD_SET_DATA_VALUE_PTR(1U, c16_y);
-          _SFD_SET_DATA_VALUE_PTR(2U, c16_dy);
+          c16_dx = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
+          c16_u_thrust_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+          c16_u_thrust = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
+          _SFD_SET_DATA_VALUE_PTR(0U, c16_u_thrust);
+          _SFD_SET_DATA_VALUE_PTR(1U, c16_u_thrust_out);
+          _SFD_SET_DATA_VALUE_PTR(2U, c16_dx);
           _SFD_SET_DATA_VALUE_PTR(3U, c16_dz);
+          _SFD_SET_DATA_VALUE_PTR(4U, c16_K_g_up);
         }
       }
     } else {
@@ -869,7 +943,8 @@ static void mdlSetWorkWidths_c16_controller_template(SimStruct *S)
       ssSetInputPortOptimOpts(S, 0, SS_REUSABLE_AND_LOCAL);
       ssSetInputPortOptimOpts(S, 1, SS_REUSABLE_AND_LOCAL);
       ssSetInputPortOptimOpts(S, 2, SS_REUSABLE_AND_LOCAL);
-      sf_mark_chart_expressionable_inputs(S,infoStruct,16,3);
+      ssSetInputPortOptimOpts(S, 3, SS_REUSABLE_AND_LOCAL);
+      sf_mark_chart_expressionable_inputs(S,infoStruct,16,4);
       sf_mark_chart_reusable_outputs(S,infoStruct,16,1);
     }
 
@@ -880,10 +955,10 @@ static void mdlSetWorkWidths_c16_controller_template(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(3595415077U));
-  ssSetChecksum1(S,(2038129951U));
-  ssSetChecksum2(S,(2848173562U));
-  ssSetChecksum3(S,(4213724936U));
+  ssSetChecksum0(S,(1773377427U));
+  ssSetChecksum1(S,(11685412U));
+  ssSetChecksum2(S,(2125150026U));
+  ssSetChecksum3(S,(261966378U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
 }

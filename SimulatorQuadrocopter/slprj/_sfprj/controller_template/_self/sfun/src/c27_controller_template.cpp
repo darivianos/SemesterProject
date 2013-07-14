@@ -316,7 +316,7 @@ static void sf_c27_controller_template(SFc27_controller_templateInstanceStruct
   c27_A = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
   c27_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 19U, *c27_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 26U, *c27_sfEvent);
   for (c27_i4 = 0; c27_i4 < 9; c27_i4++) {
     _SFD_DATA_RANGE_CHECK((*c27_A)[c27_i4], 0U);
   }
@@ -540,7 +540,7 @@ static void c27_chartstep_c27_controller_template
   c27_b_B = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 1);
   c27_b_A = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
   c27_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 19U, *c27_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 26U, *c27_sfEvent);
   c27_hoistedGlobal = *c27_b_u;
   for (c27_i15 = 0; c27_i15 < 9; c27_i15++) {
     c27_A[c27_i15] = (*c27_b_A)[c27_i15];
@@ -969,7 +969,7 @@ static void c27_chartstep_c27_controller_template
     (*c27_b_P_est)[c27_i123] = c27_P_est[c27_i123];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 19U, *c27_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 26U, *c27_sfEvent);
 }
 
 static void initSimStructsc27_controller_template

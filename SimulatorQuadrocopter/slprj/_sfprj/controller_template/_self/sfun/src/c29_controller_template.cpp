@@ -316,7 +316,7 @@ static void sf_c29_controller_template(SFc29_controller_templateInstanceStruct
   c29_A = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
   c29_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 21U, *c29_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 28U, *c29_sfEvent);
   for (c29_i4 = 0; c29_i4 < 9; c29_i4++) {
     _SFD_DATA_RANGE_CHECK((*c29_A)[c29_i4], 0U);
   }
@@ -540,7 +540,7 @@ static void c29_chartstep_c29_controller_template
   c29_b_B = (real_T (*)[3])ssGetInputPortSignal(chartInstance->S, 1);
   c29_b_A = (real_T (*)[9])ssGetInputPortSignal(chartInstance->S, 0);
   c29_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 21U, *c29_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 28U, *c29_sfEvent);
   c29_hoistedGlobal = *c29_b_u;
   for (c29_i15 = 0; c29_i15 < 9; c29_i15++) {
     c29_A[c29_i15] = (*c29_b_A)[c29_i15];
@@ -969,7 +969,7 @@ static void c29_chartstep_c29_controller_template
     (*c29_b_P_est)[c29_i123] = c29_P_est[c29_i123];
   }
 
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 21U, *c29_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 28U, *c29_sfEvent);
 }
 
 static void initSimStructsc29_controller_template

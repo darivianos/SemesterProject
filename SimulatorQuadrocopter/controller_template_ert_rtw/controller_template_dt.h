@@ -3,9 +3,9 @@
  *
  * Code generation for model "controller_template.mdl".
  *
- * Model version              : 1.613
+ * Model version              : 1.680
  * Simulink Coder version : 8.1 (R2011b) 08-Jul-2011
- * C++ source code generated on : Wed Jul 10 21:38:37 2013
+ * C++ source code generated on : Sun Jul 14 22:21:30 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -53,7 +53,7 @@ static const char_T * rtDataTypeNames[] = {
 
 /* data type transitions for block I/O structure */
 static DataTypeTransition rtBTransitions[] = {
-  { (char_T *)(&controller_template_B.DataTypeConversion[0]), 0, 0, 560 },
+  { (char_T *)(&controller_template_B.DataTypeConversion[0]), 0, 0, 584 },
 
   { (char_T *)(&controller_template_B.sf_EmbeddedMATLABFunction_o.roll_rot), 0,
     0, 4 },
@@ -93,14 +93,14 @@ static DataTypeTransition rtBTransitions[] = {
 
   { (char_T *)(&controller_template_B.sf_MATLABFunction.y), 0, 0, 1 },
 
+  { (char_T *)(&controller_template_B.sf_MATLABFunction_c.y), 0, 0, 1 },
+
   { (char_T *)(&controller_template_B.sf_discretekalmanfilter.state_est[0]), 0,
     0, 12 },
 
-  { (char_T *)(&controller_template_B.sf_MATLABFunction_k.y[0]), 0, 0, 4 },
+  { (char_T *)(&controller_template_B.sf_MATLABFunction_l5.y), 0, 0, 1 },
 
   { (char_T *)(&controller_template_B.sf_MATLABFunction_e.y), 0, 0, 1 },
-
-  { (char_T *)(&controller_template_B.sf_MATLABFunction_i.y[0]), 0, 0, 4 },
 
   { (char_T *)(&controller_template_B.sf_generate_X_ref_z_l.X_ref_z[0]), 0, 0,
     62 },
@@ -115,12 +115,12 @@ static DataTypeTransition rtBTransitions[] = {
     93 }
   ,
 
-  { (char_T *)(&controller_template_DWork.FixPtUnitDelay1_DSTATE[0]), 0, 0, 235
+  { (char_T *)(&controller_template_DWork.FixPtUnitDelay1_DSTATE[0]), 0, 0, 238
   },
 
-  { (char_T *)(&controller_template_DWork.bias_PWORK.LoggedData), 11, 0, 34 },
+  { (char_T *)(&controller_template_DWork.bias_PWORK.LoggedData), 11, 0, 36 },
 
-  { (char_T *)(&controller_template_DWork.sfEvent), 6, 0, 17 },
+  { (char_T *)(&controller_template_DWork.sfEvent), 6, 0, 24 },
 
   { (char_T *)(&controller_template_DWork.ToFile_IWORK.Count), 10, 0, 4 },
 
@@ -130,9 +130,9 @@ static DataTypeTransition rtBTransitions[] = {
     2 },
 
   { (char_T *)(&controller_template_DWork.is_active_c4_Hquad_control_LIB_), 3, 0,
-    17 },
+    24 },
 
-  { (char_T *)(&controller_template_DWork.isStable), 8, 0, 36 },
+  { (char_T *)(&controller_template_DWork.isStable), 8, 0, 50 },
 
   { (char_T *)(&controller_template_DWork.sf_EmbeddedMATLABFunction_o.sfEvent),
     6, 0, 1 },
@@ -271,6 +271,16 @@ static DataTypeTransition rtBTransitions[] = {
 
   { (char_T *)(&controller_template_DWork.sf_MATLABFunction.isStable), 8, 0, 2 },
 
+  { (char_T *)(&controller_template_DWork.sf_MATLABFunction_c.sfEvent), 6, 0, 1
+  },
+
+  { (char_T *)
+    (&controller_template_DWork.sf_MATLABFunction_c.is_active_c13_controller_templa),
+    3, 0, 1 },
+
+  { (char_T *)(&controller_template_DWork.sf_MATLABFunction_c.isStable), 8, 0, 2
+  },
+
   { (char_T *)(&controller_template_DWork.sf_discretekalmanfilter.sfEvent), 6, 0,
     1 },
 
@@ -281,15 +291,15 @@ static DataTypeTransition rtBTransitions[] = {
   { (char_T *)(&controller_template_DWork.sf_discretekalmanfilter.isStable), 8,
     0, 2 },
 
-  { (char_T *)(&controller_template_DWork.sf_MATLABFunction_k.sfEvent), 6, 0, 1
+  { (char_T *)(&controller_template_DWork.sf_MATLABFunction_l5.sfEvent), 6, 0, 1
   },
 
   { (char_T *)
-    (&controller_template_DWork.sf_MATLABFunction_k.is_active_c26_controller_templa),
+    (&controller_template_DWork.sf_MATLABFunction_l5.is_active_c13_controller_templa),
     3, 0, 1 },
 
-  { (char_T *)(&controller_template_DWork.sf_MATLABFunction_k.isStable), 8, 0, 2
-  },
+  { (char_T *)(&controller_template_DWork.sf_MATLABFunction_l5.isStable), 8, 0,
+    2 },
 
   { (char_T *)(&controller_template_DWork.sf_MATLABFunction_e.sfEvent), 6, 0, 1
   },
@@ -299,16 +309,6 @@ static DataTypeTransition rtBTransitions[] = {
     3, 0, 1 },
 
   { (char_T *)(&controller_template_DWork.sf_MATLABFunction_e.isStable), 8, 0, 2
-  },
-
-  { (char_T *)(&controller_template_DWork.sf_MATLABFunction_i.sfEvent), 6, 0, 1
-  },
-
-  { (char_T *)
-    (&controller_template_DWork.sf_MATLABFunction_i.is_active_c26_controller_templa),
-    3, 0, 1 },
-
-  { (char_T *)(&controller_template_DWork.sf_MATLABFunction_i.isStable), 8, 0, 2
   },
 
   { (char_T *)(&controller_template_DWork.sf_generate_X_ref_z_l.sfEvent), 6, 0,
@@ -360,7 +360,7 @@ static DataTypeTransitionTable rtBTransTable = {
 
 /* data type transitions for Parameters structure */
 static DataTypeTransition rtPTransitions[] = {
-  { (char_T *)(&controller_template_P.Constant3_Value[0]), 0, 0, 50757 },
+  { (char_T *)(&controller_template_P.Constant3_Value[0]), 0, 0, 73338 },
 
   { (char_T *)(&controller_template_P.IntegerDelay3_DelayLength), 7, 0, 5 },
 

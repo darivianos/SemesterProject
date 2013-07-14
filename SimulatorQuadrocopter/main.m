@@ -121,10 +121,23 @@ load Hquad_CTRL_OBSV_parameters/obsv_mpc_yaw_v1.mat
 %load HquadTrajectories/traj_wall_square.mat
 %load HquadTrajectories/traj_circle.mat
 %load HquadTrajectories/traj_helix.mat
-maxdisty = 0.2;
-maxdistz = 0.2;
-interm = 0.1;
-traj_FG = ReferenceCreator(maxdisty,maxdistz,interm);
+maxdisty = 1.25;
+maxdistz = 0.6;
+
+scale_y = 1.1;
+scale_z = 1.2;
+% scale_z = 1.1;
+
+traj_FG = ReferenceCreator(maxdisty,maxdistz,scale_y,scale_z);
+
+% %%
+% hold on;
+% plot(traj_FG.X_ref_y(1,:),-traj_FG.X_ref_z(1,:),'o-g');
+%%
+% hold on;
+% plot(traj_FG.X_ref_y_real(1,:),-traj_FG.X_ref_z_real(1,:),'o-g'); 
+%%
+
 
 load Hquad_CTRL_OBSV_parameters/ctrl_lqr_x_v1.mat
 load Hquad_CTRL_OBSV_parameters/ctrl_lqr_y_v1.mat
@@ -160,6 +173,9 @@ a0_roll = 419.1;
 c0_roll = 419.1;
 Td_roll = Td_roll_2ndOrd;
 [Aff_roll,Bff_roll,Cff_roll,Dff_roll,~,~,~,~] = linearizSimple(Theta,Td_roll,m,l,gamma,J,a1_roll,a0_roll,c0_roll,DF);
+
+Aff_roll = [Aff_roll,zeros(size(Aff_roll,1),1);zeros(1,size(Aff_roll,1)),1];
+Bff_roll = [Bff_roll;zeros(1,size(Bff_roll,2))];
 
 
 DF_pitch = 0;

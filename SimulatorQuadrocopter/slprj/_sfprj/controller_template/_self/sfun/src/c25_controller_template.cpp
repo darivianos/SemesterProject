@@ -187,12 +187,12 @@ static void sf_c25_controller_template(SFc25_controller_templateInstanceStruct
   c25_b_psi_meas = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
   c25_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 17U, *c25_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 24U, *c25_sfEvent);
   _SFD_DATA_RANGE_CHECK(*c25_b_psi_meas, 0U);
   _SFD_DATA_RANGE_CHECK(*c25_b_psi_prime, 1U);
   _SFD_DATA_RANGE_CHECK(*c25_b_psi_prev, 2U);
   *c25_sfEvent = CALL_EVENT;
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 17U, *c25_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 24U, *c25_sfEvent);
   c25_hoistedGlobal = *c25_b_psi_meas;
   c25_b_hoistedGlobal = *c25_b_psi_prev;
   c25_psi_meas = c25_hoistedGlobal;
@@ -213,7 +213,7 @@ static void sf_c25_controller_template(SFc25_controller_templateInstanceStruct
   _SFD_EML_CALL(0U, *c25_sfEvent, -4);
   sf_debug_symbol_scope_pop();
   *c25_b_psi_prime = c25_psi_prime;
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 17U, *c25_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 24U, *c25_sfEvent);
   sf_debug_check_for_state_inconsistency(_controller_templateMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);
 }

@@ -3,7 +3,6 @@
 #include "blascompat32.h"
 #include "controller_template_sfun.h"
 #include "c17_controller_template.h"
-#include "mwmathutil.h"
 #define CHARTINSTANCE_CHARTNUMBER      (chartInstance->chartNumber)
 #define CHARTINSTANCE_INSTANCENUMBER   (chartInstance->instanceNumber)
 #include "controller_template_sfun_debug_macros.h"
@@ -15,8 +14,8 @@
 /* Variable Declarations */
 
 /* Variable Definitions */
-static const char * c17_debug_family_names[5] = { "nargin", "nargout", "u",
-  "thres", "y" };
+static const char * c17_debug_family_names[6] = { "nargin", "nargout", "input",
+  "dist_wall", "K_gain", "input_out" };
 
 /* Function Declarations */
 static void initialize_c17_controller_template
@@ -46,7 +45,7 @@ static void init_script_number_translation(uint32_T c17_machineNumber, uint32_T
 static const mxArray *c17_sf_marshallOut(void *chartInstanceVoid, void
   *c17_inData);
 static real_T c17_emlrt_marshallIn(SFc17_controller_templateInstanceStruct
-  *chartInstance, const mxArray *c17_y, const char_T *c17_identifier);
+  *chartInstance, const mxArray *c17_input_out, const char_T *c17_identifier);
 static real_T c17_b_emlrt_marshallIn(SFc17_controller_templateInstanceStruct
   *chartInstance, const mxArray *c17_u, const emlrtMsgIdentifier *c17_parentId);
 static void c17_sf_marshallIn(void *chartInstanceVoid, const mxArray
@@ -118,16 +117,16 @@ static const mxArray *get_sim_state_c17_controller_template
   uint8_T c17_b_hoistedGlobal;
   uint8_T c17_b_u;
   const mxArray *c17_c_y = NULL;
-  real_T *c17_d_y;
+  real_T *c17_input_out;
   uint8_T *c17_is_active_c17_controller_template;
-  c17_d_y = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  c17_input_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
   c17_is_active_c17_controller_template = (uint8_T *)ssGetDWork(chartInstance->S,
     3);
   c17_st = NULL;
   c17_st = NULL;
   c17_y = NULL;
   sf_mex_assign(&c17_y, sf_mex_createcellarray(2), FALSE);
-  c17_hoistedGlobal = *c17_d_y;
+  c17_hoistedGlobal = *c17_input_out;
   c17_u = c17_hoistedGlobal;
   c17_b_y = NULL;
   sf_mex_assign(&c17_b_y, sf_mex_create("y", &c17_u, 0, 0U, 0U, 0U, 0), FALSE);
@@ -146,16 +145,16 @@ static void set_sim_state_c17_controller_template
 {
   const mxArray *c17_u;
   boolean_T *c17_doneDoubleBufferReInit;
-  real_T *c17_y;
+  real_T *c17_input_out;
   uint8_T *c17_is_active_c17_controller_template;
-  c17_y = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  c17_input_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
   c17_is_active_c17_controller_template = (uint8_T *)ssGetDWork(chartInstance->S,
     3);
   c17_doneDoubleBufferReInit = (boolean_T *)ssGetDWork(chartInstance->S, 2);
   *c17_doneDoubleBufferReInit = TRUE;
   c17_u = sf_mex_dup(c17_st);
-  *c17_y = c17_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c17_u,
-    0)), "y");
+  *c17_input_out = c17_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell
+    (c17_u, 0)), "input_out");
   *c17_is_active_c17_controller_template = c17_d_emlrt_marshallIn(chartInstance,
     sf_mex_dup(sf_mex_getcell(c17_u, 1)), "is_active_c17_controller_template");
   sf_mex_destroy(&c17_u);
@@ -173,66 +172,65 @@ static void sf_c17_controller_template(SFc17_controller_templateInstanceStruct
 {
   real_T c17_hoistedGlobal;
   real_T c17_b_hoistedGlobal;
-  real_T c17_u;
-  real_T c17_thres;
-  uint32_T c17_debug_family_var_map[5];
-  real_T c17_nargin = 2.0;
+  real_T c17_c_hoistedGlobal;
+  real_T c17_input;
+  real_T c17_dist_wall;
+  real_T c17_K_gain;
+  uint32_T c17_debug_family_var_map[6];
+  real_T c17_nargin = 3.0;
   real_T c17_nargout = 1.0;
-  real_T c17_y;
-  real_T c17_x;
-  real_T c17_b_x;
-  real_T c17_b_y;
-  real_T c17_c_x;
-  real_T c17_d_x;
-  real_T c17_c_y;
+  real_T c17_input_out;
+  real_T c17_a;
+  real_T c17_b;
   int32_T *c17_sfEvent;
-  real_T *c17_b_u;
-  real_T *c17_d_y;
-  real_T *c17_b_thres;
-  c17_b_thres = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
-  c17_d_y = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
-  c17_b_u = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
+  real_T *c17_b_input;
+  real_T *c17_b_input_out;
+  real_T *c17_b_dist_wall;
+  real_T *c17_b_K_gain;
+  c17_b_K_gain = (real_T *)ssGetInputPortSignal(chartInstance->S, 2);
+  c17_b_dist_wall = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
+  c17_b_input_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  c17_b_input = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
   c17_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
   _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 16U, *c17_sfEvent);
-  _SFD_DATA_RANGE_CHECK(*c17_b_u, 0U);
-  _SFD_DATA_RANGE_CHECK(*c17_d_y, 1U);
-  _SFD_DATA_RANGE_CHECK(*c17_b_thres, 2U);
+  _SFD_DATA_RANGE_CHECK(*c17_b_input, 0U);
+  _SFD_DATA_RANGE_CHECK(*c17_b_input_out, 1U);
+  _SFD_DATA_RANGE_CHECK(*c17_b_dist_wall, 2U);
+  _SFD_DATA_RANGE_CHECK(*c17_b_K_gain, 3U);
   *c17_sfEvent = CALL_EVENT;
   _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 16U, *c17_sfEvent);
-  c17_hoistedGlobal = *c17_b_u;
-  c17_b_hoistedGlobal = *c17_b_thres;
-  c17_u = c17_hoistedGlobal;
-  c17_thres = c17_b_hoistedGlobal;
-  sf_debug_symbol_scope_push_eml(0U, 5U, 5U, c17_debug_family_names,
+  c17_hoistedGlobal = *c17_b_input;
+  c17_b_hoistedGlobal = *c17_b_dist_wall;
+  c17_c_hoistedGlobal = *c17_b_K_gain;
+  c17_input = c17_hoistedGlobal;
+  c17_dist_wall = c17_b_hoistedGlobal;
+  c17_K_gain = c17_c_hoistedGlobal;
+  sf_debug_symbol_scope_push_eml(0U, 6U, 6U, c17_debug_family_names,
     c17_debug_family_var_map);
   sf_debug_symbol_scope_add_eml_importable(&c17_nargin, 0U, c17_sf_marshallOut,
     c17_sf_marshallIn);
   sf_debug_symbol_scope_add_eml_importable(&c17_nargout, 1U, c17_sf_marshallOut,
     c17_sf_marshallIn);
-  sf_debug_symbol_scope_add_eml(&c17_u, 2U, c17_sf_marshallOut);
-  sf_debug_symbol_scope_add_eml(&c17_thres, 3U, c17_sf_marshallOut);
-  sf_debug_symbol_scope_add_eml_importable(&c17_y, 4U, c17_sf_marshallOut,
-    c17_sf_marshallIn);
+  sf_debug_symbol_scope_add_eml(&c17_input, 2U, c17_sf_marshallOut);
+  sf_debug_symbol_scope_add_eml(&c17_dist_wall, 3U, c17_sf_marshallOut);
+  sf_debug_symbol_scope_add_eml(&c17_K_gain, 4U, c17_sf_marshallOut);
+  sf_debug_symbol_scope_add_eml_importable(&c17_input_out, 5U,
+    c17_sf_marshallOut, c17_sf_marshallIn);
   CV_EML_FCN(0, 0);
-  _SFD_EML_CALL(0U, *c17_sfEvent, 3);
-  c17_x = c17_u;
-  c17_b_x = c17_x;
-  c17_b_y = muDoubleScalarAbs(c17_b_x);
-  c17_c_x = c17_thres;
-  c17_d_x = c17_c_x;
-  c17_c_y = muDoubleScalarAbs(c17_d_x);
-  if (CV_EML_IF(0, 1, 0, c17_b_y < c17_c_y)) {
-    _SFD_EML_CALL(0U, *c17_sfEvent, 4);
-    c17_y = 0.0;
-  } else {
-    _SFD_EML_CALL(0U, *c17_sfEvent, 6);
-    c17_y = c17_u;
+  _SFD_EML_CALL(0U, *c17_sfEvent, 4);
+  c17_input_out = c17_input;
+  _SFD_EML_CALL(0U, *c17_sfEvent, 6);
+  if (CV_EML_IF(0, 1, 0, c17_dist_wall >= 0.0)) {
+    _SFD_EML_CALL(0U, *c17_sfEvent, 7);
+    c17_a = c17_input;
+    c17_b = c17_K_gain;
+    c17_input_out = c17_a * c17_b;
   }
 
-  _SFD_EML_CALL(0U, *c17_sfEvent, -6);
+  _SFD_EML_CALL(0U, *c17_sfEvent, -7);
   sf_debug_symbol_scope_pop();
-  *c17_d_y = c17_y;
+  *c17_b_input_out = c17_input_out;
   _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 16U, *c17_sfEvent);
   sf_debug_check_for_state_inconsistency(_controller_templateMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);
@@ -265,15 +263,16 @@ static const mxArray *c17_sf_marshallOut(void *chartInstanceVoid, void
 }
 
 static real_T c17_emlrt_marshallIn(SFc17_controller_templateInstanceStruct
-  *chartInstance, const mxArray *c17_y, const char_T *c17_identifier)
+  *chartInstance, const mxArray *c17_input_out, const char_T *c17_identifier)
 {
-  real_T c17_b_y;
+  real_T c17_y;
   emlrtMsgIdentifier c17_thisId;
   c17_thisId.fIdentifier = c17_identifier;
   c17_thisId.fParent = NULL;
-  c17_b_y = c17_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c17_y), &c17_thisId);
-  sf_mex_destroy(&c17_y);
-  return c17_b_y;
+  c17_y = c17_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c17_input_out),
+    &c17_thisId);
+  sf_mex_destroy(&c17_input_out);
+  return c17_y;
 }
 
 static real_T c17_b_emlrt_marshallIn(SFc17_controller_templateInstanceStruct
@@ -290,54 +289,45 @@ static real_T c17_b_emlrt_marshallIn(SFc17_controller_templateInstanceStruct
 static void c17_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c17_mxArrayInData, const char_T *c17_varName, void *c17_outData)
 {
-  const mxArray *c17_y;
+  const mxArray *c17_input_out;
   const char_T *c17_identifier;
   emlrtMsgIdentifier c17_thisId;
-  real_T c17_b_y;
+  real_T c17_y;
   SFc17_controller_templateInstanceStruct *chartInstance;
   chartInstance = (SFc17_controller_templateInstanceStruct *)chartInstanceVoid;
-  c17_y = sf_mex_dup(c17_mxArrayInData);
+  c17_input_out = sf_mex_dup(c17_mxArrayInData);
   c17_identifier = c17_varName;
   c17_thisId.fIdentifier = c17_identifier;
   c17_thisId.fParent = NULL;
-  c17_b_y = c17_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c17_y), &c17_thisId);
-  sf_mex_destroy(&c17_y);
-  *(real_T *)c17_outData = c17_b_y;
+  c17_y = c17_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c17_input_out),
+    &c17_thisId);
+  sf_mex_destroy(&c17_input_out);
+  *(real_T *)c17_outData = c17_y;
   sf_mex_destroy(&c17_mxArrayInData);
 }
 
 const mxArray *sf_c17_controller_template_get_eml_resolved_functions_info(void)
 {
   const mxArray *c17_nameCaptureInfo;
-  c17_ResolvedFunctionInfo c17_info[2];
-  c17_ResolvedFunctionInfo (*c17_b_info)[2];
+  c17_ResolvedFunctionInfo c17_info[1];
+  c17_ResolvedFunctionInfo (*c17_b_info)[1];
   const mxArray *c17_m0 = NULL;
   int32_T c17_i0;
   c17_ResolvedFunctionInfo *c17_r0;
   c17_nameCaptureInfo = NULL;
   c17_nameCaptureInfo = NULL;
-  c17_b_info = (c17_ResolvedFunctionInfo (*)[2])c17_info;
+  c17_b_info = (c17_ResolvedFunctionInfo (*)[1])c17_info;
   (*c17_b_info)[0].context = "";
-  (*c17_b_info)[0].name = "abs";
+  (*c17_b_info)[0].name = "mtimes";
   (*c17_b_info)[0].dominantType = "double";
   (*c17_b_info)[0].resolved =
-    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/abs.m";
-  (*c17_b_info)[0].fileTimeLo = 1286818694U;
+    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/ops/mtimes.m";
+  (*c17_b_info)[0].fileTimeLo = 1289519692U;
   (*c17_b_info)[0].fileTimeHi = 0U;
   (*c17_b_info)[0].mFileTimeLo = 0U;
   (*c17_b_info)[0].mFileTimeHi = 0U;
-  (*c17_b_info)[1].context =
-    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/abs.m";
-  (*c17_b_info)[1].name = "eml_scalar_abs";
-  (*c17_b_info)[1].dominantType = "double";
-  (*c17_b_info)[1].resolved =
-    "[ILXE]$matlabroot$/toolbox/eml/lib/matlab/elfun/eml_scalar_abs.m";
-  (*c17_b_info)[1].fileTimeLo = 1286818712U;
-  (*c17_b_info)[1].fileTimeHi = 0U;
-  (*c17_b_info)[1].mFileTimeLo = 0U;
-  (*c17_b_info)[1].mFileTimeHi = 0U;
-  sf_mex_assign(&c17_m0, sf_mex_createstruct("nameCaptureInfo", 1, 2), FALSE);
-  for (c17_i0 = 0; c17_i0 < 2; c17_i0++) {
+  sf_mex_assign(&c17_m0, sf_mex_createstruct("nameCaptureInfo", 1, 1), FALSE);
+  for (c17_i0 = 0; c17_i0 < 1; c17_i0++) {
     c17_r0 = &c17_info[c17_i0];
     sf_mex_addfield(c17_m0, sf_mex_create("nameCaptureInfo", c17_r0->context, 15,
       0U, 0U, 0U, 2, 1, strlen(c17_r0->context)), "context", "nameCaptureInfo",
@@ -447,10 +437,10 @@ static void init_dsm_address_info(SFc17_controller_templateInstanceStruct
 static uint32_T* sf_get_sfun_dwork_checksum();
 void sf_c17_controller_template_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(2068788421U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(1229543511U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2725996962U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(2578817439U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(1946430456U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(3208493482U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(2170643579U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1922484863U);
 }
 
 mxArray *sf_c17_controller_template_get_autoinheritance_info(void)
@@ -462,14 +452,14 @@ mxArray *sf_c17_controller_template_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("ZH9sBIUXb60HDCcw8OKxpC");
+    mxArray *mxChecksum = mxCreateString("C8EEXWaNQpZoUKby2u09zE");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
   {
     const char *dataFields[] = { "size", "type", "complexity" };
 
-    mxArray *mxData = mxCreateStructMatrix(1,2,3,dataFields);
+    mxArray *mxData = mxCreateStructMatrix(1,3,3,dataFields);
 
     {
       mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
@@ -508,6 +498,25 @@ mxArray *sf_c17_controller_template_get_autoinheritance_info(void)
     }
 
     mxSetField(mxData,1,"complexity",mxCreateDoubleScalar(0));
+
+    {
+      mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
+      double *pr = mxGetPr(mxSize);
+      pr[0] = (double)(1);
+      pr[1] = (double)(1);
+      mxSetField(mxData,2,"size",mxSize);
+    }
+
+    {
+      const char *typeFields[] = { "base", "fixpt" };
+
+      mxArray *mxType = mxCreateStructMatrix(1,1,2,typeFields);
+      mxSetField(mxType,0,"base",mxCreateDoubleScalar(10));
+      mxSetField(mxType,0,"fixpt",mxCreateDoubleMatrix(0,0,mxREAL));
+      mxSetField(mxData,2,"type",mxType);
+    }
+
+    mxSetField(mxData,2,"complexity",mxCreateDoubleScalar(0));
     mxSetField(mxAutoinheritanceInfo,0,"inputs",mxData);
   }
 
@@ -555,7 +564,7 @@ static const mxArray *sf_get_sim_state_info_c17_controller_template(void)
 
   mxArray *mxInfo = mxCreateStructMatrix(1, 1, 2, infoFields);
   const char *infoEncStr[] = {
-    "100 S1x2'type','srcId','name','auxInfo'{{M[1],M[5],T\"y\",},{M[8],M[0],T\"is_active_c17_controller_template\",}}"
+    "100 S1x2'type','srcId','name','auxInfo'{{M[1],M[5],T\"input_out\",},{M[8],M[0],T\"is_active_c17_controller_template\",}}"
   };
 
   mxArray *mxVarInfo = sf_mex_decode_encoded_mx_struct_array(infoEncStr, 2, 10);
@@ -582,7 +591,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
            17,
            1,
            1,
-           3,
+           4,
            0,
            0,
            0,
@@ -603,9 +612,10 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
             0,
             0,
             0);
-          _SFD_SET_DATA_PROPS(0,1,1,0,"u");
-          _SFD_SET_DATA_PROPS(1,2,0,1,"y");
-          _SFD_SET_DATA_PROPS(2,1,1,0,"thres");
+          _SFD_SET_DATA_PROPS(0,1,1,0,"input");
+          _SFD_SET_DATA_PROPS(1,2,0,1,"input_out");
+          _SFD_SET_DATA_PROPS(2,1,1,0,"dist_wall");
+          _SFD_SET_DATA_PROPS(3,1,1,0,"K_gain");
           _SFD_STATE_INFO(0,0,2);
           _SFD_CH_SUBSTATE_COUNT(0);
           _SFD_CH_SUBSTATE_DECOMP(0);
@@ -621,8 +631,8 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
 
         /* Initialization of MATLAB Function Model Coverage */
         _SFD_CV_INIT_EML(0,1,1,1,0,0,0,0,0,0);
-        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,90);
-        _SFD_CV_INIT_EML_IF(0,1,0,36,58,70,89);
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,135);
+        _SFD_CV_INIT_EML_IF(0,1,0,80,96,-1,130);
         _SFD_TRANS_COV_WTS(0,0,0,1,0);
         if (chartAlreadyPresent==0) {
           _SFD_TRANS_COV_MAPS(0,
@@ -638,17 +648,22 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (MexFcnForType)c17_sf_marshallOut,(MexInFcnForType)c17_sf_marshallIn);
         _SFD_SET_DATA_COMPILED_PROPS(2,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
           (MexFcnForType)c17_sf_marshallOut,(MexInFcnForType)NULL);
+        _SFD_SET_DATA_COMPILED_PROPS(3,SF_DOUBLE,0,NULL,0,0,0,0.0,1.0,0,0,
+          (MexFcnForType)c17_sf_marshallOut,(MexInFcnForType)NULL);
 
         {
-          real_T *c17_u;
-          real_T *c17_y;
-          real_T *c17_thres;
-          c17_thres = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
-          c17_y = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
-          c17_u = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
-          _SFD_SET_DATA_VALUE_PTR(0U, c17_u);
-          _SFD_SET_DATA_VALUE_PTR(1U, c17_y);
-          _SFD_SET_DATA_VALUE_PTR(2U, c17_thres);
+          real_T *c17_input;
+          real_T *c17_input_out;
+          real_T *c17_dist_wall;
+          real_T *c17_K_gain;
+          c17_K_gain = (real_T *)ssGetInputPortSignal(chartInstance->S, 2);
+          c17_dist_wall = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
+          c17_input_out = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+          c17_input = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
+          _SFD_SET_DATA_VALUE_PTR(0U, c17_input);
+          _SFD_SET_DATA_VALUE_PTR(1U, c17_input_out);
+          _SFD_SET_DATA_VALUE_PTR(2U, c17_dist_wall);
+          _SFD_SET_DATA_VALUE_PTR(3U, c17_K_gain);
         }
       }
     } else {
@@ -867,7 +882,8 @@ static void mdlSetWorkWidths_c17_controller_template(SimStruct *S)
     if (chartIsInlinable) {
       ssSetInputPortOptimOpts(S, 0, SS_REUSABLE_AND_LOCAL);
       ssSetInputPortOptimOpts(S, 1, SS_REUSABLE_AND_LOCAL);
-      sf_mark_chart_expressionable_inputs(S,infoStruct,17,2);
+      ssSetInputPortOptimOpts(S, 2, SS_REUSABLE_AND_LOCAL);
+      sf_mark_chart_expressionable_inputs(S,infoStruct,17,3);
       sf_mark_chart_reusable_outputs(S,infoStruct,17,1);
     }
 
@@ -878,10 +894,10 @@ static void mdlSetWorkWidths_c17_controller_template(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(2624066821U));
-  ssSetChecksum1(S,(2568476553U));
-  ssSetChecksum2(S,(2366836554U));
-  ssSetChecksum3(S,(370184439U));
+  ssSetChecksum0(S,(3598213556U));
+  ssSetChecksum1(S,(3610831206U));
+  ssSetChecksum2(S,(3744715573U));
+  ssSetChecksum3(S,(609504369U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
 }

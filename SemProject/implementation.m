@@ -14,14 +14,25 @@ l = 0.30;
 gamma = 0;
 J = m*l*l/4; % Inertia, we use the approximation of Thin, solid disk of radius r and mass m
 
-TsCtrl = 0.08;
-TsReal = 0.02;
+TsCtrl = 0.08;  % Sampling time of the controller
+TsReal = 0.02;  % Sampling time of real system
 
-DF_roll = 0;
-a1_roll = 27.07;
+% Dynamics for roll (y - direction)
+
+DF_roll_DC= -0.05;   % Damping due to the contact in the wall
+DF_roll_FF = 0;     % Free flight no damping
+
+
+a1_roll = 27.07;    % Common parameters in both docking and free flight
 a0_roll = 171.66;
 c0_roll = 169.16;
 
+
+% Dynamics for z direction
+DF_z_FF = -3.4586;
+DF_z_DC = -3.9586;
+
+% Pitch dynamics x direction
 DF_pitch = 0;
 a1_pitch = 27.07;
 a0_pitch = 171.66;
@@ -36,33 +47,15 @@ Theta = -deg2rad(2); % Docking angle
 N = 5;
 norm = 2;
 
-%% Xdirection Controller (Pitch Controller)
+%%
+%------------------------------------------------------------
+%------------------------------------------------------------
+% Xdirection Controller (Pitch Controller)
+%------------------------------------------------------------
+%------------------------------------------------------------
+
 
 modelXdirection = GenerateModel('QuadXDirectionNC',Theta,TsCtrl,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
-% Simulation Model
-%modelXdirectionReal = GenerateModel('QuadXDirectionSimulink',Theta,TsReal,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch);
-
-%%
-
-% %%  Simulate Open Loop
-% x0 = [0 0 -0.1 0 ]';
-% modelXdirection.initialize(x0);
-%
-% U = -deg2rad(5)*ones(1,50);
-% data = modelXdirection.simulate(U);
-%
-% time = [0:Ts:49*Ts];
-% figure(1);
-% subplot(5,1,1)
-% plot(time,data.Y(1,:)); grid on;ylabel('angle');
-% subplot(5,1,2)
-% plot(time,data.Y(2,:)); grid on;ylabel('omega');
-% subplot(5,1,3)
-% plot(time,data.Y(3,:)); grid on;ylabel('position')
-% subplot(5,1,4)
-% plot(time,data.Y(4,:)); grid on;ylabel('velocity')
-% subplot(5,1,5)
-% plot(time,data.Y(5,:)); grid on;ylabel('Force')
 
 % Optimization problem set up
 Qy = zeros(5,5);
@@ -99,27 +92,10 @@ ctrl.model.y.reference = yref;
 ctrl.model.u.with('reference');
 ctrl.model.u.reference = uref;
 
-%%
-% Define Custom logic constraint
-
-custom = ctrl.toYALMIP;
-CON = custom.constraints;
-
-for k = 1:length(VARS.u)
-    CON = CON + set(implies(VARS.x(3,1) == 0, VARS.u(1) <= deg2rad(6)));
-    CON = CON + set(implies(VARS.x(3,1) == 0, VARS.u(1) >= -deg2rad(6)));
-end
-
-custom.constraints = CON;
-
-ctrl.fromYALMIP(custom);
-%%
-
 
 expmpcXdirection = ctrl.toExplicit();
 
 
-%%
 % Create Look Up Table, code in C
 exportToC_MLD(expmpcXdirection,TsCtrl,'XdirectionCtrl','Xdirection');
 cd Xdirection
@@ -127,165 +103,72 @@ mex mpt_getInput_sfunc_Xdirection.c;
 cd ..
 [Hn_Xdir,Kn_Xdir,Fi_Xdir,Gi_Xdir,Nc_Xdir] = GetMPCMatrices(expmpcXdirection);
 save('Xdirection','Hn_Xdir','Kn_Xdir','Fi_Xdir','Gi_Xdir','Nc_Xdir');
-x0 = [0;0;-1;0];
 
 
-% %% Simulate the closed loop
-% N_sim = 50;
-%
-% % Create the closed-loop system:
-% loop = ClosedLoop(expmpcXdirection, modelXdirection);
-% ClosedData = loop.simulate(x0, N_sim);
-%
-% N = size(ClosedData.Y(1,:),2);
-% time = zeros(N,1);
-% Fref = zeros(N,1);
-% thetaref = zeros(N,1);
-% k=1;
-% for i = 0:TsCtrl:(N-1)*TsCtrl
-%     time(k) =i;
-%     Fref(k) = yref(5);
-%     thetaref(k) = yref(1);
-%     k = k+1;
-% end
-%
-%
-% % plot the output
-% figure(2);
-% subplot(6,1,1)
-% plot(time,ClosedData.Y(1,:),time,thetaref,'-g'); grid on;ylabel('angle');
-% subplot(6,1,2)
-% plot(time,ClosedData.Y(2,:)); grid on;ylabel('omega');
-% subplot(6,1,3)
-% plot(time,ClosedData.Y(3,:)); grid on;ylabel('position')
-% subplot(6,1,4)
-% plot(time,ClosedData.Y(4,:)); grid on;ylabel('velocity')
-% subplot(6,1,5)
-% plot(time,ClosedData.Y(5,:),time,Fref,'-g'); grid on;ylabel('Force')
-% subplot(6,1,6)
-% plot(time,ClosedData.U(:)); grid on;ylabel('Input')
 
-% %% Xdirection Controller Free Flight
-% Af = zeros(4,4);
-% Bf = zeros(4,1);
-% Df = zeros(4,1);
-% % Free Flight
-% Af(1,2) = 1; Af(2,1) = -a0_pitch; Af(2,2) = -a1_pitch; Af(3,4) = 1;
-% Af(4,1) = -g; Af(4,4) = DF_pitch;
-% Bf(2,1) = c0_pitch;
-% Cf = eye(4);
-%
-% sysfc = ss(Af,Bf,Cf,Df);
-%
-% % All controller must operate at the same frequency
-% sysfd = c2d(sysfc,TsCtrl,'zoh');
-% modelXdirectionFF = LTISystem(sysfd);
-%
-% % Real models are generated at 50Hz frequency
-% sysfd = c2d(sysfc,TsReal,'zoh');
-% modelXdirectionRealFF = LTISystem(sysfd);
-%
-% % Set constraints on states and input
-% modelXdirectionFF.x.min = [-0.2094;-2;-1;-1];
-% modelXdirectionFF.x.max = [0.2094;2;1;1];
-% modelXdirectionFF.u.min = -0.27;
-% modelXdirectionFF.u.max = 0.27;
-%
-% % Set the penalty
-% Qxff = zeros(4,4);
-% Qxff(1,1) = 10;
-% Qxff(3,3) = 100; % position control
-% Qxff(4,4) = 10;
-% Rff = 40;
-%
-% modelXdirectionFF.x.penalty = Penalty(Qxff,norm);
-% modelXdirectionFF.u.penalty = Penalty(Rff,norm);
-%
-% ctrlXFF = MPCController(modelXdirectionFF,N);
-%
-% expmpcXdirectionFF = ctrlXFF.toExplicit;
-% exportToC_MLD(expmpcXdirectionFF,TsCtrl,'XdirectionCtrlFF','XdirectionFF');
-% cd XdirectionFF
-% mex mpt_getInput_sfunc_XdirectionFF.c;
-% cd ..
-% [Hn_XdirFF,Kn_XdirFF,Fi_XdirFF,Gi_XdirFF,Nc_XdirFF] = GetMPCMatrices(expmpcXdirectionFF);
-% save('XdirectionFF','Hn_XdirFF','Kn_XdirFF','Fi_XdirFF','Gi_XdirFF','Nc_XdirFF');
-% x0FF = [0;0;-1;0];
-%
-%
-% % %Simulate the closed loop
-% % N_sim = 50;
-% %
-% % %Create the closed-loop system:
-% % loop = ClosedLoop(expmpcXdirectionFF, modelXdirectionFF);
-% % ClosedData = loop.simulate(x0FF, N_sim);
-% %
-% % yref = [0;0;0;0];
-% % N = size(ClosedData.Y(1,:),2);
-% % time = zeros(N,1);
-% % Fref = zeros(N,1);
-% % thetaref = zeros(N,1);
-% % k=1;
-% % for i = 0:Ts:(N-1)*Ts
-% %     time(k) =i;
-% %     Fref(k) = yref(4);
-% %     thetaref(k) = yref(1);
-% %     k = k+1;
-% % end
-% %
-% %
-% % %plot the output
-% % figure(3);
-% % subplot(5,1,1)
-% % plot(time,ClosedData.Y(1,:),time,thetaref,'-g'); grid on;ylabel('angle');
-% % subplot(5,1,2)
-% % plot(time,ClosedData.Y(2,:)); grid on;ylabel('omega');
-% % subplot(5,1,3)
-% % plot(time,ClosedData.Y(3,:)); grid on;ylabel('position')
-% % subplot(5,1,4)
-% % plot(time,ClosedData.Y(4,:)); grid on;ylabel('velocity')
-% % subplot(5,1,5)
-% % plot(time,ClosedData.U(:)); grid on;ylabel('Input')
+%%
+%------------------------------------------------------------
+%------------------------------------------------------------
+% Ydirection Controller (No Hybrid Model) (Roll Controller)
+%------------------------------------------------------------
+%------------------------------------------------------------
 
-%% Ydirection Controller (No Hybrid Model) (Roll Controller)
-%DF = -0.9606;
 
-Af = zeros(4,4);
-Bf = zeros(4,1);
-Df = zeros(4,1);
+% Initialize models of free-flight and docking
+A = zeros(4,4);
+B = zeros(4,1);
+
 % Free Flight
-Af(1,2) = 1; Af(2,1) = -a0_roll; Af(2,2) = -a1_roll; Af(3,4) = 1;
-Af(4,1) = g; Af(4,4) = DF_roll;
-Bf(2,1) = c0_roll;
-Cf = eye(4);
+A(1,2) = 1; A(2,1) = -a0_roll; A(2,2) = -a1_roll; A(3,4) = 1;
+A(4,1) = g; A(4,4) = DF_roll_FF;
 
+B(2,1) = c0_roll;
+
+
+%  State  Extension to include external input
+Af = [A,zeros(4,1);zeros(1,4),0];
+Bf = [B;0];
+Cf = [eye(4),zeros(4,1)];
+Df = zeros(4,1);
+
+% Free Flight model
 sysfc = ss(Af,Bf,Cf,Df);
-
-% All controller must operate at the same frequency
 sysfd = c2d(sysfc,TsCtrl,'zoh');
-modelYdirection = LTISystem(sysfd);
+dynFF = LTISystem(sysfd);
 
-% Real models are generated at 50Hz frequency
-sysfd = c2d(sysfc,TsReal,'zoh');
-modelYdirectionReal = LTISystem(sysfd);
+dynFF.setDomain('x', Polyhedron([0 0 0 0 1], 0));
+
+
+% Docking model
+Af(4,4) = DF_roll_DC;
+sysfc = ss(Af,Bf,Cf,Df);
+sysfd = c2d(sysfc,TsCtrl,'zoh');
+dynDC = LTISystem(sysfd);
+dynDC.setDomain('x', Polyhedron([0 0 0 0 -1], 0));
+
+
+modelYdirection = PWASystem([dynFF dynDC]);
+
 
 % Set constraints on states and input
-modelYdirection.x.min = [-0.2094;-2;-1;-1];
-modelYdirection.x.max = [0.2094;2;1;1];
-modelYdirection.u.min = -0.27;
+modelYdirection.x.min = [-0.2094;-2;-1;-1;-1];  % states x = [roll, roll_dot, y, y_dot, dx]
+modelYdirection.x.max = [0.2094;2;1;1;0.5];
+modelYdirection.u.min = -0.27;   
 modelYdirection.u.max = 0.27;
 
-% Set the penalty
+% Set the penalty (penalization remains the same, 4 outputs)
 Qxy = zeros(4,4);
 Qxy(1,1) = 10;
-Qxy(3,3) = 100; % position control
-Qxy(4,4) = 10;
+Qxy(3,3) = 150; % position control  % 100
+Qxy(4,4) = 20;                      % 10
+
 Ry = 40;
 
-modelYdirection.x.penalty = Penalty(Qxy,norm);
+modelYdirection.y.penalty = Penalty(Qxy,norm);  % output penalization 
 modelYdirection.u.penalty = Penalty(Ry,norm);
 
 ctrlY = MPCController(modelYdirection,N);
+
 
 expmpcYdirection = ctrlY.toExplicit;
 exportToC_MLD(expmpcYdirection,TsCtrl,'YdirectionCtrl','Ydirection');
@@ -294,110 +177,86 @@ mex mpt_getInput_sfunc_Ydirection.c;
 cd ..
 [Hn_Ydir,Kn_Ydir,Fi_Ydir,Gi_Ydir,Nc_Ydir] = GetMPCMatrices(expmpcYdirection);
 save('Ydirection','Hn_Ydir','Kn_Ydir','Fi_Ydir','Gi_Ydir','Nc_Ydir');
-y0 = [0;0;-1;0];
 
 
-% %Simulate the closed loop
-% N_sim = 50;
-%
-% %Create the closed-loop system:
-% loop = ClosedLoop(expmpcYdirection, modelYdirection);
-% ClosedData = loop.simulate(y0, N_sim);
-%
-% yref = [0;0;0;0];
-% N = size(ClosedData.Y(1,:),2);
-% time = zeros(N,1);
-% Fref = zeros(N,1);
-% thetaref = zeros(N,1);
-% k=1;
-% for i = 0:Ts:(N-1)*Ts
-%     time(k) =i;
-%     Fref(k) = yref(4);
-%     thetaref(k) = yref(1);
-%     k = k+1;
-% end
-%
-%
-% %plot the output
-% figure(3);
-% subplot(5,1,1)
-% plot(time,ClosedData.Y(1,:),time,thetaref,'-g'); grid on;ylabel('angle');
-% subplot(5,1,2)
-% plot(time,ClosedData.Y(2,:)); grid on;ylabel('omega');
-% subplot(5,1,3)
-% plot(time,ClosedData.Y(3,:)); grid on;ylabel('position')
-% subplot(5,1,4)
-% plot(time,ClosedData.Y(4,:)); grid on;ylabel('velocity')
-% subplot(5,1,5)
-% plot(time,ClosedData.U(:)); grid on;ylabel('Input')
 
-%% Zdirection Controller (No Hybrid Model) (Thrust controller)
+%%
+%------------------------------------------------------------
+%------------------------------------------------------------
+% Zdirection Controller (No Hybrid Model) (Thrust controller)
+%------------------------------------------------------------
+%------------------------------------------------------------
 
-Az = zeros(2,2); Az(1,2) = 1;
-Bz = zeros(2,1); Bz(2,1) = -1/m;
-Cz = eye(2); Dz = 0;
+% Theoretical Values
+% Az = zeros(2,2); Az(1,2) = 1; 
+% Bz = zeros(2,1); Bz(2,1) = -1/m;
+% Cz = eye(2); Dz = 0;
+
+Tsz = 0.02;
+
 %    - from ID - possibly wrong
-Az = [0 1; 0 -3.4586];
-Bz = [0 -5.6961]';
+A = [0 1; 0 DF_z_FF];
+B = [0 -5.6961]';
 
-syscz = ss(Az,Bz,Cz,Dz);
-%
-% All controller must operate at the same frequency
-Tsz = 0.04;
-sysdz = c2d(syscz,Tsz,'zoh');
-modelZdirection = LTISystem(sysdz);
 
-% Real models are generated at 50Hz frequency
-sysdz = c2d(syscz,TsReal,'zoh');
-modelZdirectionReal = LTISystem(sysdz);
+%  State  Extension to include external input
+Af = [A,zeros(2,1);zeros(1,2),0];
+Bf = [B;0];
+Cf = [eye(2),zeros(2,1)];
+Df = zeros(2,1);
+
+% Free Flight model
+sysfc = ss(Af,Bf,Cf,Df);
+sysfd = c2d(sysfc,Tsz,'zoh');
+dynFF = LTISystem(sysfd);
+
+dynFF.setDomain('x', Polyhedron([0 0 1], 0));
+
+
+% Docking model
+Af(2,2) = DF_z_DC;
+sysfc = ss(Af,Bf,Cf,Df);
+sysfd = c2d(sysfc,Tsz,'zoh');
+dynDC = LTISystem(sysfd);
+dynDC.setDomain('x', Polyhedron([0 0 -1], 0));
+
+
+modelZdirection = PWASystem([dynFF dynDC]);
+
+
 
 % Set constraints on states and input
-modelZdirection.x.min = [-1;-1];
-modelZdirection.x.max = [1;1];
+modelZdirection.x.min = [-1;-1;-1];
+modelZdirection.x.max = [1;1;0.5];
 modelZdirection.u.min = -1;
 modelZdirection.u.max = 1;
 
 % Set the penalty
 Qxz = zeros(2,2);
-Qxz(1,1) = 150; % position control
-Qxz(2,2) = 25;
-Rz = 4;
+Qxz(1,1) = 400; % position control
+Qxz(2,2) = 125;
+Rz = 3;
 
-modelZdirection.x.penalty = Penalty(Qxz,norm);
+modelZdirection.y.penalty = Penalty(Qxz,norm);
 modelZdirection.u.penalty = Penalty(Rz,norm);
 
-ctrlZ = MPCController(modelZdirection,3*N);
+ctrlZ = MPCController(modelZdirection,12);
 
 expmpcZdirection = ctrlZ.toExplicit;
-exportToC_MLD(expmpcZdirection,TsCtrl,'ZdirectionCtrl','Zdirection');
+exportToC_MLD(expmpcZdirection,Tsz,'ZdirectionCtrl','Zdirection');
 cd Zdirection
 mex mpt_getInput_sfunc_Zdirection.c;
 cd ..
 [Hn_Zdir,Kn_Zdir,Fi_Zdir,Gi_Zdir,Nc_Zdir] = GetMPCMatrices(expmpcZdirection);
 save('Zdirection','Hn_Zdir','Kn_Zdir','Fi_Zdir','Gi_Zdir','Nc_Zdir');
-z0 = [-1;0];
 
 
-% %Simulate the closed loop
-% N_sim = 50;
-%
-% % Create the closed-loop system:
-% loop = ClosedLoop(expmpcZdirection, modelZdirection);
-% ClosedData = loop.simulate(z0, N_sim);
-%
-% N = size(ClosedData.Y(1,:),2);
-% time = 0:Ts:(N-1)*Ts;
-%
-% % plot the output
-% figure(4);
-% subplot(3,1,1)
-% plot(time,ClosedData.Y(1,:)); grid on;ylabel('position')
-% subplot(3,1,2)
-% plot(time,ClosedData.Y(2,:)); grid on;ylabel('velocity')
-% subplot(3,1,3)
-% plot(time,ClosedData.U(:)); grid on;ylabel('Input')
-
-%% (Yaw controller)
+%%
+%------------------------------------------------------------
+%------------------------------------------------------------
+% Yaw Controller
+%------------------------------------------------------------
+%------------------------------------------------------------
 
 Ay = -a0_yaw;
 By = c0_yaw;
@@ -440,22 +299,3 @@ mex mpt_getInput_sfunc_YawCtrl.c;
 cd ..
 [Hn_Yaw,Kn_Yaw,Fi_Yaw,Gi_Yaw,Nc_Yaw] = GetMPCMatrices(expmpcYaw);
 save('Yawdirection','Hn_Yaw','Kn_Yaw','Fi_Yaw','Gi_Yaw','Nc_Yaw');
-yaw0 = -0.0873;
-
-
-% %% Simulate the closed loop
-% N_sim = 50;
-%
-% % Create the closed-loop system:
-% loop = ClosedLoop(expmpcYaw, modelYaw);
-% ClosedData = loop.simulate(yaw0, N_sim);
-%
-% N = size(ClosedData.Y(1,:),2);
-% time = 0:TsReal:(N-1)*TsReal;
-%
-% % plot the output
-% figure(4);
-% subplot(2,1,1)
-% plot(time,ClosedData.Y(1,:)); grid on;ylabel('position')
-% subplot(2,1,2)
-% plot(time,ClosedData.U(:)); grid on;ylabel('Input')

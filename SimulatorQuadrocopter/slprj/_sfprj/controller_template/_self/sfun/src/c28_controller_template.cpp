@@ -184,11 +184,11 @@ static void sf_c28_controller_template(SFc28_controller_templateInstanceStruct
   c28_b_psi_meas = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
   c28_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 20U, *c28_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 27U, *c28_sfEvent);
   _SFD_DATA_RANGE_CHECK(*c28_b_psi_meas, 0U);
   _SFD_DATA_RANGE_CHECK(*c28_b_psi_prime, 1U);
   *c28_sfEvent = CALL_EVENT;
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 20U, *c28_sfEvent);
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 27U, *c28_sfEvent);
   c28_hoistedGlobal = *c28_b_psi_meas;
   c28_psi_meas = c28_hoistedGlobal;
   sf_debug_symbol_scope_push_eml(0U, 4U, 4U, c28_debug_family_names,
@@ -226,7 +226,7 @@ static void sf_c28_controller_template(SFc28_controller_templateInstanceStruct
   _SFD_EML_CALL(0U, *c28_sfEvent, -8);
   sf_debug_symbol_scope_pop();
   *c28_b_psi_prime = c28_psi_prime;
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 20U, *c28_sfEvent);
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 27U, *c28_sfEvent);
   sf_debug_check_for_state_inconsistency(_controller_templateMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);
 }
