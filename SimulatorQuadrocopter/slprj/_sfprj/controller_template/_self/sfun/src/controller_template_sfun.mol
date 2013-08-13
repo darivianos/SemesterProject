@@ -33,5 +33,9 @@ c32_controller_template.obj
 c33_controller_template.obj
 c34_controller_template.obj
 c35_controller_template.obj
+c36_controller_template.obj
+c37_controller_template.obj
+c38_controller_template.obj
+c39_controller_template.obj
 controller_template_sfun_registry.obj
 controller_template_sfun.obj

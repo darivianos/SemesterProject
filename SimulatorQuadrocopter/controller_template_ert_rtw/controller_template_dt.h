@@ -3,9 +3,9 @@
  *
  * Code generation for model "controller_template.mdl".
  *
- * Model version              : 1.680
+ * Model version              : 1.703
  * Simulink Coder version : 8.1 (R2011b) 08-Jul-2011
- * C++ source code generated on : Sun Jul 14 22:21:30 2013
+ * C++ source code generated on : Sat Jul 20 16:47:53 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -53,7 +53,7 @@ static const char_T * rtDataTypeNames[] = {
 
 /* data type transitions for block I/O structure */
 static DataTypeTransition rtBTransitions[] = {
-  { (char_T *)(&controller_template_B.DataTypeConversion[0]), 0, 0, 584 },
+  { (char_T *)(&controller_template_B.DataTypeConversion[0]), 0, 0, 583 },
 
   { (char_T *)(&controller_template_B.sf_EmbeddedMATLABFunction_o.roll_rot), 0,
     0, 4 },
@@ -102,6 +102,18 @@ static DataTypeTransition rtBTransitions[] = {
 
   { (char_T *)(&controller_template_B.sf_MATLABFunction_e.y), 0, 0, 1 },
 
+  { (char_T *)(&controller_template_B.sf_generate_X_ref_z_b.X_ref_z[0]), 0, 0,
+    62 },
+
+  { (char_T *)(&controller_template_B.sf_generate_X_ref_yaw_h.X_ref_yaw[0]), 0,
+    0, 62 },
+
+  { (char_T *)(&controller_template_B.sf_generate_X_ref_y_k.X_ref_y[0]), 0, 0,
+    93 },
+
+  { (char_T *)(&controller_template_B.sf_generate_X_ref_x_a.X_ref_x[0]), 0, 0,
+    93 },
+
   { (char_T *)(&controller_template_B.sf_generate_X_ref_z_l.X_ref_z[0]), 0, 0,
     62 },
 
@@ -115,7 +127,7 @@ static DataTypeTransition rtBTransitions[] = {
     93 }
   ,
 
-  { (char_T *)(&controller_template_DWork.FixPtUnitDelay1_DSTATE[0]), 0, 0, 238
+  { (char_T *)(&controller_template_DWork.FixPtUnitDelay1_DSTATE[0]), 0, 0, 239
   },
 
   { (char_T *)(&controller_template_DWork.bias_PWORK.LoggedData), 11, 0, 36 },
@@ -311,6 +323,46 @@ static DataTypeTransition rtBTransitions[] = {
   { (char_T *)(&controller_template_DWork.sf_MATLABFunction_e.isStable), 8, 0, 2
   },
 
+  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_z_b.sfEvent), 6, 0,
+    1 },
+
+  { (char_T *)
+    (&controller_template_DWork.sf_generate_X_ref_z_b.is_active_c22_controller_templa),
+    3, 0, 1 },
+
+  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_z_b.isStable), 8, 0,
+    2 },
+
+  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_yaw_h.sfEvent), 6, 0,
+    1 },
+
+  { (char_T *)
+    (&controller_template_DWork.sf_generate_X_ref_yaw_h.is_active_c21_controller_templa),
+    3, 0, 1 },
+
+  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_yaw_h.isStable), 8,
+    0, 2 },
+
+  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_y_k.sfEvent), 6, 0,
+    1 },
+
+  { (char_T *)
+    (&controller_template_DWork.sf_generate_X_ref_y_k.is_active_c20_controller_templa),
+    3, 0, 1 },
+
+  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_y_k.isStable), 8, 0,
+    2 },
+
+  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_x_a.sfEvent), 6, 0,
+    1 },
+
+  { (char_T *)
+    (&controller_template_DWork.sf_generate_X_ref_x_a.is_active_c19_controller_templa),
+    3, 0, 1 },
+
+  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_x_a.isStable), 8, 0,
+    2 },
+
   { (char_T *)(&controller_template_DWork.sf_generate_X_ref_z_l.sfEvent), 6, 0,
     1 },
 
@@ -354,17 +406,17 @@ static DataTypeTransition rtBTransitions[] = {
 
 /* data type transition table for block I/O structure */
 static DataTypeTransitionTable rtBTransTable = {
-  97U,
+  113U,
   rtBTransitions
 };
 
 /* data type transitions for Parameters structure */
 static DataTypeTransition rtPTransitions[] = {
-  { (char_T *)(&controller_template_P.Constant3_Value[0]), 0, 0, 73338 },
+  { (char_T *)(&controller_template_P.Constant3_Value[0]), 0, 0, 78444 },
 
   { (char_T *)(&controller_template_P.IntegerDelay3_DelayLength), 7, 0, 5 },
 
-  { (char_T *)(&controller_template_P.FixPtUnitDelay2_X0), 3, 0, 31 }
+  { (char_T *)(&controller_template_P.FixPtUnitDelay2_X0), 3, 0, 33 }
 };
 
 /* data type transition table for Parameters structure */

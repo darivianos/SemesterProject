@@ -43,7 +43,11 @@ CHART_SRCS 	= \
      c32_controller_template.cpp\
      c33_controller_template.cpp\
      c34_controller_template.cpp\
-     c35_controller_template.cpp
+     c35_controller_template.cpp\
+     c36_controller_template.cpp\
+     c37_controller_template.cpp\
+     c38_controller_template.cpp\
+     c39_controller_template.cpp
 MACHINE_SRC	= controller_template_sfun.cpp
 MACHINE_REG = controller_template_sfun_registry.cpp
 MEX_WRAPPER =

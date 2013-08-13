@@ -5,7 +5,7 @@
 % Task:         LQRI, LQR, MPC - Controlling decoupled SISO case
 %
 % function:     main file for design and derivation of the controllers
-%
+
 % Important:    If you change the pade approximation of the delay, check the
 %               order of the states (1st position, 2nd velocity)
 %
@@ -120,13 +120,15 @@ load Hquad_CTRL_OBSV_parameters/obsv_mpc_yaw_v1.mat
 %load HquadTrajectories/traj_wall_docking.mat
 %load HquadTrajectories/traj_wall_square.mat
 %load HquadTrajectories/traj_circle.mat
-%load HquadTrajectories/traj_helix.mat
+% load HquadTrajectories/traj_helix.mat
+
+%% Drawing Tool for wall reference (comment for free flight)
 maxdisty = 1.25;
 maxdistz = 0.6;
 
 scale_y = 1.1;
 scale_z = 1.2;
-% scale_z = 1.1;
+
 
 traj_FG = ReferenceCreator(maxdisty,maxdistz,scale_y,scale_z);
 
@@ -154,6 +156,7 @@ load Hquad_CTRL_OBSV_parameters/ctrl_lqr_yaw_v1.mat
 
 
 %% Darivianakis Controller Parameters load
+
 
 %% Parameters Initialization
 addpath(genpath('/home/burrimi/git/darivianakis/SemProject/'));

@@ -196,7 +196,7 @@ static void sf_c21_controller_template(SFc21_controller_templateInstanceStruct
   real_T c21_hoistedGlobal;
   real_T c21_b_hoistedGlobal;
   int32_T c21_i4;
-  real_T c21_X_ref_yaw_unbounded[888];
+  real_T c21_X_ref_yaw_unbounded[806];
   real_T c21_yaw_meas;
   real_T c21_idx;
   uint32_T c21_debug_family_var_map[10];
@@ -224,16 +224,16 @@ static void sf_c21_controller_template(SFc21_controller_templateInstanceStruct
   real_T *c21_b_yaw_meas;
   int32_T *c21_sfEvent;
   real_T (*c21_b_X_ref_yaw)[62];
-  real_T (*c21_b_X_ref_yaw_unbounded)[888];
+  real_T (*c21_b_X_ref_yaw_unbounded)[806];
   c21_b_idx = (real_T *)ssGetInputPortSignal(chartInstance->S, 2);
   c21_b_yaw_meas = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
   c21_b_X_ref_yaw = (real_T (*)[62])ssGetOutputPortSignal(chartInstance->S, 1);
-  c21_b_X_ref_yaw_unbounded = (real_T (*)[888])ssGetInputPortSignal
+  c21_b_X_ref_yaw_unbounded = (real_T (*)[806])ssGetInputPortSignal
     (chartInstance->S, 0);
   c21_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
   _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 20U, *c21_sfEvent);
-  for (c21_i2 = 0; c21_i2 < 888; c21_i2++) {
+  for (c21_i2 = 0; c21_i2 < 806; c21_i2++) {
     _SFD_DATA_RANGE_CHECK((*c21_b_X_ref_yaw_unbounded)[c21_i2], 0U);
   }
 
@@ -247,7 +247,7 @@ static void sf_c21_controller_template(SFc21_controller_templateInstanceStruct
   _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 20U, *c21_sfEvent);
   c21_hoistedGlobal = *c21_b_yaw_meas;
   c21_b_hoistedGlobal = *c21_b_idx;
-  for (c21_i4 = 0; c21_i4 < 888; c21_i4++) {
+  for (c21_i4 = 0; c21_i4 < 806; c21_i4++) {
     c21_X_ref_yaw_unbounded[c21_i4] = (*c21_b_X_ref_yaw_unbounded)[c21_i4];
   }
 
@@ -277,7 +277,7 @@ static void sf_c21_controller_template(SFc21_controller_templateInstanceStruct
   c21_pred_horizon_yaw = 30.0;
   _SFD_EML_CALL(0U, *c21_sfEvent, 5);
   c21_yaw0 = c21_X_ref_yaw_unbounded[(_SFD_EML_ARRAY_BOUNDS_CHECK(
-    "X_ref_yaw_unbounded", (int32_T)_SFD_INTEGER_CHECK("idx", c21_idx), 1, 444,
+    "X_ref_yaw_unbounded", (int32_T)_SFD_INTEGER_CHECK("idx", c21_idx), 1, 403,
     2, 0) - 1) << 1];
   _SFD_EML_CALL(0U, *c21_sfEvent, 6);
   c21_yaw_diff = c21_yaw_meas - c21_yaw0;
@@ -307,14 +307,14 @@ static void sf_c21_controller_template(SFc21_controller_templateInstanceStruct
     c21_X_ref_yaw[c21_i5 << 1] = c21_X_ref_yaw_unbounded
       [(_SFD_EML_ARRAY_BOUNDS_CHECK("X_ref_yaw_unbounded", (int32_T)
          _SFD_INTEGER_CHECK("idx:idx+pred_horizon_yaw", c21_idx + (real_T)c21_i5),
-         1, 444, 2, 0) - 1) << 1] + c21_yaw_offset;
+         1, 403, 2, 0) - 1) << 1] + c21_yaw_offset;
   }
 
   for (c21_i6 = 0; c21_i6 < 31; c21_i6++) {
     c21_X_ref_yaw[1 + (c21_i6 << 1)] = c21_X_ref_yaw_unbounded[1 +
       ((_SFD_EML_ARRAY_BOUNDS_CHECK("X_ref_yaw_unbounded", (int32_T)
          _SFD_INTEGER_CHECK("idx:idx+pred_horizon_yaw", c21_idx + (real_T)c21_i6),
-         1, 444, 2, 0) - 1) << 1)];
+         1, 403, 2, 0) - 1) << 1)];
   }
 
   _SFD_EML_CALL(0U, *c21_sfEvent, -11);
@@ -462,19 +462,19 @@ static const mxArray *c21_c_sf_marshallOut(void *chartInstanceVoid, void
   int32_T c21_i18;
   int32_T c21_i19;
   int32_T c21_i20;
-  real_T c21_b_inData[888];
+  real_T c21_b_inData[806];
   int32_T c21_i21;
   int32_T c21_i22;
   int32_T c21_i23;
-  real_T c21_u[888];
+  real_T c21_u[806];
   const mxArray *c21_y = NULL;
   SFc21_controller_templateInstanceStruct *chartInstance;
   chartInstance = (SFc21_controller_templateInstanceStruct *)chartInstanceVoid;
   c21_mxArrayOutData = NULL;
   c21_i18 = 0;
-  for (c21_i19 = 0; c21_i19 < 444; c21_i19++) {
+  for (c21_i19 = 0; c21_i19 < 403; c21_i19++) {
     for (c21_i20 = 0; c21_i20 < 2; c21_i20++) {
-      c21_b_inData[c21_i20 + c21_i18] = (*(real_T (*)[888])c21_inData)[c21_i20 +
+      c21_b_inData[c21_i20 + c21_i18] = (*(real_T (*)[806])c21_inData)[c21_i20 +
         c21_i18];
     }
 
@@ -482,7 +482,7 @@ static const mxArray *c21_c_sf_marshallOut(void *chartInstanceVoid, void
   }
 
   c21_i21 = 0;
-  for (c21_i22 = 0; c21_i22 < 444; c21_i22++) {
+  for (c21_i22 = 0; c21_i22 < 403; c21_i22++) {
     for (c21_i23 = 0; c21_i23 < 2; c21_i23++) {
       c21_u[c21_i23 + c21_i21] = c21_b_inData[c21_i23 + c21_i21];
     }
@@ -491,7 +491,7 @@ static const mxArray *c21_c_sf_marshallOut(void *chartInstanceVoid, void
   }
 
   c21_y = NULL;
-  sf_mex_assign(&c21_y, sf_mex_create("y", c21_u, 0, 0U, 1U, 0U, 2, 2, 444),
+  sf_mex_assign(&c21_y, sf_mex_create("y", c21_u, 0, 0U, 1U, 0U, 2, 2, 403),
                 FALSE);
   sf_mex_assign(&c21_mxArrayOutData, c21_y, FALSE);
   return c21_mxArrayOutData;
@@ -728,10 +728,10 @@ static void init_dsm_address_info(SFc21_controller_templateInstanceStruct
 static uint32_T* sf_get_sfun_dwork_checksum();
 void sf_c21_controller_template_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(4065032786U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2655823567U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3505947907U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(1400316187U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(846684404U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2900445370U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(3897224422U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(189109119U);
 }
 
 mxArray *sf_c21_controller_template_get_autoinheritance_info(void)
@@ -743,7 +743,7 @@ mxArray *sf_c21_controller_template_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("oCmm5mqx8foSVSoNXxRImD");
+    mxArray *mxChecksum = mxCreateString("f4K9DnLprq53FB4aKD3IME");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -756,7 +756,7 @@ mxArray *sf_c21_controller_template_get_autoinheritance_info(void)
       mxArray *mxSize = mxCreateDoubleMatrix(1,2,mxREAL);
       double *pr = mxGetPr(mxSize);
       pr[0] = (double)(2);
-      pr[1] = (double)(444);
+      pr[1] = (double)(403);
       mxSetField(mxData,0,"size",mxSize);
     }
 
@@ -935,7 +935,7 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         {
           unsigned int dimVector[2];
           dimVector[0]= 2;
-          dimVector[1]= 444;
+          dimVector[1]= 403;
           _SFD_SET_DATA_COMPILED_PROPS(0,SF_DOUBLE,2,&(dimVector[0]),0,0,0,0.0,
             1.0,0,0,(MexFcnForType)c21_c_sf_marshallOut,(MexInFcnForType)NULL);
         }
@@ -957,13 +957,13 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         {
           real_T *c21_yaw_meas;
           real_T *c21_idx;
-          real_T (*c21_X_ref_yaw_unbounded)[888];
+          real_T (*c21_X_ref_yaw_unbounded)[806];
           real_T (*c21_X_ref_yaw)[62];
           c21_idx = (real_T *)ssGetInputPortSignal(chartInstance->S, 2);
           c21_yaw_meas = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
           c21_X_ref_yaw = (real_T (*)[62])ssGetOutputPortSignal(chartInstance->S,
             1);
-          c21_X_ref_yaw_unbounded = (real_T (*)[888])ssGetInputPortSignal
+          c21_X_ref_yaw_unbounded = (real_T (*)[806])ssGetInputPortSignal
             (chartInstance->S, 0);
           _SFD_SET_DATA_VALUE_PTR(0U, *c21_X_ref_yaw_unbounded);
           _SFD_SET_DATA_VALUE_PTR(1U, *c21_X_ref_yaw);
@@ -1199,10 +1199,10 @@ static void mdlSetWorkWidths_c21_controller_template(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(4096565004U));
-  ssSetChecksum1(S,(1402390588U));
-  ssSetChecksum2(S,(531835243U));
-  ssSetChecksum3(S,(2137367098U));
+  ssSetChecksum0(S,(978784636U));
+  ssSetChecksum1(S,(2050170765U));
+  ssSetChecksum2(S,(1474354112U));
+  ssSetChecksum3(S,(3149686632U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
 }

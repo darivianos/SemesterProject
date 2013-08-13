@@ -27,10 +27,15 @@ title('x axis');
 % Plot y axis
 figure(2);
 plot(simout_data.time,simout_data.signals.values(:,6));
-title('y axis');
-
+title('y axis')
+x_ref_sig = traj_FG.X_ref_x(1,:) + simout_data.signals.values(1,1);
+y_ref_sig = traj_FG.X_ref_y(1,:) + simout_data.signals.values(1,6);
+z_ref_sig = - traj_FG.X_ref_z(1,:) + simout_data.signals.values(1,11);
 % Plot x-y axis
 figure(3)
 plot3(simout_data.signals.values(:,1),simout_data.signals.values(:,6),-simout_data.signals.values(:,11));
+hold on
+plot3(x_ref_sig,y_ref_sig,z_ref_sig,'r');
 title('x-y-z axis plot');
 grid on;
+axis equal

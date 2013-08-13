@@ -104,6 +104,65 @@ cd ..
 [Hn_Xdir,Kn_Xdir,Fi_Xdir,Gi_Xdir,Nc_Xdir] = GetMPCMatrices(expmpcXdirection);
 save('Xdirection','Hn_Xdir','Kn_Xdir','Fi_Xdir','Gi_Xdir','Nc_Xdir');
 
+%%
+%------------------------------------------------------------
+%------------------------------------------------------------
+% Xdirection Controller (Free Flight) (Pitch Controller)
+%------------------------------------------------------------
+%------------------------------------------------------------
+
+
+% Initialize models of free-flight and docking
+Af = zeros(4,4);
+Bf = zeros(4,1);
+
+% Free Flight
+Af(1,2) = 1; Af(2,1) = -a0_pitch; Af(2,2) = -a1_pitch; Af(3,4) = 1;
+Af(4,1) = -g; Af(4,4) = DF_pitch;
+
+Bf(2,1) = c0_pitch;
+
+Cf = eye(4);
+Df = zeros(4,1);
+
+
+% Free Flight model
+sysfc = ss(Af,Bf,Cf,Df);
+sysfd = c2d(sysfc,TsCtrl,'zoh');
+dynFF = LTISystem(sysfd);
+
+
+modelXdirectionFF = dynFF;
+
+
+% Set constraints on states and input
+modelXdirectionFF.x.min = [-0.2094;-2;-1;-1];  % states x = [roll, roll_dot, y, y_dot, dx]
+modelXdirectionFF.x.max = [0.2094;2;1;1];
+modelXdirectionFF.u.min = -0.27;   
+modelXdirectionFF.u.max = 0.27;
+
+% Set the penalty (penalization remains the same, 4 outputs)
+Qxy = zeros(4,4);
+Qxy(1,1) = 10;
+Qxy(3,3) = 80; % position control  % 100
+Qxy(4,4) = 10;                      % 10
+
+Ry = 40;
+
+modelXdirectionFF.y.penalty = Penalty(Qxy,norm);  % output penalization 
+modelXdirectionFF.u.penalty = Penalty(Ry,norm);
+
+ctrlXFF = MPCController(modelXdirectionFF,N);
+
+
+expmpcXdirectionFF = ctrlXFF.toExplicit;
+exportToC_MLD(expmpcXdirectionFF,TsCtrl,'XdirectionCtrlFF','XdirectionFF');
+cd XdirectionFF
+mex mpt_getInput_sfunc_XdirectionFF.c;
+cd ..
+[Hn_XdirFF,Kn_XdirFF,Fi_XdirFF,Gi_XdirFF,Nc_XdirFF] = GetMPCMatrices(expmpcXdirectionFF);
+save('XdirectionFF','Hn_XdirFF','Kn_XdirFF','Fi_XdirFF','Gi_XdirFF','Nc_XdirFF');
+
 
 
 %%
@@ -159,8 +218,8 @@ modelYdirection.u.max = 0.27;
 % Set the penalty (penalization remains the same, 4 outputs)
 Qxy = zeros(4,4);
 Qxy(1,1) = 10;
-Qxy(3,3) = 150; % position control  % 100
-Qxy(4,4) = 20;                      % 10
+Qxy(3,3) = 150; % position control  % 150
+Qxy(4,4) = 20;                      % 20
 
 Ry = 40;
 
@@ -233,8 +292,8 @@ modelZdirection.u.max = 1;
 
 % Set the penalty
 Qxz = zeros(2,2);
-Qxz(1,1) = 400; % position control
-Qxz(2,2) = 125;
+Qxz(1,1) = 400; % position control   %400
+Qxz(2,2) = 125;                      %125
 Rz = 3;
 
 modelZdirection.y.penalty = Penalty(Qxz,norm);

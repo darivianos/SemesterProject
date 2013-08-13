@@ -36,18 +36,19 @@ end
 % hack
 %%
 if counter == 1
-    %
+    %%
     flag_type = 1;
     disp('Default Option : ASL -> Blame Kostas for the awful design');
-    YY_REF = [-0.75 -0.58 -0.45 -0.30 -0.16 -0.1 0.4  0.65  0.4 0.15 -0.05   0.15 0.65 0.9 0.9  1.3];
-    ZZ_REF = [-0.4   0.3   0.4   0.3  -0.4  -0.4 -0.4 -0.2 0.0 0.0  0.2 0.4  0.4       0.4 -0.4 -0.4];
+    YY_REF = [-0.75 -0.58 -0.45 -0.30 -0.16 -0.1 0.4  0.65  0.4 0.15 -0.05   0.15 0.65 0.9 0.8  0.82 1.3];
+    ZZ_REF = [-0.4   0.3   0.4   0.3  -0.4  -0.4 -0.4 -0.2 0.0 0.0  0.2 0.4  0.4       0.4 -0.4 -0.4 -0.4];
     Coarsity = 300; 
-    disp('Rectangle Option');
-    flag_type = 2;
-    YY_REF = [-0.75 -0.75 -0.10 -0.1 -0.75];
-    ZZ_REF = [0.4   -0.4  -0.4 0.4   0.4];
-    Coarsity = 500; 
+%     disp('Rectangle Option');
+%     flag_type = 2;
+%     YY_REF = [-0.75 -0.75 -0.10 -0.1 -0.75];
+%     ZZ_REF = [0.4   -0.4  -0.4 0.4   0.4];
+%     Coarsity = 500; 
     [YY_WPTS_S,ZZ_WPTS_S,~,~] = ACX_Smooth_Trajectory(YY_REF,ZZ_REF,Coarsity,1);
+    %%
 %     disp('SineWave');
 %     flag_type = 3;
 %     YY_WPTS_S = 0:0.01:1;
@@ -68,10 +69,18 @@ if counter == 1
 %     ZZ_WPTS_S = ZZ_WPTS_S - 0.35;
 %     ZZ_WPTS_S = - ZZ_WPTS_S;
 %     plot(YY_WPTS_S,-ZZ_WPTS_S,'o-r','LineWidth',2);
-    disp('Inspection Maneuver')
-    flag_type = 6;
-    YY_REF = [-0.7 0.3  0.3 -0.7 -0.7 0.3  0.3 -0.7];
-    ZZ_REF = [ 0.6 0.6  0.3  0.3  0.0 0.0 -0.3 -0.3];
+%     disp('Inspection Maneuver')
+%     flag_type = 6;
+%     YY_REF = [-0.7 0.3  0.3 -0.7 -0.7 0.3  0.3 -0.7];
+%     ZZ_REF = [ 0.6 0.6  0.3  0.3  0.0 0.0 -0.3 -0.3];
+%     ZZ_REF = 0.8*ZZ_REF;
+%     YY_REF = 1.6*YY_REF;
+%     Coarsity = 500; 
+%     [YY_WPTS_S,ZZ_WPTS_S,~,~] = ACX_Smooth_Trajectory(YY_REF,ZZ_REF,Coarsity,1);
+    flag_type = 7;
+    disp('Pipe Inspection');
+    YY_REF = [0    0    0    0   0  ];
+    ZZ_REF = [0.1 -0.5 -0.8 -0.3 0.1];
     Coarsity = 500; 
     [YY_WPTS_S,ZZ_WPTS_S,~,~] = ACX_Smooth_Trajectory(YY_REF,ZZ_REF,Coarsity,1);
     %%
@@ -79,7 +88,7 @@ else
     disp('Custom Design -> Good luck with that');
     YY_REF = yvec(1:counter);
     ZZ_REF = zvec(1:counter);
-    Coarsity = 300; 
+    Coarsity = 600; 
     [YY_WPTS_S,ZZ_WPTS_S,~,~] = ACX_Smooth_Trajectory(YY_REF,ZZ_REF,Coarsity,1);  
 end
 %%
