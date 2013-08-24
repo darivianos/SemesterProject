@@ -182,10 +182,24 @@ Bff_roll = [Bff_roll;zeros(1,size(Bff_roll,2))];
 
 
 DF_pitch = 0;
+DF_pitch_mp = -2.35;
 a1_pitch = 59.71;
 a0_pitch = 491;
 c0_pitch = 491;
 Td_pitch = Td_pitch_2ndOrd;
+
+[Aff_pitch_mp,Bff_pitch_mp,Cff_pitch_mp,Dff_pitch_mp,Add_pitch_mp,Bdd_pitch_mp,Cdd_pitch_mp,Ddd_pitch_mp] = linearizSimple(Theta,Td_pitch,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF_pitch_mp);
+
+% Af = zeros(4,4);
+% Bf = zeros(4,2);
+% 
+% % Free Flight
+% Af(1,2) = 1; Af(2,1) = -a0_pitch; Af(2,2) = -a1_pitch; Af(3,4) = 1; 
+% Af(4,1) = -g; Af(4,4) = DF_pitch_mp;
+% 
+% Bf(2,1) = c0_pitch;
+% Cf = [eye(4);zeros(1,4)];
+
 [Aff_pitch,Bff_pitch,Cff_pitch,Dff_pitch,Add_pitch,Bdd_pitch,Cdd_pitch,Ddd_pitch] = linearizSimple(Theta,Td_pitch,m,l,gamma,J,a1_pitch,a0_pitch,c0_pitch,DF);
 
 a0_yaw = 5.9;
@@ -215,5 +229,10 @@ mass = 0.66;
 % startIndex = 1;
 % endIndex = 1700;
 % [RecordedData,RefX,RefY,RefZ,RefYaw] = loadSimulationData(hquad_pos_FG,startIndex,endIndex);
+
+%% Kalman Filter Parameters
+Ax = Aff_pitch_mp;
+Bx = Bff_pitch_mp(:,1);
+Cx = eye(4);
 
 disp('### MAIN FILE LOADED!');

@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'controller_template'.
  *
- * Model version                  : 1.703
+ * Model version                  : 1.718
  * Simulink Coder version         : 8.1 (R2011b) 08-Jul-2011
  * TLC version                    : 8.1 (Aug  6 2011)
- * C/C++ source code generated on : Sat Jul 20 16:47:53 2013
+ * C/C++ source code generated on : Sat Aug 24 17:45:15 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -52,23 +52,23 @@ int_T rt_WriteMat4FileHeader(FILE *fp,
   const char_T *name);
 extern void controlle_generate_X_ref_x_Init(rtDW_generate_X_ref_x_controlle
   *localDW);
-extern void controller_tem_generate_X_ref_x(const real_T rtu_traj_x[1209],
-  real_T rtu_idx, rtB_generate_X_ref_x_controller *localB,
+extern void controller_tem_generate_X_ref_x(const real_T rtu_traj_x[909], real_T
+  rtu_idx, rtB_generate_X_ref_x_controller *localB,
   rtDW_generate_X_ref_x_controlle *localDW);
 extern void controlle_generate_X_ref_y_Init(rtDW_generate_X_ref_y_controlle
   *localDW);
-extern void controller_tem_generate_X_ref_y(const real_T rtu_traj_y[1209],
-  real_T rtu_idx, rtB_generate_X_ref_y_controller *localB,
+extern void controller_tem_generate_X_ref_y(const real_T rtu_traj_y[909], real_T
+  rtu_idx, rtB_generate_X_ref_y_controller *localB,
   rtDW_generate_X_ref_y_controlle *localDW);
 extern void control_generate_X_ref_yaw_Init(rtDW_generate_X_ref_yaw_control
   *localDW);
 extern void controller_t_generate_X_ref_yaw(const real_T
-  rtu_X_ref_yaw_unbounded[806], real_T rtu_yaw_meas, real_T rtu_idx,
+  rtu_X_ref_yaw_unbounded[606], real_T rtu_yaw_meas, real_T rtu_idx,
   rtB_generate_X_ref_yaw_controll *localB, rtDW_generate_X_ref_yaw_control
   *localDW);
 extern void controlle_generate_X_ref_z_Init(rtDW_generate_X_ref_z_controlle
   *localDW);
-extern void controller_tem_generate_X_ref_z(const real_T rtu_traj_z[806], real_T
+extern void controller_tem_generate_X_ref_z(const real_T rtu_traj_z[606], real_T
   rtu_idx, rtB_generate_X_ref_z_controller *localB,
   rtDW_generate_X_ref_z_controlle *localDW);
 extern void controller__MATLABFunction_Init(rtDW_MATLABFunction_controller_
@@ -88,12 +88,6 @@ extern void controller_discretekalmanfilter(real_T rtu_y, real_T rtu_y_e, const
   rtu_B[3], const real_T rtu_C[6], const real_T rtu_Q[9], const real_T rtu_R[4],
   real_T rtu_u, const real_T rtu_P[9], rtB_discretekalmanfilter_contro *localB,
   rtDW_discretekalmanfilter_contr *localDW);
-extern void con_EmbeddedMATLABFunction_Init(rtDW_EmbeddedMATLABFunction_con
-  *localDW);
-extern void controll_EmbeddedMATLABFunction(real_T rtu_roll, real_T rtu_pitch,
-  real_T rtu_pitch_bias, real_T rtu_roll_bias, real_T rtu_yaw,
-  rtB_EmbeddedMATLABFunction_cont *localB, rtDW_EmbeddedMATLABFunction_con
-  *localDW);
 extern void controller_runFastGradient_Init(rtDW_runFastGradient_controller
   *localDW);
 extern void controller_temp_runFastGradient(const real_T rtu_TT_PP[900], const
