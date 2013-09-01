@@ -2,7 +2,10 @@ function U = OptimalMPCInput(X,Hn,Kn,Fi,Gi,Nc)
 
 tolerance = 1;
 nr  = size(Nc,1);
+nu = size(Gi,1)/nr;
 MPT_ABSTOL = 1e-8;
+UminJ = 10000*ones(nu,1);
+minJ = 1e+08;
 
 X = round(10000*X)/10000;
 
@@ -16,8 +19,8 @@ for ireg = 1:nr
     Ki = Kn(abspos:abspos+Nc(ireg)-1,:);
     abspos = abspos + Nc(ireg);
     
-    F = Fi(ireg,:);
-    G = Gi(ireg,:);
+    F = Fi((ireg-1)*nu+1:ireg*nu,:);
+    G = Gi((ireg-1)*nu+1:ireg*nu,:);
     
     nc = Nc(ireg);
     
@@ -36,13 +39,20 @@ for ireg = 1:nr
     % extract the right control law
     if (isinside == 1)
         U = F*X + G;
-        return
+        
+       Jobj = X'*Hi*X + F*X + G;
+       if Jobj <= minJ  
+            minJ = Jobj;
+            UminJ = U;
+       end
     end
 end
-F = Fi(minreg,:);
-G = Gi(minreg,:);
-U = F*X + G;
+
+if UminJ == 10000*ones(nu,1)
+    F = Fi((minreg-1)*nu:minreg*nu,:);
+    G = Gi((minreg-1)*nu:minreg*nu,:);
+    U = F*X + G;
+else
+    U = UminJ;
+end
 return
-    
-    
- 

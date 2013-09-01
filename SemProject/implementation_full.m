@@ -44,7 +44,7 @@ c0_yaw = 5.9;
 Theta = -deg2rad(2); % Docking angle
 
 % Optimization Parameters
-N = 3; %N = 5; 
+N = 2; %N = 5; 
 norm = 2;
 
 %%
@@ -126,37 +126,35 @@ DynFFXY.setDomain('x', Polyhedron([0 0 1 0 0 0 0 0], -0.01));
 
 modelXYdirection = PWASystem([DynFFXY DynDDXY]);
 
-modelXYdirection.x.min = [-0.2094;-2;-1;1;-0.2094;-2;-1;1];  % states x = [pitch, pitch_dot, x, x_dot, roll, roll_dot, y, y_dot]
+modelXYdirection.x.min = [-0.2094;-2;-1;-1;-0.2094;-2;-1;-1];  % states x = [pitch, pitch_dot, x, x_dot, roll, roll_dot, y, y_dot]
 modelXYdirection.x.max = [0.2094;2;0;1;0.2094;2;1;1];
 modelXYdirection.u.min = [-0.27;-0.27];   
-modelXYdirection.u.max = [-0.27;-0.27];
+modelXYdirection.u.max = [0.27;0.27];
 
+%% X-Y direction Optimization Problem Set Up
 
+% Reference Signal Calculation
+% Output Reference
+yref = [Theta;0;0;0;-m*g*Theta;0;0;0;0];    % yref = [pitch, pitch_dot, x, x_dot,Force, roll, roll_dot, y, y_dot]
+xref = [Theta;0;0;0;0;0;0;0];               % xref  =[pitch, pitch_dot, x, x_dot, roll, roll_dot, y, y_dot]
 
+B = modelXYdirection.B{2};
+A = modelXYdirection.A{2};
+uref = (B'*B)\B'*(eye(size(A,1)) - A)*xref;
 
-%%
+% Output reference tracking
+Qxy = zeros(9,9); 
+Qxy(3,3) = 55;
+Qxy(4,4) = 8;
+Qxy(5,5) = 50;
+Qxy(6,6) = 10;
+Qxy(8,8) = 150; % position control  % 150
+Qxy(9,9) = 20;
 
+R = diag([40;40]);
+Q = zeros(8,8);
 
-% Optimization problem set up
-Qy = zeros(5,5);
-Qy(3,3) = 100; % when we have the switching this cost will be zero.
-Qy(4,4) = 10;
-Qy(5,5) = 50; % when in free flight this error doesn't affect optimization
-
-%   - hoping I understand correctly George code...
-Qy(3,3) = 55;
-Qy(4,4) = 8;
-
-R = 40;
-Q = zeros(5,5);
-% reference signals calculation Xss = A*Xss+B*Uref
-yref = [Theta;0;0;0;-m*g*Theta]; % ensure that the angle of arrival is not positive
-xref = [Theta;0;0;0;0];
-B = modelXdirection.B{1};
-A = modelXdirection.A{1};
-uref = (B'*B)\B'*(eye(5) - A)*xref;
-
-ctrl = MPCController(modelXdirection);
+ctrl = MPCController(modelXYdirection);
 ctrl.N = N;
 
 % add quadratic penalty on the inputs
@@ -164,7 +162,7 @@ ctrl.model.u.penalty = Penalty(R, norm);
 % add quadratic penalty on the states
 ctrl.model.x.penalty = Penalty(Q, norm);
 % add quadratic penalty on the output
-ctrl.model.y.penalty = Penalty(Qy, norm);
+ctrl.model.y.penalty = Penalty(Qxy, norm);
 
 % Define output reference signal
 ctrl.model.y.with('reference');
@@ -172,50 +170,64 @@ ctrl.model.y.reference = yref;
 ctrl.model.u.with('reference');
 ctrl.model.u.reference = uref;
 
-
-expmpcXdirection = ctrl.toExplicit();
-
-
-
 %% Obstacle avoidance (Yalmip formulation)
 
 % Relative distance for the controller
 xrel_min = -0.4;
 xrel_max = -0.3;
+yrel_min = -0.4;
+yrel_max = -0.3;
 
 % Define the unsafe location
-% Define the total Space
-H = zeros(10,5);
+
+H = zeros(16,8);
 H(1,1) = -1; H(2,1) = 1;
 H(3,2) = -1; H(4,2) = 1;
 H(5,3) = -1; H(6,3) = 1;
 H(7,4) = -1; H(8,4) = 1;
 H(9,5) = -1; H(10,5) = 1;
+H(11,6) = -1; H(12,6) = 1;
+H(13,7) = -1; H(14,7) = 1;
+H(15,8) = -1; H(16,8) = 1;
+
+% modelXYdirection.x.min = [-0.2094;-2;-1;-1;-0.2094;-2;-1;1];  % states x = [pitch, pitch_dot, x, x_dot, roll, roll_dot, y, y_dot]
+% modelXYdirection.x.max = [0.2094;2;0;1;0.2094;2;1;1];
+% modelXYdirection.u.min = [-0.27;-0.27];   
+% modelXYdirection.u.max = [0.27;0.27];
 
 
-K = zeros(10,1);
-K(1:2) = 0.5094;
-K(3:4) = 5;
+K = zeros(16,1);
+K(1:2) = 0.2094;
+K(3:4) = 2;
 K(5) = -xrel_min; K(6) = xrel_max;
-K(7:8) = 10;
-K(9) = -0.5; K(10) = 1;
+K(7:8) = 1;
+K(9:10) = 0.2094;
+K(11:12) = 2;
+K(13) = -yrel_min; K(14) = yrel_max;
+K(15:16) = 1;
 
 Punsafe = polytope(H, K);
 
 % Define the total Space
-H = zeros(10,5);
+H = zeros(16,8);
 H(1,1) = -1; H(2,1) = 1;
 H(3,2) = -1; H(4,2) = 1;
 H(5,3) = -1; H(6,3) = 1;
 H(7,4) = -1; H(8,4) = 1;
 H(9,5) = -1; H(10,5) = 1;
+H(11,6) = -1; H(12,6) = 1;
+H(13,7) = -1; H(14,7) = 1;
+H(15,8) = -1; H(16,8) = 1;
 
-K = zeros(10,1);
-K(1:2) = 0.5094;
-K(3:4) = 5;
+K = zeros(16,1);
+K(1:2) = 0.2094;
+K(3:4) = 2;
 K(5) = 1; K(6) = 0;
-K(7:8) = 10;
-K(9) = 0; K(10) = 1;
+K(7:8) = 1;
+K(9:10) = 0.2094;
+K(11:12) = 2;
+K(13) = 1; K(14) = 1;
+K(15:16) = 1;
 
 Pspace = polytope(H,K);
 
@@ -223,14 +235,18 @@ Pspace = polytope(H,K);
 Psafe = Pspace \ Punsafe;
 
 %% Define constraint for the specific obstacle in x direction
-Xyal = expmpcXdirection.toYALMIP();
+Xyal = ctrl.toYALMIP();
 for k = 1:size(Xyal.variables.x,2)
     Xyal.constraints = Xyal.constraints +...
         set(ismember(Xyal.variables.x(:,k), Psafe));
 end
 
-expmpcXdirection.fromYALMIP(Xyal);
+ctrl.fromYALMIP(Xyal);
 %%
+
+expmpcXYdirection = ctrl.toExplicit();
+%%
+
 % Create Look Up Table, code in C
 exportToC_MLD(expmpcXdirection,TsCtrl,'XdirectionCtrl','Xdirection');
 cd Xdirection

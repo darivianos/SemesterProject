@@ -14,8 +14,8 @@
 /* Variable Declarations */
 
 /* Variable Definitions */
-static const char * c40_debug_family_names[5] = { "nargin", "nargout",
-  "enable_flag", "enable_flag_prev", "pulse_enable" };
+static const char * c40_debug_family_names[5] = { "nargin", "nargout", "u",
+  "thres", "y" };
 
 /* Function Declarations */
 static void initialize_c40_controller_template
@@ -45,7 +45,7 @@ static void init_script_number_translation(uint32_T c40_machineNumber, uint32_T
 static const mxArray *c40_sf_marshallOut(void *chartInstanceVoid, void
   *c40_inData);
 static real_T c40_emlrt_marshallIn(SFc40_controller_templateInstanceStruct
-  *chartInstance, const mxArray *c40_pulse_enable, const char_T *c40_identifier);
+  *chartInstance, const mxArray *c40_y, const char_T *c40_identifier);
 static real_T c40_b_emlrt_marshallIn(SFc40_controller_templateInstanceStruct
   *chartInstance, const mxArray *c40_u, const emlrtMsgIdentifier *c40_parentId);
 static void c40_sf_marshallIn(void *chartInstanceVoid, const mxArray
@@ -117,16 +117,16 @@ static const mxArray *get_sim_state_c40_controller_template
   uint8_T c40_b_hoistedGlobal;
   uint8_T c40_b_u;
   const mxArray *c40_c_y = NULL;
-  real_T *c40_pulse_enable;
+  real_T *c40_d_y;
   uint8_T *c40_is_active_c40_controller_template;
-  c40_pulse_enable = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  c40_d_y = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
   c40_is_active_c40_controller_template = (uint8_T *)ssGetDWork(chartInstance->S,
     3);
   c40_st = NULL;
   c40_st = NULL;
   c40_y = NULL;
   sf_mex_assign(&c40_y, sf_mex_createcellarray(2), FALSE);
-  c40_hoistedGlobal = *c40_pulse_enable;
+  c40_hoistedGlobal = *c40_d_y;
   c40_u = c40_hoistedGlobal;
   c40_b_y = NULL;
   sf_mex_assign(&c40_b_y, sf_mex_create("y", &c40_u, 0, 0U, 0U, 0U, 0), FALSE);
@@ -145,16 +145,16 @@ static void set_sim_state_c40_controller_template
 {
   const mxArray *c40_u;
   boolean_T *c40_doneDoubleBufferReInit;
-  real_T *c40_pulse_enable;
+  real_T *c40_y;
   uint8_T *c40_is_active_c40_controller_template;
-  c40_pulse_enable = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  c40_y = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
   c40_is_active_c40_controller_template = (uint8_T *)ssGetDWork(chartInstance->S,
     3);
   c40_doneDoubleBufferReInit = (boolean_T *)ssGetDWork(chartInstance->S, 2);
   *c40_doneDoubleBufferReInit = TRUE;
   c40_u = sf_mex_dup(c40_st);
-  *c40_pulse_enable = c40_emlrt_marshallIn(chartInstance, sf_mex_dup
-    (sf_mex_getcell(c40_u, 0)), "pulse_enable");
+  *c40_y = c40_emlrt_marshallIn(chartInstance, sf_mex_dup(sf_mex_getcell(c40_u,
+    0)), "y");
   *c40_is_active_c40_controller_template = c40_d_emlrt_marshallIn(chartInstance,
     sf_mex_dup(sf_mex_getcell(c40_u, 1)), "is_active_c40_controller_template");
   sf_mex_destroy(&c40_u);
@@ -172,69 +172,55 @@ static void sf_c40_controller_template(SFc40_controller_templateInstanceStruct
 {
   real_T c40_hoistedGlobal;
   real_T c40_b_hoistedGlobal;
-  real_T c40_enable_flag;
-  real_T c40_enable_flag_prev;
+  real_T c40_u;
+  real_T c40_thres;
   uint32_T c40_debug_family_var_map[5];
   real_T c40_nargin = 2.0;
   real_T c40_nargout = 1.0;
-  real_T c40_pulse_enable;
+  real_T c40_y;
   int32_T *c40_sfEvent;
-  real_T *c40_b_enable_flag;
-  real_T *c40_b_pulse_enable;
-  real_T *c40_b_enable_flag_prev;
-  boolean_T guard1 = FALSE;
-  c40_b_enable_flag_prev = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
-  c40_b_pulse_enable = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
-  c40_b_enable_flag = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
+  real_T *c40_b_u;
+  real_T *c40_b_y;
+  real_T *c40_b_thres;
+  c40_b_thres = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
+  c40_b_y = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+  c40_b_u = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
   c40_sfEvent = (int32_T *)ssGetDWork(chartInstance->S, 0);
   _sfTime_ = (real_T)ssGetT(chartInstance->S);
-  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 39U, *c40_sfEvent);
-  _SFD_DATA_RANGE_CHECK(*c40_b_enable_flag, 0U);
-  _SFD_DATA_RANGE_CHECK(*c40_b_pulse_enable, 1U);
-  _SFD_DATA_RANGE_CHECK(*c40_b_enable_flag_prev, 2U);
+  _SFD_CC_CALL(CHART_ENTER_SFUNCTION_TAG, 26U, *c40_sfEvent);
+  _SFD_DATA_RANGE_CHECK(*c40_b_u, 0U);
+  _SFD_DATA_RANGE_CHECK(*c40_b_y, 1U);
+  _SFD_DATA_RANGE_CHECK(*c40_b_thres, 2U);
   *c40_sfEvent = CALL_EVENT;
-  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 39U, *c40_sfEvent);
-  c40_hoistedGlobal = *c40_b_enable_flag;
-  c40_b_hoistedGlobal = *c40_b_enable_flag_prev;
-  c40_enable_flag = c40_hoistedGlobal;
-  c40_enable_flag_prev = c40_b_hoistedGlobal;
+  _SFD_CC_CALL(CHART_ENTER_DURING_FUNCTION_TAG, 26U, *c40_sfEvent);
+  c40_hoistedGlobal = *c40_b_u;
+  c40_b_hoistedGlobal = *c40_b_thres;
+  c40_u = c40_hoistedGlobal;
+  c40_thres = c40_b_hoistedGlobal;
   sf_debug_symbol_scope_push_eml(0U, 5U, 5U, c40_debug_family_names,
     c40_debug_family_var_map);
   sf_debug_symbol_scope_add_eml_importable(&c40_nargin, 0U, c40_sf_marshallOut,
     c40_sf_marshallIn);
   sf_debug_symbol_scope_add_eml_importable(&c40_nargout, 1U, c40_sf_marshallOut,
     c40_sf_marshallIn);
-  sf_debug_symbol_scope_add_eml(&c40_enable_flag, 2U, c40_sf_marshallOut);
-  sf_debug_symbol_scope_add_eml(&c40_enable_flag_prev, 3U, c40_sf_marshallOut);
-  sf_debug_symbol_scope_add_eml_importable(&c40_pulse_enable, 4U,
-    c40_sf_marshallOut, c40_sf_marshallIn);
+  sf_debug_symbol_scope_add_eml(&c40_u, 2U, c40_sf_marshallOut);
+  sf_debug_symbol_scope_add_eml(&c40_thres, 3U, c40_sf_marshallOut);
+  sf_debug_symbol_scope_add_eml_importable(&c40_y, 4U, c40_sf_marshallOut,
+    c40_sf_marshallIn);
   CV_EML_FCN(0, 0);
-  _SFD_EML_CALL(0U, *c40_sfEvent, 4);
-  c40_pulse_enable = 1.0;
-  _SFD_EML_CALL(0U, *c40_sfEvent, 6);
-  guard1 = FALSE;
-  if (CV_EML_COND(0, 1, 0, c40_enable_flag == 1.0)) {
-    if (CV_EML_COND(0, 1, 1, c40_enable_flag_prev == 1.0)) {
-      CV_EML_MCDC(0, 1, 0, TRUE);
-      CV_EML_IF(0, 1, 0, TRUE);
-      _SFD_EML_CALL(0U, *c40_sfEvent, 7);
-      c40_pulse_enable = 0.0;
-    } else {
-      guard1 = TRUE;
-    }
+  _SFD_EML_CALL(0U, *c40_sfEvent, 3);
+  if (CV_EML_IF(0, 1, 0, c40_u >= c40_thres)) {
+    _SFD_EML_CALL(0U, *c40_sfEvent, 4);
+    c40_y = 0.0;
   } else {
-    guard1 = TRUE;
+    _SFD_EML_CALL(0U, *c40_sfEvent, 6);
+    c40_y = c40_u;
   }
 
-  if (guard1 == TRUE) {
-    CV_EML_MCDC(0, 1, 0, FALSE);
-    CV_EML_IF(0, 1, 0, FALSE);
-  }
-
-  _SFD_EML_CALL(0U, *c40_sfEvent, -7);
+  _SFD_EML_CALL(0U, *c40_sfEvent, -6);
   sf_debug_symbol_scope_pop();
-  *c40_b_pulse_enable = c40_pulse_enable;
-  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 39U, *c40_sfEvent);
+  *c40_b_y = c40_y;
+  _SFD_CC_CALL(EXIT_OUT_OF_FUNCTION_TAG, 26U, *c40_sfEvent);
   sf_debug_check_for_state_inconsistency(_controller_templateMachineNumber_,
     chartInstance->chartNumber, chartInstance->instanceNumber);
 }
@@ -266,16 +252,15 @@ static const mxArray *c40_sf_marshallOut(void *chartInstanceVoid, void
 }
 
 static real_T c40_emlrt_marshallIn(SFc40_controller_templateInstanceStruct
-  *chartInstance, const mxArray *c40_pulse_enable, const char_T *c40_identifier)
+  *chartInstance, const mxArray *c40_y, const char_T *c40_identifier)
 {
-  real_T c40_y;
+  real_T c40_b_y;
   emlrtMsgIdentifier c40_thisId;
   c40_thisId.fIdentifier = c40_identifier;
   c40_thisId.fParent = NULL;
-  c40_y = c40_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c40_pulse_enable),
-    &c40_thisId);
-  sf_mex_destroy(&c40_pulse_enable);
-  return c40_y;
+  c40_b_y = c40_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c40_y), &c40_thisId);
+  sf_mex_destroy(&c40_y);
+  return c40_b_y;
 }
 
 static real_T c40_b_emlrt_marshallIn(SFc40_controller_templateInstanceStruct
@@ -292,20 +277,19 @@ static real_T c40_b_emlrt_marshallIn(SFc40_controller_templateInstanceStruct
 static void c40_sf_marshallIn(void *chartInstanceVoid, const mxArray
   *c40_mxArrayInData, const char_T *c40_varName, void *c40_outData)
 {
-  const mxArray *c40_pulse_enable;
+  const mxArray *c40_y;
   const char_T *c40_identifier;
   emlrtMsgIdentifier c40_thisId;
-  real_T c40_y;
+  real_T c40_b_y;
   SFc40_controller_templateInstanceStruct *chartInstance;
   chartInstance = (SFc40_controller_templateInstanceStruct *)chartInstanceVoid;
-  c40_pulse_enable = sf_mex_dup(c40_mxArrayInData);
+  c40_y = sf_mex_dup(c40_mxArrayInData);
   c40_identifier = c40_varName;
   c40_thisId.fIdentifier = c40_identifier;
   c40_thisId.fParent = NULL;
-  c40_y = c40_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c40_pulse_enable),
-    &c40_thisId);
-  sf_mex_destroy(&c40_pulse_enable);
-  *(real_T *)c40_outData = c40_y;
+  c40_b_y = c40_b_emlrt_marshallIn(chartInstance, sf_mex_dup(c40_y), &c40_thisId);
+  sf_mex_destroy(&c40_y);
+  *(real_T *)c40_outData = c40_b_y;
   sf_mex_destroy(&c40_mxArrayInData);
 }
 
@@ -399,10 +383,10 @@ static void init_dsm_address_info(SFc40_controller_templateInstanceStruct
 static uint32_T* sf_get_sfun_dwork_checksum();
 void sf_c40_controller_template_get_check_sum(mxArray *plhs[])
 {
-  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3481636585U);
-  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(2341390084U);
-  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(4225789769U);
-  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(531655U);
+  ((real_T *)mxGetPr((plhs[0])))[0] = (real_T)(3567241213U);
+  ((real_T *)mxGetPr((plhs[0])))[1] = (real_T)(4093172190U);
+  ((real_T *)mxGetPr((plhs[0])))[2] = (real_T)(70428522U);
+  ((real_T *)mxGetPr((plhs[0])))[3] = (real_T)(907592534U);
 }
 
 mxArray *sf_c40_controller_template_get_autoinheritance_info(void)
@@ -414,7 +398,7 @@ mxArray *sf_c40_controller_template_get_autoinheritance_info(void)
     autoinheritanceFields);
 
   {
-    mxArray *mxChecksum = mxCreateString("dCVUd6XmnxY0Yfw4yYt4L");
+    mxArray *mxChecksum = mxCreateString("9DYUK24kJhabEDbdJagsJB");
     mxSetField(mxAutoinheritanceInfo,0,"checksum",mxChecksum);
   }
 
@@ -507,7 +491,7 @@ static const mxArray *sf_get_sim_state_info_c40_controller_template(void)
 
   mxArray *mxInfo = mxCreateStructMatrix(1, 1, 2, infoFields);
   const char *infoEncStr[] = {
-    "100 S1x2'type','srcId','name','auxInfo'{{M[1],M[5],T\"pulse_enable\",},{M[8],M[0],T\"is_active_c40_controller_template\",}}"
+    "100 S1x2'type','srcId','name','auxInfo'{{M[1],M[5],T\"y\",},{M[8],M[0],T\"is_active_c40_controller_template\",}}"
   };
 
   mxArray *mxVarInfo = sf_mex_decode_encoded_mx_struct_array(infoEncStr, 2, 10);
@@ -555,9 +539,9 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
             0,
             0,
             0);
-          _SFD_SET_DATA_PROPS(0,1,1,0,"enable_flag");
-          _SFD_SET_DATA_PROPS(1,2,0,1,"pulse_enable");
-          _SFD_SET_DATA_PROPS(2,1,1,0,"enable_flag_prev");
+          _SFD_SET_DATA_PROPS(0,1,1,0,"u");
+          _SFD_SET_DATA_PROPS(1,2,0,1,"y");
+          _SFD_SET_DATA_PROPS(2,1,1,0,"thres");
           _SFD_STATE_INFO(0,0,2);
           _SFD_CH_SUBSTATE_COUNT(0);
           _SFD_CH_SUBSTATE_DECOMP(0);
@@ -572,21 +556,9 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
         _SFD_CV_INIT_TRANS(0,0,NULL,NULL,0,NULL);
 
         /* Initialization of MATLAB Function Model Coverage */
-        _SFD_CV_INIT_EML(0,1,1,1,0,0,0,0,2,1);
-        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,168);
-        _SFD_CV_INIT_EML_IF(0,1,0,88,136,-1,163);
-
-        {
-          static int condStart[] = { 92, 114 };
-
-          static int condEnd[] = { 108, 135 };
-
-          static int pfixExpr[] = { 0, 1, -3 };
-
-          _SFD_CV_INIT_EML_MCDC(0,1,0,91,136,2,0,&(condStart[0]),&(condEnd[0]),3,
-                                &(pfixExpr[0]));
-        }
-
+        _SFD_CV_INIT_EML(0,1,1,1,0,0,0,0,0,0);
+        _SFD_CV_INIT_EML_FCN(0,0,"eML_blk_kernel",0,-1,80);
+        _SFD_CV_INIT_EML_IF(0,1,0,36,48,60,79);
         _SFD_TRANS_COV_WTS(0,0,0,1,0);
         if (chartAlreadyPresent==0) {
           _SFD_TRANS_COV_MAPS(0,
@@ -604,16 +576,15 @@ static void chart_debug_initialization(SimStruct *S, unsigned int
           (MexFcnForType)c40_sf_marshallOut,(MexInFcnForType)NULL);
 
         {
-          real_T *c40_enable_flag;
-          real_T *c40_pulse_enable;
-          real_T *c40_enable_flag_prev;
-          c40_enable_flag_prev = (real_T *)ssGetInputPortSignal(chartInstance->S,
-            1);
-          c40_pulse_enable = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
-          c40_enable_flag = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
-          _SFD_SET_DATA_VALUE_PTR(0U, c40_enable_flag);
-          _SFD_SET_DATA_VALUE_PTR(1U, c40_pulse_enable);
-          _SFD_SET_DATA_VALUE_PTR(2U, c40_enable_flag_prev);
+          real_T *c40_u;
+          real_T *c40_y;
+          real_T *c40_thres;
+          c40_thres = (real_T *)ssGetInputPortSignal(chartInstance->S, 1);
+          c40_y = (real_T *)ssGetOutputPortSignal(chartInstance->S, 1);
+          c40_u = (real_T *)ssGetInputPortSignal(chartInstance->S, 0);
+          _SFD_SET_DATA_VALUE_PTR(0U, c40_u);
+          _SFD_SET_DATA_VALUE_PTR(1U, c40_y);
+          _SFD_SET_DATA_VALUE_PTR(2U, c40_thres);
         }
       }
     } else {
@@ -843,10 +814,10 @@ static void mdlSetWorkWidths_c40_controller_template(SimStruct *S)
   }
 
   ssSetOptions(S,ssGetOptions(S)|SS_OPTION_WORKS_WITH_CODE_REUSE);
-  ssSetChecksum0(S,(2685863459U));
-  ssSetChecksum1(S,(3614888893U));
-  ssSetChecksum2(S,(3419158795U));
-  ssSetChecksum3(S,(1362185533U));
+  ssSetChecksum0(S,(2381541654U));
+  ssSetChecksum1(S,(1337048744U));
+  ssSetChecksum2(S,(3896874838U));
+  ssSetChecksum3(S,(1800367401U));
   ssSetmdlDerivatives(S, NULL);
   ssSetExplicitFCSSCtrl(S,1);
 }

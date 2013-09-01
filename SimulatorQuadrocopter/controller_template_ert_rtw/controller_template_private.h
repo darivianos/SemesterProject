@@ -3,10 +3,10 @@
  *
  * Code generated for Simulink model 'controller_template'.
  *
- * Model version                  : 1.718
+ * Model version                  : 1.681
  * Simulink Coder version         : 8.1 (R2011b) 08-Jul-2011
  * TLC version                    : 8.1 (Aug  6 2011)
- * C/C++ source code generated on : Sat Aug 24 17:45:15 2013
+ * C/C++ source code generated on : Sun Sep  1 21:17:59 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -88,6 +88,12 @@ extern void controller_discretekalmanfilter(real_T rtu_y, real_T rtu_y_e, const
   rtu_B[3], const real_T rtu_C[6], const real_T rtu_Q[9], const real_T rtu_R[4],
   real_T rtu_u, const real_T rtu_P[9], rtB_discretekalmanfilter_contro *localB,
   rtDW_discretekalmanfilter_contr *localDW);
+extern void con_EmbeddedMATLABFunction_Init(rtDW_EmbeddedMATLABFunction_con
+  *localDW);
+extern void controll_EmbeddedMATLABFunction(real_T rtu_roll, real_T rtu_pitch,
+  real_T rtu_pitch_bias, real_T rtu_roll_bias, real_T rtu_yaw,
+  rtB_EmbeddedMATLABFunction_cont *localB, rtDW_EmbeddedMATLABFunction_con
+  *localDW);
 extern void controller_runFastGradient_Init(rtDW_runFastGradient_controller
   *localDW);
 extern void controller_temp_runFastGradient(const real_T rtu_TT_PP[900], const

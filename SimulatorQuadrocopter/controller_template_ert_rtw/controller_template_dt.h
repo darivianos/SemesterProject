@@ -3,9 +3,9 @@
  *
  * Code generation for model "controller_template.mdl".
  *
- * Model version              : 1.718
+ * Model version              : 1.681
  * Simulink Coder version : 8.1 (R2011b) 08-Jul-2011
- * C++ source code generated on : Sat Aug 24 17:45:15 2013
+ * C++ source code generated on : Sun Sep  1 21:17:59 2013
  *
  * Target selection: ert.tlc
  * Embedded hardware selection: Intel Pentium
@@ -53,7 +53,10 @@ static const char_T * rtDataTypeNames[] = {
 
 /* data type transitions for block I/O structure */
 static DataTypeTransition rtBTransitions[] = {
-  { (char_T *)(&controller_template_B.DataTypeConversion[0]), 0, 0, 618 },
+  { (char_T *)(&controller_template_B.DataTypeConversion[0]), 0, 0, 584 },
+
+  { (char_T *)(&controller_template_B.sf_EmbeddedMATLABFunction_o.roll_rot), 0,
+    0, 4 },
 
   { (char_T *)(&controller_template_B.sf_discretekalmanfilter_k.state_est[0]), 0,
     0, 12 },
@@ -70,6 +73,9 @@ static DataTypeTransition rtBTransitions[] = {
     0, 20 },
 
   { (char_T *)(&controller_template_B.sf_runFastGradient.u_opt), 0, 0, 35 },
+
+  { (char_T *)(&controller_template_B.sf_EmbeddedMATLABFunction.roll_rot), 0, 0,
+    4 },
 
   { (char_T *)(&controller_template_B.sf_MATLABFunction_p.y), 0, 0, 1 },
 
@@ -96,18 +102,6 @@ static DataTypeTransition rtBTransitions[] = {
 
   { (char_T *)(&controller_template_B.sf_MATLABFunction_e.y), 0, 0, 1 },
 
-  { (char_T *)(&controller_template_B.sf_generate_X_ref_z_b.X_ref_z[0]), 0, 0,
-    62 },
-
-  { (char_T *)(&controller_template_B.sf_generate_X_ref_yaw_h.X_ref_yaw[0]), 0,
-    0, 62 },
-
-  { (char_T *)(&controller_template_B.sf_generate_X_ref_y_k.X_ref_y[0]), 0, 0,
-    93 },
-
-  { (char_T *)(&controller_template_B.sf_generate_X_ref_x_a.X_ref_x[0]), 0, 0,
-    93 },
-
   { (char_T *)(&controller_template_B.sf_generate_X_ref_z_l.X_ref_z[0]), 0, 0,
     62 },
 
@@ -121,12 +115,12 @@ static DataTypeTransition rtBTransitions[] = {
     93 }
   ,
 
-  { (char_T *)(&controller_template_DWork.FixPtUnitDelay1_DSTATE[0]), 0, 0, 266
+  { (char_T *)(&controller_template_DWork.FixPtUnitDelay1_DSTATE[0]), 0, 0, 238
   },
 
-  { (char_T *)(&controller_template_DWork.bias_PWORK.LoggedData), 11, 0, 38 },
+  { (char_T *)(&controller_template_DWork.bias_PWORK.LoggedData), 11, 0, 36 },
 
-  { (char_T *)(&controller_template_DWork.sfEvent), 6, 0, 30 },
+  { (char_T *)(&controller_template_DWork.sfEvent), 6, 0, 24 },
 
   { (char_T *)(&controller_template_DWork.ToFile_IWORK.Count), 10, 0, 4 },
 
@@ -135,10 +129,20 @@ static DataTypeTransition rtBTransitions[] = {
   { (char_T *)(&controller_template_DWork.FreeFlightPosCtrl_SubsysRanBC), 2, 0,
     2 },
 
-  { (char_T *)(&controller_template_DWork.is_active_c26_Hquad_control_LIB), 3, 0,
-    30 },
+  { (char_T *)(&controller_template_DWork.is_active_c4_Hquad_control_LIB_), 3, 0,
+    24 },
 
-  { (char_T *)(&controller_template_DWork.isStable), 8, 0, 62 },
+  { (char_T *)(&controller_template_DWork.isStable), 8, 0, 50 },
+
+  { (char_T *)(&controller_template_DWork.sf_EmbeddedMATLABFunction_o.sfEvent),
+    6, 0, 1 },
+
+  { (char_T *)
+    (&controller_template_DWork.sf_EmbeddedMATLABFunction_o.is_active_c26_Hquad_control_LIB),
+    3, 0, 1 },
+
+  { (char_T *)(&controller_template_DWork.sf_EmbeddedMATLABFunction_o.isStable),
+    8, 0, 2 },
 
   { (char_T *)(&controller_template_DWork.sf_discretekalmanfilter_k.sfEvent), 6,
     0, 1 },
@@ -198,6 +202,16 @@ static DataTypeTransition rtBTransitions[] = {
 
   { (char_T *)(&controller_template_DWork.sf_runFastGradient.isStable), 8, 0, 2
   },
+
+  { (char_T *)(&controller_template_DWork.sf_EmbeddedMATLABFunction.sfEvent), 6,
+    0, 1 },
+
+  { (char_T *)
+    (&controller_template_DWork.sf_EmbeddedMATLABFunction.is_active_c26_Hquad_control_LIB),
+    3, 0, 1 },
+
+  { (char_T *)(&controller_template_DWork.sf_EmbeddedMATLABFunction.isStable), 8,
+    0, 2 },
 
   { (char_T *)(&controller_template_DWork.sf_MATLABFunction_p.sfEvent), 6, 0, 1
   },
@@ -297,46 +311,6 @@ static DataTypeTransition rtBTransitions[] = {
   { (char_T *)(&controller_template_DWork.sf_MATLABFunction_e.isStable), 8, 0, 2
   },
 
-  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_z_b.sfEvent), 6, 0,
-    1 },
-
-  { (char_T *)
-    (&controller_template_DWork.sf_generate_X_ref_z_b.is_active_c22_controller_templa),
-    3, 0, 1 },
-
-  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_z_b.isStable), 8, 0,
-    2 },
-
-  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_yaw_h.sfEvent), 6, 0,
-    1 },
-
-  { (char_T *)
-    (&controller_template_DWork.sf_generate_X_ref_yaw_h.is_active_c21_controller_templa),
-    3, 0, 1 },
-
-  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_yaw_h.isStable), 8,
-    0, 2 },
-
-  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_y_k.sfEvent), 6, 0,
-    1 },
-
-  { (char_T *)
-    (&controller_template_DWork.sf_generate_X_ref_y_k.is_active_c20_controller_templa),
-    3, 0, 1 },
-
-  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_y_k.isStable), 8, 0,
-    2 },
-
-  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_x_a.sfEvent), 6, 0,
-    1 },
-
-  { (char_T *)
-    (&controller_template_DWork.sf_generate_X_ref_x_a.is_active_c19_controller_templa),
-    3, 0, 1 },
-
-  { (char_T *)(&controller_template_DWork.sf_generate_X_ref_x_a.isStable), 8, 0,
-    2 },
-
   { (char_T *)(&controller_template_DWork.sf_generate_X_ref_z_l.sfEvent), 6, 0,
     1 },
 
@@ -380,17 +354,17 @@ static DataTypeTransition rtBTransitions[] = {
 
 /* data type transition table for block I/O structure */
 static DataTypeTransitionTable rtBTransTable = {
-  105U,
+  97U,
   rtBTransitions
 };
 
 /* data type transitions for Parameters structure */
 static DataTypeTransition rtPTransitions[] = {
-  { (char_T *)(&controller_template_P.Constant3_Value[0]), 0, 0, 75542 },
+  { (char_T *)(&controller_template_P.Constant3_Value[0]), 0, 0, 72406 },
 
   { (char_T *)(&controller_template_P.IntegerDelay3_DelayLength), 7, 0, 5 },
 
-  { (char_T *)(&controller_template_P.FixPtUnitDelay2_X0), 3, 0, 33 }
+  { (char_T *)(&controller_template_P.FixPtUnitDelay2_X0), 3, 0, 31 }
 };
 
 /* data type transition table for Parameters structure */

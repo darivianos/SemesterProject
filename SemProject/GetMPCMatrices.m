@@ -5,7 +5,7 @@ tempnum = size(obj.feedback,2);
 clear Pn;
 Pn = [];
 nr = 0;
-nu = 1;
+nu = obj.nu;
 for i = 1:tempnum
     Pn = [Pn;obj.feedback(i).Set];
     nr = nr + obj.feedback(i).Num;
@@ -44,8 +44,9 @@ end
 nx = obj.nx;
 H = zeros(nctotal,nx);
 K = zeros(nctotal,1);
-F = zeros(nr,nx);
-G = zeros(nr,1);
+
+F = zeros(nr*nu,nx);
+G = zeros(nr*nu,1);
 
 abspos = 1;
 for i = 1:nr
@@ -53,8 +54,8 @@ for i = 1:nr
     K(abspos:abspos+Nc(i)-1,:) = Kn{i};
     abspos = abspos + Nc(i);
     
-    F(i,:) = Fi{i};
-    G(i,:) = Gi{i};
+    F((i-1)*nu+1:i*nu,:) = Fi{i};
+    G((i-1)*nu+1:i*nu,:) = Gi{i};
 end
 
 return
